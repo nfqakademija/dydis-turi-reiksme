@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle;
+namespace DTR\DTRBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class AppBundle extends Bundle
+class DTRBundle extends Bundle
 {
 }
