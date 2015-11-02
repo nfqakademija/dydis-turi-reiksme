@@ -14,3 +14,7 @@
 /nbproject/private/
 .idea/
 .vagrant/
+/.vagrant/
+/.idea/
+/src/AppBundle/Controller/RegistrationController.php~
+/nbproject/private/
