@@ -4,7 +4,7 @@ dtrdtr:
     prefix:   /
 
 app:
-    resource: "@AppBundle/Controller/"
+    resource: "@DTR\DTRBundle/Controller/"
     type:     annotation
 
 fos_user_security:
