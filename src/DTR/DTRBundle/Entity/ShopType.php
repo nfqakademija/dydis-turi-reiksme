@@ -64,3 +64,5 @@ class ShopType
     }
 }
 
+
+//Table created
