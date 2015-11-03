@@ -24,9 +24,9 @@ class Shop
     /**
      * @var integer
      *
-     * @ORM\Column(name="shoptype_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="ShopType", inversedBy="shops")
      */
-    private $shoptypeId;
+    private $shoptype;
 
     /**
      * @var string
@@ -44,30 +44,6 @@ class Shop
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set shoptypeId
-     *
-     * @param integer $shoptypeId
-     *
-     * @return Shop
-     */
-    public function setShoptypeId($shoptypeId)
-    {
-        $this->shoptypeId = $shoptypeId;
-
-        return $this;
-    }
-
-    /**
-     * Get shoptypeId
-     *
-     * @return integer
-     */
-    public function getShoptypeId()
-    {
-        return $this->shoptypeId;
     }
 
     /**
@@ -93,5 +69,28 @@ class Shop
     {
         return $this->name;
     }
-}
 
+    /**
+     * Set shoptype
+     *
+     * @param \DTR\DTRBundle\Entity\ShopType $shoptype
+     *
+     * @return Shop
+     */
+    public function setShoptype(\DTR\DTRBundle\Entity\ShopType $shoptype = null)
+    {
+        $this->shoptype = $shoptype;
+
+        return $this;
+    }
+
+    /**
+     * Get shoptype
+     *
+     * @return \DTR\DTRBundle\Entity\ShopType
+     */
+    public function getShoptype()
+    {
+        return $this->shoptype;
+    }
+}
