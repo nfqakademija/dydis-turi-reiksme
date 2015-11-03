@@ -18,7 +18,7 @@ class ItemType
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ManyToOne(targetEntity="Item", inversedBy="id")
+     * @ManyToOne(targetEntity="Item", inversedBy="itemTypeId")
      */
     private $id;
 
