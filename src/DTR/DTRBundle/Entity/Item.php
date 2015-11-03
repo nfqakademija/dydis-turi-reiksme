@@ -14,28 +14,35 @@ class Item
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @OneToMany(targetEntity="ItemType", mappedBy="id")
      */
-    protected $id;
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="shop_id", type="integer")
+     */
+    private $shopId;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="itemtype_id", type="integer")
+     * @OneToMany(targetEntity="ItemType", mappedBy="id")
      */
-    protected $itemTypeId;
+    private $itemTypeId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    protected $name;
+    private $name;
 
     /**
      * @ORM\Column(name="price", type="float", scale=2)
      */
-    protected $price;
+    private $price;
 
     /**
      * Get id
@@ -48,7 +55,30 @@ class Item
     }
 
     /**
-     * Set shoptypeId
+     * Set shopId
+     *
+     * @param integer $shopId
+     *
+     * @return Item
+     */
+    public function setShopId($shopId)
+    {
+        $this->shopId = $shopId;
+        return $this;
+    }
+
+    /**
+     * Get shopId
+     *
+     * @return integer
+     */
+    public function getShopId()
+    {
+        return $this->shopId;
+    }
+
+    /**
+     * Set itemTypeId
      *
      * @param integer $itemTypeId
      *
