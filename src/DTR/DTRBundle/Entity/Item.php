@@ -22,15 +22,15 @@ class Item
      *
      * @ORM\Column(name="shop_id", type="integer")
      */
-    private $shopId;
+    private $shop;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="itemtype_id", type="integer")
-     * @ORM\OneToMany(targetEntity="ItemType", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="ItemType", mappedBy="items")
      */
-    private $itemTypeId;
+    private $itemType;
 
     /**
      * @var string
@@ -55,26 +55,26 @@ class Item
     }
 
     /**
-     * Set shopId
+     * Set shop
      *
-     * @param integer $shopId
+     * @param integer $shop
      *
-     * @return Item
+     * @return shop
      */
-    public function setShopId($shopId)
+    public function setShop($shop)
     {
-        $this->shopId = $shopId;
+        $this->shop = $shop;
         return $this;
     }
 
     /**
-     * Get shopId
+     * Get shop
      *
      * @return integer
      */
-    public function getShopId()
+    public function getShop()
     {
-        return $this->shopId;
+        return $this->shop;
     }
 
     /**
@@ -84,9 +84,9 @@ class Item
      *
      * @return Item
      */
-    public function setItemTypeId($itemTypeId)
+    public function setItemType(\DTR\DTRBundle\Entity\ItemType $itemType = null)
     {
-        $this->itemTypeId = $itemTypeId;
+        $this->itemTypeId = $itemType;
         return $this;
     }
 
@@ -95,9 +95,9 @@ class Item
      *
      * @return integer
      */
-    public function getItemTypeId()
+    public function getItemType()
     {
-        return $this->itemTypeId;
+        return $this->itemType;
     }
 
     /**
@@ -145,5 +145,4 @@ class Item
     {
         return $this->price;
     }
-
 }

@@ -2,6 +2,7 @@
 
 namespace DTR\DTRBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,7 +19,6 @@ class ItemType
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="itemTypeId")
      */
     private $id;
 
@@ -28,6 +28,19 @@ class ItemType
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="itemType")
+     */
+    private $items;
+
+    public function __construct()
+    {
+        $this->item = new ArrayCollection();
+    }
+
     /**
      * Get id
      *
@@ -57,5 +70,36 @@ class ItemType
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add item
+     *
+     * @param \DTR\DTRBundle\Entity\Item $item
+     *
+     * @return ItemType
+     */
+    public function addItem(\DTR\DTRBundle\Entity\Item $item)
+    {
+        $this->item[] = $item;
+        return $this;
+    }
+    /**
+     * Remove item
+     *
+     * @param \DTR\DTRBundle\Entity\Item $item
+     */
+    public function removeItem(\DTR\DTRBundle\Entity\Item $item)
+    {
+        $this->items->removeElement($item);
+    }
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->item;
     }
 }
