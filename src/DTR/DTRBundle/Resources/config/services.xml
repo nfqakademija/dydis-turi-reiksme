@@ -6,7 +6,7 @@
 
     <!--
     <services>
-        <service id="dtr.example" class="DTR\DTRBundle\Example">
+        <service id="dtrdtr.example" class="DTR\DTRBundle\Example">
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>
