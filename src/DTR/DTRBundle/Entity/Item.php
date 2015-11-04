@@ -28,7 +28,7 @@ class Item
      * @var integer
      *
      * @ORM\Column(name="itemtype_id", type="integer")
-     * @OneToMany(targetEntity="ItemType", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="ItemType", mappedBy="id")
      */
     private $itemTypeId;
 
