@@ -3,6 +3,7 @@
 namespace DTR\DTRBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Event
@@ -25,6 +26,13 @@ class Event
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Pavadinimo laukas negali būti tuščias.")
+     * @Assert\Length(
+     *      min=3,
+     *      minMessage="Pavadinimas negali būti trumpesnis nei 3 raidės.",
+     *      max=255,
+     *      maxMessage="Pavadinimas negali būti ilgesnis nei 255 raidės.")
      */
     private $name;
 
@@ -32,6 +40,12 @@ class Event
      * @var integer
      *
      * @ORM\Column(name="guest_limit", type="integer")
+     *
+     * @Assert\Range(
+     *      min=1,
+     *      minMessage="Svečių limitas negali būti mažesnis už 1.",
+     *      max=60,
+     *      maxMessage="Svečių skaičius negali būti didesnis nei 60.")
      */
     private $guestLimit;
 
@@ -39,6 +53,10 @@ class Event
      * @var float
      *
      * @ORM\Column(name="funds_limit", type="float")
+     *
+     * @Assert\GreaterThanOrEqual(
+     *      value=5.00,
+     *      message="Pinigų sumos limitas negali būti mažesnis už 5.00.")
      */
     private $fundsLimit;
 
