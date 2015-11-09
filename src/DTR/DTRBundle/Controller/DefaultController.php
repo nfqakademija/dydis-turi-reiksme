@@ -2,29 +2,17 @@
 
 namespace DTR\DTRBundle\Controller;
 
+use DTR\DTRBundle\Entity\Shop;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Validator\Tests\Fixtures\Entity;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/", name="_index")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $name = "";
-
-        return $this->render(
-            'views/default/name.html.twig',
-            array('name' => $name)
-        );
-    }
-
-
     /**
      * @Route("/hello/{name}")
      * @Template()
@@ -36,6 +24,36 @@ class DefaultController extends Controller
             array('name' => $name)
         );
     }
+
+    /**
+     * @Route("/", name="_index")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        return $this->render(
+            'views/default/index.html.twig'
+        );
+    }
+
+    /**
+     * @Route("/shops_list", name="_shops_list")
+     * @Template()
+     */
+    public function shopAction()
+    {
+        // Repository object to fetch entities
+        $repository = $this->getDoctrine()
+            ->getRepository('DTRBundle:Shop');
+
+        $shops = $repository->findAll();
+
+        return $this->render(
+            'views/default/shops_list.html.twig',
+            array('name' => $shops)
+        );
+    }
+
 
     public function hashAction($event)
     {
