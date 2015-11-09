@@ -1,9 +1,6 @@
 <?php
-
 namespace DTR\DTRBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="item")
@@ -16,34 +13,29 @@ class Item
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var integer
      *
      * @ORM\Column(name="shop_id", type="integer")
      */
-    private $shopId;
-
+    private $shop;
     /**
      * @var integer
      *
      * @ORM\Column(name="itemtype_id", type="integer")
-     * @OneToMany(targetEntity="ItemType", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="ItemType", mappedBy="items")
      */
-    private $itemTypeId;
-
+    private $itemType;
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-
     /**
      * @ORM\Column(name="price", type="float", scale=2)
      */
     private $price;
-
     /**
      * Get id
      *
@@ -53,30 +45,27 @@ class Item
     {
         return $this->id;
     }
-
     /**
-     * Set shopId
+     * Set shop
      *
-     * @param integer $shopId
+     * @param integer $shop
      *
-     * @return Item
+     * @return shop
      */
-    public function setShopId($shopId)
+    public function setShop($shop)
     {
-        $this->shopId = $shopId;
+        $this->shop = $shop;
         return $this;
     }
-
     /**
-     * Get shopId
+     * Get shop
      *
      * @return integer
      */
-    public function getShopId()
+    public function getShop()
     {
-        return $this->shopId;
+        return $this->shop;
     }
-
     /**
      * Set itemTypeId
      *
@@ -84,22 +73,20 @@ class Item
      *
      * @return Item
      */
-    public function setItemTypeId($itemTypeId)
+    public function setItemType(\DTR\DTRBundle\Entity\ItemType $itemType = null)
     {
-        $this->itemTypeId = $itemTypeId;
+        $this->itemTypeId = $itemType;
         return $this;
     }
-
     /**
      * Get itemTypeId
      *
      * @return integer
      */
-    public function getItemTypeId()
+    public function getItemType()
     {
-        return $this->itemTypeId;
+        return $this->itemType;
     }
-
     /**
      * Set name
      *
@@ -112,7 +99,6 @@ class Item
         $this->name = $name;
         return $this;
     }
-
     /**
      * Get name
      *
@@ -122,7 +108,6 @@ class Item
     {
         return $this->name;
     }
-
     /**
      * Set price
      *
@@ -135,7 +120,6 @@ class Item
         $this->price = $price;
         return $this;
     }
-
     /**
      * Get price
      *
@@ -145,5 +129,4 @@ class Item
     {
         return $this->price;
     }
-
 }
