@@ -2,6 +2,7 @@
 
 namespace DTR\DTRBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -37,6 +38,13 @@ class Event
     private $name;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="events")
+     */
+    private $members;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="guest_limit", type="integer")
@@ -59,6 +67,14 @@ class Event
      *      message="Pinigų sumos limitas negali būti mažesnis už 5.00.")
      */
     private $fundsLimit;
+
+    /**
+     * Public constructor
+     */
+    public function __construct()
+    {
+        $this->members = new ArrayCollection();
+    }
 
     /**
      * Get hash
@@ -141,5 +157,38 @@ class Event
     {
         return $this->fundsLimit;
     }
-}
 
+    /**
+     * Add member
+     *
+     * @param \DTR\DTRBundle\Entity\User $member
+     *
+     * @return Event
+     */
+    public function addMember(User $member)
+    {
+        $this->members[] = $member;
+
+        return $this;
+    }
+
+    /**
+     * Remove member
+     *
+     * @param \DTR\DTRBundle\Entity\User $member
+     */
+    public function removeMember(User $member)
+    {
+        $this->members->removeElement($member);
+    }
+
+    /**
+     * Get members
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMembers()
+    {
+        return $this->members;
+    }
+}
