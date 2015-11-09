@@ -27,6 +27,9 @@ class DefaultController extends Controller
         // Generating unique hash code
         $uniqueHash = uniqid();
 
+        // Generate unique URL
+        $uniqueURL = "http://test.com/" . $uniqueHash;
+
         // Object responsible for handling the process of persisting objects to the database
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -37,8 +40,9 @@ class DefaultController extends Controller
         $entityManager->flush();
 
         return $this->render(
-            'views/default/id.html.twig',
-            array('uniqueHash' => $uniqueHash
+            'views/default/url.html.twig',
+            array('uniqueURL' => $uniqueURL
         ));
     }
+    
 }
