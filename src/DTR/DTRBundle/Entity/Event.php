@@ -81,6 +81,7 @@ class Event
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     /**

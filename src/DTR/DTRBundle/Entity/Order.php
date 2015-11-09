@@ -56,6 +56,13 @@ class Order
     private $event;
 
     /**
+     * @var \DTR\DTRBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="oders")
+     */
+    private $user;
+
+    /**
      * Public constructor
      */
     public function __construct()
@@ -178,5 +185,29 @@ class Order
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \DTR\DTRBundle\Entity\User $user
+     *
+     * @return Order
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \DTR\DTRBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
