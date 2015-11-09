@@ -48,6 +48,14 @@ class Order
     private $isPaid;
 
     /**
+     * @var \DTR\DTRBundle\Entity\Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="orders")
+     * @ORM\JoinColumn(name="event_hash", referencedColumnName="hash")
+     */
+    private $event;
+
+    /**
      * Public constructor
      */
     public function __construct()
@@ -146,5 +154,29 @@ class Order
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * Set event
+     *
+     * @param \DTR\DTRBundle\Entity\Event $event
+     *
+     * @return Order
+     */
+    public function setEvent(Event $event = null)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \DTR\DTRBundle\Entity\Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }

@@ -45,6 +45,13 @@ class Event
     private $members;
 
     /**
+     * @var \DTR\DTRBundle\Entity\Order
+     *
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="event")
+     */
+    private $orders;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="guest_limit", type="integer")
@@ -190,5 +197,39 @@ class Event
     public function getMembers()
     {
         return $this->members;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \DTR\DTRBundle\Entity\Order $order
+     *
+     * @return Event
+     */
+    public function addOrder(Order $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \DTR\DTRBundle\Entity\Order $order
+     */
+    public function removeOrder(Order $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }
