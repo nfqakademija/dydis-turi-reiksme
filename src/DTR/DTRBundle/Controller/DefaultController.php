@@ -11,10 +11,25 @@ use Symfony\Component\Validator\Tests\Fixtures\Entity;
 class DefaultController extends Controller
 {
     /**
+     * @Route("/", name="_index")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        $name = "";
+
+        return $this->render(
+            'views/default/name.html.twig',
+            array('name' => $name)
+        );
+    }
+
+
+    /**
      * @Route("/hello/{name}")
      * @Template()
      */
-    public function indexAction($name)
+    public function nameAction($name)
     {
         return $this->render(
             'views/default/name.html.twig',
@@ -25,7 +40,7 @@ class DefaultController extends Controller
     public function hashAction($event)
     {
         // Generating unique hash code
-        $uniqueHash = uniqid();
+        $uniqueHash = $event->getHash();
 
         // Generate unique URL
         $uniqueURL = "http://test.com/" . $uniqueHash;
