@@ -2,10 +2,13 @@
 
 namespace DTR\DTRBundle\Controller;
 
+use DTR\DTRBundle\Entity\Event;
+use DTR\DTRBundle\Form\EventType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Tests\Fixtures\Entity;
 
 class DefaultController extends Controller
@@ -22,23 +25,38 @@ class DefaultController extends Controller
         );
     }
 
-    public function hashAction($event)
+    /**
+     * @Route("/create_event")
+     */
+    public function createEventAction(Request $request)
     {
-        // Generating unique hash code
-        $uniqueHash = uniqid();
+        $event = new Event();
+        $form = $this->createForm(new EventType(), $event);
 
-        // Object responsible for handling the process of persisting objects to the database
-        $entityManager = $this->getDoctrine()->getManager();
+        $form->handleRequest($request);
 
-        // "Managing" the $event object, this doesn't cause a query to the database
-        $entityManager->persist($event);
+        if ($form->isValid()) {
+            $event_response = $this->forward('DTRBundle:Default:persist', compact('event'));
 
-        // $event objest is persisted to the database
-        $entityManager->flush();
+            return $event_response;
+        }
 
-        return $this->render(
-            'views/default/id.html.twig',
-            array('uniqueHash' => $uniqueHash
-        ));
+        return $this->render('views/forms/create_event.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @param $event
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function persistAction(Event $event)
+    {
+        $manager = $this->getDoctrine()->getManager();
+
+        $manager->persist($event);
+        $manager->flush();
+
+        return new Response('Created event: #'. $event->getHash());
     }
 }
