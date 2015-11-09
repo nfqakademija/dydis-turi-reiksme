@@ -26,7 +26,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/create_event")
+     * @Route("/create_event", name="_create_event")
      */
     public function createEventAction(Request $request)
     {
