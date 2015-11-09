@@ -18,17 +18,16 @@ class Item
     private $id;
 
     /**
-     * @var integer
+     * @var Shop
      *
-     * @ORM\Column(name="shop_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Shop", inversedBy="items")
      */
     private $shop;
 
     /**
-     * @var integer
+     * @var ItemType
      *
-     * @ORM\Column(name="itemtype_id", type="integer")
-     * @ORM\OneToMany(targetEntity="ItemType", mappedBy="items")
+     * @ORM\ManyToOne(targetEntity="ItemType", inversedBy="items")
      */
     private $itemType;
 
@@ -57,20 +56,21 @@ class Item
     /**
      * Set shop
      *
-     * @param integer $shop
+     * @param \DTR\DTRBundle\Entity\Shop $shop
      *
-     * @return shop
+     * @return Item
      */
-    public function setShop($shop)
+    public function setShop(Shop $shop = null)
     {
         $this->shop = $shop;
+
         return $this;
     }
 
     /**
      * Get shop
      *
-     * @return integer
+     * @return Shop
      */
     public function getShop()
     {
@@ -80,20 +80,20 @@ class Item
     /**
      * Set itemTypeId
      *
-     * @param integer $itemTypeId
+     * @param ItemType $itemType
      *
      * @return Item
      */
-    public function setItemType(\DTR\DTRBundle\Entity\ItemType $itemType = null)
+    public function setItemType(ItemType $itemType = null)
     {
-        $this->itemTypeId = $itemType;
+        $this->itemType = $itemType;
         return $this;
     }
 
     /**
-     * Get itemTypeId
+     * Get itemType
      *
-     * @return integer
+     * @return ItemType
      */
     public function getItemType()
     {
@@ -144,5 +144,36 @@ class Item
     public function getPrice()
     {
         return $this->price;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->itemType = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add itemType
+     *
+     * @param \DTR\DTRBundle\Entity\ItemType $itemType
+     *
+     * @return Item
+     */
+    public function addItemType(\DTR\DTRBundle\Entity\ItemType $itemType)
+    {
+        $this->itemType[] = $itemType;
+
+        return $this;
+    }
+
+    /**
+     * Remove itemType
+     *
+     * @param \DTR\DTRBundle\Entity\ItemType $itemType
+     */
+    public function removeItemType(\DTR\DTRBundle\Entity\ItemType $itemType)
+    {
+        $this->itemType->removeElement($itemType);
     }
 }

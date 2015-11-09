@@ -2,6 +2,7 @@
 
 namespace DTR\DTRBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +36,17 @@ class Shop
      */
     private $name;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="shop")
+     */
+    private $items;
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -92,5 +104,39 @@ class Shop
     public function getShoptype()
     {
         return $this->shoptype;
+    }
+
+    /**
+     * Add item
+     *
+     * @param \DTR\DTRBundle\Entity\Item $item
+     *
+     * @return Shop
+     */
+    public function addItem(\DTR\DTRBundle\Entity\Item $item)
+    {
+        $this->items[] = $item;
+
+        return $this;
+    }
+
+    /**
+     * Remove item
+     *
+     * @param \DTR\DTRBundle\Entity\Item $item
+     */
+    public function removeItem(\DTR\DTRBundle\Entity\Item $item)
+    {
+        $this->items->removeElement($item);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 }
