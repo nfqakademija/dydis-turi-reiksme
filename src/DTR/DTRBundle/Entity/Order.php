@@ -2,6 +2,7 @@
 
 namespace DTR\DTRBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +23,17 @@ class Order
     private $id;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Item")
+     * @ORM\JoinTable(
+     *      name="orders_items",
+     *      joinColumns={@ORM\JoinColumn(name="order_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true)})
+     */
+    private $items;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="quantity", type="integer")
@@ -35,6 +47,14 @@ class Order
      */
     private $isPaid;
 
+    /**
+     * Public constructor
+     */
+    public function __construct()
+    {
+        $this->isPaid = false;
+        $this->items = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -93,5 +113,38 @@ class Order
     {
         return $this->isPaid;
     }
-}
 
+    /**
+     * Add item
+     *
+     * @param \DTR\DTRBundle\Entity\Item $item
+     *
+     * @return Order
+     */
+    public function addItem(Item $item)
+    {
+        $this->items[] = $item;
+
+        return $this;
+    }
+
+    /**
+     * Remove item
+     *
+     * @param \DTR\DTRBundle\Entity\Item $item
+     */
+    public function removeItem(Item $item)
+    {
+        $this->items->removeElement($item);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+}
