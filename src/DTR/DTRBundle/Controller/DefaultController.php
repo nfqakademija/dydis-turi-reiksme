@@ -2,13 +2,13 @@
 
 namespace DTR\DTRBundle\Controller;
 
-use DTR\DTRBundle\Entity\Shop;
-
+use DTR\DTRBundle\Entity\Event;
+use DTR\DTRBundle\Form\EventType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Tests\Fixtures\Entity;
 
 class DefaultController extends Controller
@@ -17,7 +17,7 @@ class DefaultController extends Controller
      * @Route("/hello/{name}")
      * @Template()
      */
-    public function nameAction($name)
+    public function indexAction($name)
     {
         return $this->render(
             'views/default/name.html.twig',
@@ -26,56 +26,42 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/", name="_index")
-     * @Template()
+     * @param $request
+     * @return Response
+     *
+     * @Route("create_event", name="create_event")
      */
-    public function indexAction()
+    public function createAction(Request $request)
     {
-        return $this->render(
-            'views/default/index.html.twig'
-        );
+        $event = new Event();
+        $form = $this->createForm(new EventType(), $event);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $event_response = $this->forward('DTRBundle:Default:persist', compact('event'));
+
+            return $event_response;
+        }
+
+        return $this->render('views/forms/create_event.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
-     * @Route("/shops_list", name="_shops_list")
-     * @Template()
+     * @param $event
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/persist", name="persist")
      */
-    public function shopAction()
+    public function persistAction(Event $event)
     {
-        // Repository object to fetch entities
-        $repository = $this->getDoctrine()
-            ->getRepository('DTRBundle:Shop');
+        $manager = $this->getDoctrine()->getManager();
 
-        $shops = $repository->findAll();
+        $manager->persist($event);
+        $manager->flush();
 
-        return $this->render(
-            'views/default/shops_list.html.twig',
-            array('name' => $shops)
-        );
+        return new Response('Created event: #'. $event->getHash());
     }
-
-
-    public function hashAction($event)
-    {
-        // Generating unique hash code
-        $uniqueHash = $event->getHash();
-
-        // Generate unique URL
-        $uniqueURL = "http://test.com/" . $uniqueHash;
-
-        // Object responsible for handling the process of persisting objects to the database
-        $entityManager = $this->getDoctrine()->getManager();
-
-        // "Managing" the $event object, this doesn't cause a query to the database
-        $entityManager->persist($event);
-
-        // $event objest is persisted to the database
-        $entityManager->flush();
-
-        return $this->render(
-            'views/default/url.html.twig',
-            array('uniqueURL' => $uniqueURL
-        ));
-    }
-    
 }
