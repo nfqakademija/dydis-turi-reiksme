@@ -6,6 +6,7 @@
 
         {% for shop in shops %}
             <div class="col-md-4">
+                <img src="{{ asset('' ~ shop.getImageLocation() ~ '') }}" class="img-thumbnail" .img-responsive>
                 <a href="#">{{ shop.getName() }}</a>
             </div>
         {% endfor %}
