@@ -93,4 +93,12 @@ class DefaultController extends Controller
 
         return new Response('Created event: #'. $event->getHash());
     }
+
+    /**
+     * @Route("/new", name="form")
+     */
+    public function formAction()
+    {
+        return $this->render('form.html.twig');
+    }
 }
