@@ -22,6 +22,13 @@ class Shop
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="image_location", type="string", length=255)
+     */
+    private $imageLocation;
+
+    /**
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="ShopType", inversedBy="shops")
@@ -68,6 +75,23 @@ class Shop
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setImageLocation($imageLocation)
+    {
+        $this->imageLocation = $imageLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get imageLocation
+     *
+     * @return string
+     */
+    public function getImageLocation()
+    {
+        return $this->imageLocation;
     }
 
     /**

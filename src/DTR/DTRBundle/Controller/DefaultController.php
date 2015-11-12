@@ -50,7 +50,7 @@ class DefaultController extends Controller
 
         return $this->render(
             'views/default/shops_list.html.twig',
-            array('name' => $shops)
+            array('shops' => $shops)
         );
     }
 

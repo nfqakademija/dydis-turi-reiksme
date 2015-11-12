@@ -1,13 +1,17 @@
 {%  extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row">
-        {% for shop in shop %}
+
+    <div class="shops_list">
+
+        {% for shop in shops %}
             <div class="col-md-4">
                 <a href="#">{{ shop.getName() }}</a>
             </div>
         {% endfor %}
+
     </div>
+
 {% endblock %}
 
 
