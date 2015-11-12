@@ -17,11 +17,40 @@ class DefaultController extends Controller
      * @Route("/hello/{name}")
      * @Template()
      */
-    public function indexAction($name)
+    public function nameAction($name)
     {
         return $this->render(
             'views/default/name.html.twig',
             array('name' => $name)
+        );
+    }
+
+    /**
+     * @Route("/", name="_index")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        return $this->render(
+            'views/default/index.html.twig'
+        );
+    }
+
+    /**
+     * @Route("/shops_list", name="_shops_list")
+     * @Template()
+     */
+    public function shopAction()
+    {
+        // Repository object to fetch entities
+        $repository = $this->getDoctrine()
+            ->getRepository('DTRBundle:Shop');
+
+        $shops = $repository->findAll();
+
+        return $this->render(
+            'views/default/shops_list.html.twig',
+            array('name' => $shops)
         );
     }
 
