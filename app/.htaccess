@@ -1,4 +1,4 @@
-<IfModule mod_authz_core.c>
+f<IfModule mod_authz_core.c>
     Require all denied
 </IfModule>
 <IfModule !mod_authz_core.c>
