@@ -30,6 +30,18 @@ class ProductType
     private $name;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="productType")
+     */
+    private $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -61,5 +73,39 @@ class ProductType
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add product
+     *
+     * @param \DTR\DTRBundle\Entity\Product $product
+     *
+     * @return ProductType
+     */
+    public function addProduct(Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \DTR\DTRBundle\Entity\Product $product
+     */
+    public function removeProduct(Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

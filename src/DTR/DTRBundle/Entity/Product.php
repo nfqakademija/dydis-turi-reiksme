@@ -36,6 +36,20 @@ class Product
     private $price;
 
     /**
+     * @var \DTR\DTRBundle\Entity\Shop
+     *
+     * @ORM\ManyToOne(targetEntity="Shop", inversedBy="products")
+     */
+    private $shop;
+
+    /**
+     * @var \DTR\DTRBundle\Entity\ProductType
+     *
+     * @ORM\ManyToOne(targetEntity="ProductType", inversedBy="products")
+     */
+    private $productType;
+
+    /**
      * Get id
      *
      * @return integer
@@ -91,5 +105,53 @@ class Product
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set shop
+     *
+     * @param \DTR\DTRBundle\Entity\Shop $shop
+     *
+     * @return Product
+     */
+    public function setShop(Shop $shop = null)
+    {
+        $this->shop = $shop;
+
+        return $this;
+    }
+
+    /**
+     * Get shop
+     *
+     * @return \DTR\DTRBundle\Entity\Shop
+     */
+    public function getShop()
+    {
+        return $this->shop;
+    }
+
+    /**
+     * Set productType
+     *
+     * @param \DTR\DTRBundle\Entity\ProductType $productType
+     *
+     * @return Product
+     */
+    public function setProductType(ProductType $productType = null)
+    {
+        $this->productType = $productType;
+
+        return $this;
+    }
+
+    /**
+     * Get productType
+     *
+     * @return \DTR\DTRBundle\Entity\ProductType
+     */
+    public function getProductType()
+    {
+        return $this->productType;
     }
 }
