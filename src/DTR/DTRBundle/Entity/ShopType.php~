@@ -2,16 +2,16 @@
 
 namespace DTR\DTRBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * ItemType
+ * ShopType
  *
- * @ORM\Table(name="itemtype")
+ * @ORM\Table(name="shoptype")
  * @ORM\Entity
  */
-class ItemType
+class ShopType
 {
     /**
      * @var integer
@@ -32,13 +32,13 @@ class ItemType
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="itemType")
+     * @ORM\OneToMany(targetEntity="Shop", mappedBy="shoptype")
      */
-    private $items;
+    private $shops;
 
     public function __construct()
     {
-        $this->item = new ArrayCollection();
+        $this->shops = new ArrayCollection();
     }
 
     /**
@@ -50,18 +50,21 @@ class ItemType
     {
         return $this->id;
     }
+
     /**
      * Set name
      *
      * @param string $name
      *
-     * @return ItemType
+     * @return ShopType
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
+
     /**
      * Get name
      *
@@ -73,33 +76,36 @@ class ItemType
     }
 
     /**
-     * Add item
+     * Add shop
      *
-     * @param \DTR\DTRBundle\Entity\Item $item
+     * @param \DTR\DTRBundle\Entity\Shop $shop
      *
-     * @return ItemType
+     * @return ShopType
      */
-    public function addItem(\DTR\DTRBundle\Entity\Item $item)
+    public function addShop(\DTR\DTRBundle\Entity\Shop $shop)
     {
-        $this->item[] = $item;
+        $this->shops[] = $shop;
+
         return $this;
     }
+
     /**
-     * Remove item
+     * Remove shop
      *
-     * @param \DTR\DTRBundle\Entity\Item $item
+     * @param \DTR\DTRBundle\Entity\Shop $shop
      */
-    public function removeItem(\DTR\DTRBundle\Entity\Item $item)
+    public function removeShop(\DTR\DTRBundle\Entity\Shop $shop)
     {
-        $this->items->removeElement($item);
+        $this->shops->removeElement($shop);
     }
+
     /**
-     * Get items
+     * Get shops
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getItems()
+    public function getShops()
     {
-        return $this->item;
+        return $this->shops;
     }
 }
