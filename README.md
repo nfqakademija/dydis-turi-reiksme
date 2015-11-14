@@ -1,6 +1,8 @@
 Symfony Standard Edition
 ========================
 
+[![Build Status](https://scrutinizer-ci.com/g/nfqakademija/dydis-turi-reiksme/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/nfqakademija/dydis-turi-reiksme/build-status/develop)
+
 Welcome to the Symfony Standard Edition - a fully-functional Symfony2
 application that you can use as the skeleton for your new applications.
 
