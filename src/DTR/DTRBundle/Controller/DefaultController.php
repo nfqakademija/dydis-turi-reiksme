@@ -3,6 +3,7 @@
 namespace DTR\DTRBundle\Controller;
 
 use DTR\DTRBundle\Entity\Event;
+use DTR\DTRBundle\Entity\Product;
 use DTR\DTRBundle\Form\EventType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,5 +93,33 @@ class DefaultController extends Controller
         $manager->flush();
 
         return new Response('Created event: #'. $event->getHash());
+    }
+
+    /**
+     * @return Response
+     *
+     * @Route("/test")
+     */
+    public function testAction()
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $str1 = $str2 = '';
+
+        $productType = $manager->getRepository('DTRBundle:ProductType')->find(1);
+        $shop = $manager->getRepository('DTRBundle:Shop')->find(1);
+
+        $products = $productType->getProducts();
+
+        foreach ($products as $product) {
+            $str1 .= $product->getName(). ' ';
+        }
+
+        $products = $shop->getProducts();
+
+        foreach ($products as $product) {
+            $str2 .= $product->getName(). ' ';
+        }
+
+        return new Response($str1. '<br /><br />'. $str2);
     }
 }
