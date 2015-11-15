@@ -45,13 +45,6 @@ class Event
     private $members;
 
     /**
-     * @var \DTR\DTRBundle\Entity\Order
-     *
-     * @ORM\OneToMany(targetEntity="Order", mappedBy="event")
-     */
-    private $orders;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="guest_limit", type="integer")

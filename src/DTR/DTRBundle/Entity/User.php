@@ -30,13 +30,6 @@ class User extends BaseUser
      */
     protected $events;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="Order", mappedBy="user")
-     */
-    protected $orders;
-
     public function __construct()
     {
         parent::__construct();
