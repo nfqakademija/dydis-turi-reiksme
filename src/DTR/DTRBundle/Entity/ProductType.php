@@ -6,12 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ItemType
+ * ProductType
  *
- * @ORM\Table(name="itemtype")
+ * @ORM\Table(name="product_type")
  * @ORM\Entity
  */
-class ItemType
+class ProductType
 {
     /**
      * @var integer
@@ -30,15 +30,15 @@ class ItemType
     private $name;
 
     /**
-     * @var ArrayCollection
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="itemType")
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="productType")
      */
-    private $items;
+    private $products;
 
     public function __construct()
     {
-        $this->item = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     /**
@@ -50,18 +50,21 @@ class ItemType
     {
         return $this->id;
     }
+
     /**
      * Set name
      *
      * @param string $name
      *
-     * @return ItemType
+     * @return ProductType
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
+
     /**
      * Get name
      *
@@ -73,33 +76,36 @@ class ItemType
     }
 
     /**
-     * Add item
+     * Add product
      *
-     * @param \DTR\DTRBundle\Entity\Item $item
+     * @param \DTR\DTRBundle\Entity\Product $product
      *
-     * @return ItemType
+     * @return ProductType
      */
-    public function addItem(\DTR\DTRBundle\Entity\Item $item)
+    public function addProduct(Product $product)
     {
-        $this->item[] = $item;
+        $this->products[] = $product;
+
         return $this;
     }
+
     /**
-     * Remove item
+     * Remove product
      *
-     * @param \DTR\DTRBundle\Entity\Item $item
+     * @param \DTR\DTRBundle\Entity\Product $product
      */
-    public function removeItem(\DTR\DTRBundle\Entity\Item $item)
+    public function removeProduct(Product $product)
     {
-        $this->items->removeElement($item);
+        $this->products->removeElement($product);
     }
+
     /**
-     * Get items
+     * Get products
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getItems()
+    public function getProducts()
     {
-        return $this->item;
+        return $this->products;
     }
 }

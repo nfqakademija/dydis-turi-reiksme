@@ -21,7 +21,8 @@
         "instaclick/php-code-sniffer": "1.4.2"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "phpunit/phpunit": "^5.0"
     },
     "scripts": {
         "post-install-cmd": [
