@@ -2,13 +2,14 @@
 
 namespace DTR\DTRBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Shop
  *
  * @ORM\Table(name="shop")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="DTR\DTRBundle\Repository\ShopRepository")
  */
 class Shop
 {
@@ -42,6 +43,17 @@ class Shop
      */
     private $name;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="shop")
+     */
+    private $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -116,5 +128,39 @@ class Shop
     public function getShoptype()
     {
         return $this->shoptype;
+    }
+
+    /**
+     * Add product
+     *
+     * @param \DTR\DTRBundle\Entity\Product $product
+     *
+     * @return Shop
+     */
+    public function addProduct(\DTR\DTRBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \DTR\DTRBundle\Entity\Product $product
+     */
+    public function removeProduct(\DTR\DTRBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }
