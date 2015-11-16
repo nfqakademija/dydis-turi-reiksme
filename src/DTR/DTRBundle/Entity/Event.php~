@@ -15,13 +15,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Event {
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="hash", type="string", length=6)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $hash;
+    protected $id;
 
     /**
      * @var string
@@ -38,11 +36,10 @@ class Event {
     private $name;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="events")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="events")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $members;
+    protected $user;
 
     /**
      * @var integer
@@ -77,17 +74,16 @@ class Event {
      * Public constructor
      */
     public function __construct() {
-        $this->members = new ArrayCollection();
         $this->participations = new ArrayCollection();
     }
 
     /**
-     * Get hash
+     * Get id
      *
-     * @return string
+     * @return integer
      */
-    public function getHash() {
-        return $this->hash;
+    public function getId() {
+        return $this->id;
     }
 
     /**

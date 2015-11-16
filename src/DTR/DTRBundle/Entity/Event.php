@@ -54,6 +54,13 @@ class Event {
      */
     private $guestLimit;
 
+    /*
+     * @var integer
+     * 
+     * @ORM\Column(name="guest_amount", type="integer")
+     */
+    private $guestAmount;
+    
     /**
      * @var float
      *
@@ -75,6 +82,7 @@ class Event {
      */
     public function __construct() {
         $this->participations = new ArrayCollection();
+        $this->guestAmount = 1;
     }
 
     /**
@@ -216,5 +224,29 @@ class Event {
     public function getParticipations()
     {
         return $this->participations;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \DTR\DTRBundle\Entity\User $user
+     *
+     * @return Event
+     */
+    public function setUser(\DTR\DTRBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \DTR\DTRBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
