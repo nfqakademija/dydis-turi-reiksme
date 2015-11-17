@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Tests\Fixtures\Entity;
 
+
 class DefaultController extends Controller
 {
     /**
@@ -121,5 +122,39 @@ class DefaultController extends Controller
         }
 
         return new Response($str1. '<br /><br />'. $str2);
+    }
+
+    /**
+     *
+     * @Route("/db")
+     */
+    public function dbAction()
+    {
+        $shop =  $this->getDoctrine()->getRepository('DTRBundle:Shop')->find(6);
+
+        $product = new Product();
+        $product->setName('Kebabas su paukstiena');
+        $product->setPrice(7);
+        $product->setShop($shop);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($product);
+        $em->flush();
+
+        return new Response('Created product id '.$product->getId());
+    }
+
+    /**
+     *
+     * @Route("/up")
+     */
+    public function upAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository('DTRBundle:Product')->find(1);
+
+        $product->setPrice(5.00);
+        $em->flush();
     }
 }
