@@ -33,6 +33,10 @@ class Participation {
      */
     protected $user;
 
+    public function __toString() {
+        return $this->getUser()->getUsername();
+    }
+    
     /**
      * Get id
      *

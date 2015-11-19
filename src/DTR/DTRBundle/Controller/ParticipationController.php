@@ -35,6 +35,7 @@ class ParticipationController extends Controller
             'entities' => $entities,
         );
     }
+    
     /**
      * Creates a new Participation entity.
      *

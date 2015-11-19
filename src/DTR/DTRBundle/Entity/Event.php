@@ -54,13 +54,13 @@ class Event {
      */
     private $guestLimit;
 
-    /*
+    /**
      * @var integer
      * 
      * @ORM\Column(name="guest_amount", type="integer")
      */
-    private $guestAmount;
-    
+    private $guestAmount = 1;
+
     /**
      * @var float
      *
@@ -82,6 +82,10 @@ class Event {
      */
     public function __construct() {
         $this->participations = new ArrayCollection();
+    }
+
+    public function __toString() {
+        return $this->getName();
     }
 
     /**
@@ -190,7 +194,6 @@ class Event {
         return $this->members;
     }
 
-
     /**
      * Add participation
      *
@@ -198,8 +201,7 @@ class Event {
      *
      * @return Event
      */
-    public function addParticipation(\DTR\DTRBundle\Entity\Participation $participation)
-    {
+    public function addParticipation(\DTR\DTRBundle\Entity\Participation $participation) {
         $this->participations[] = $participation;
 
         return $this;
@@ -210,8 +212,7 @@ class Event {
      *
      * @param \DTR\DTRBundle\Entity\Participation $participation
      */
-    public function removeParticipation(\DTR\DTRBundle\Entity\Participation $participation)
-    {
+    public function removeParticipation(\DTR\DTRBundle\Entity\Participation $participation) {
         $this->participations->removeElement($participation);
     }
 
@@ -220,8 +221,7 @@ class Event {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getParticipations()
-    {
+    public function getParticipations() {
         return $this->participations;
     }
 
@@ -232,8 +232,7 @@ class Event {
      *
      * @return Event
      */
-    public function setUser(\DTR\DTRBundle\Entity\User $user = null)
-    {
+    public function setUser(\DTR\DTRBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -244,8 +243,30 @@ class Event {
      *
      * @return \DTR\DTRBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
+
+    /**
+     * Set guestAmount
+     *
+     * @param integer $guestAmount
+     *
+     * @return Event
+     */
+    public function setGuestAmount($guestAmount) {
+        $this->guestAmount = $guestAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get guestAmount
+     *
+     * @return integer
+     */
+    public function getGuestAmount() {
+        return $this->guestAmount;
+    }
+
 }

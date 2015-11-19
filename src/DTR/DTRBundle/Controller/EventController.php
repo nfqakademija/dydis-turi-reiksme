@@ -95,6 +95,7 @@ class EventController extends Controller {
 
         if ($this->get('security.context')->isGranted('ROLE_USER') === true) {
             $entity->setUser($this->get('security.context')->getToken()->getUser());
+            $entity->setGuestAmount(1);
         }
 
         $form = $this->createCreateForm($entity);
@@ -116,6 +117,7 @@ class EventController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DTRBundle:Event')->find($id);
+        $guests = $entity->getParticipations();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Event entity.');
@@ -126,6 +128,32 @@ class EventController extends Controller {
         return array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
+            'guests' => $guests
+        );
+    }
+
+    /**
+     * Creates a new Participation entity.
+     *
+     * @Route("/", name="participation_create")
+     * @Method("POST")
+     * @Template("DTRBundle:Participation:new.html.twig")
+     */
+    public function joinAction() {
+        $entity = new Participation();
+
+        if ($this->get('security.context')->isGranted('ROLE_USER') === true) {
+            $entity->setUser($this->get('security.context')->getToken()->getUser());
+            
+        }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('participation_show', array('id' => $entity->getId())));
+
+        return array(
+            'entity' => $entity,
         );
     }
 

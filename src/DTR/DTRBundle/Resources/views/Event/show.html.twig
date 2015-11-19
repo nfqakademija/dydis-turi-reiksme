@@ -21,19 +21,20 @@
                 <th>Fundslimit</th>
                 <td>{{ entity.fundsLimit }}</td>
             </tr>
-        </tbody>
-    </table>
-    <br>
-    <table class="record_properties">
-        <tbody>
             <tr>
-                <th>Host</th>
-                <td>{{ entity.user }}</td>
+                <th>Guests</th>
+                <td>{{ entity.guestAmount }}</td>
             </tr>
         </tbody>
     </table>
-
-
+    <p>
+        Host: {{ entity.user }}
+    </p>
+    Guests:
+    {% for guests in entity %}
+        <br>
+        {{ guests }}
+    {% endfor %}
     <ul class="record_actions">
         <li>
             <a href="{{ path('event') }}">
@@ -46,6 +47,9 @@
             </a>
         </li>
         <li>{{ form(delete_form) }}</li>
-        <li><input type="submit" value="Join"></li>
+        {% if app.user == entity.user %}You are the host.{% endif %}
+        <li>
+            <input type="submit" value="Join">
+        </li>
     </ul>
 {% endblock %}
