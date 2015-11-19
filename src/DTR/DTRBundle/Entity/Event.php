@@ -82,7 +82,6 @@ class Event {
      */
     public function __construct() {
         $this->participations = new ArrayCollection();
-        $this->guestAmount = 1;
     }
 
     /**

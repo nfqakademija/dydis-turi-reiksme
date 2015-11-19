@@ -35,6 +35,10 @@ class User extends BaseUser {
         $this->events = new ArrayCollection();
         $this->participations = new ArrayCollection();
     }
+    
+    public function __toString() {
+        return $this->getUsername();
+    }
 
     /**
      * Add event

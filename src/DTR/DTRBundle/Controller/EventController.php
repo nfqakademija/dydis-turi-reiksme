@@ -15,8 +15,7 @@ use DTR\DTRBundle\Form\EventType;
  *
  * @Route("/event")
  */
-class EventController extends Controller
-{
+class EventController extends Controller {
 
     /**
      * Lists all Event entities.
@@ -25,8 +24,7 @@ class EventController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('DTRBundle:Event')->findAll();
@@ -35,6 +33,7 @@ class EventController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Event entity.
      *
@@ -42,14 +41,18 @@ class EventController extends Controller
      * @Method("POST")
      * @Template("DTRBundle:Event:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new Event();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            if ($this->get('security.context')->isGranted('ROLE_USER') === true) {
+                $entity->setUser($this->get('security.context')->getToken()->getUser());
+            }
+
             $em->persist($entity);
             $em->flush();
 
@@ -58,7 +61,7 @@ class EventController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -69,8 +72,7 @@ class EventController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Event $entity)
-    {
+    private function createCreateForm(Event $entity) {
         $form = $this->createForm(new EventType(), $entity, array(
             'action' => $this->generateUrl('event_create'),
             'method' => 'POST',
@@ -88,14 +90,18 @@ class EventController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Event();
-        $form   = $this->createCreateForm($entity);
+
+        if ($this->get('security.context')->isGranted('ROLE_USER') === true) {
+            $entity->setUser($this->get('security.context')->getToken()->getUser());
+        }
+
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -106,8 +112,7 @@ class EventController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DTRBundle:Event')->find($id);
@@ -119,7 +124,7 @@ class EventController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -131,8 +136,7 @@ class EventController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DTRBundle:Event')->find($id);
@@ -145,21 +149,20 @@ class EventController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a Event entity.
-    *
-    * @param Event $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Event $entity)
-    {
+     * Creates a form to edit a Event entity.
+     *
+     * @param Event $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Event $entity) {
         $form = $this->createForm(new EventType(), $entity, array(
             'action' => $this->generateUrl('event_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -169,6 +172,7 @@ class EventController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Event entity.
      *
@@ -176,8 +180,7 @@ class EventController extends Controller
      * @Method("PUT")
      * @Template("DTRBundle:Event:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DTRBundle:Event')->find($id);
@@ -197,19 +200,19 @@ class EventController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Event entity.
      *
      * @Route("/{id}", name="event_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -235,13 +238,13 @@ class EventController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('event_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('event_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
 }

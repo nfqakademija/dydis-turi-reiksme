@@ -23,19 +23,29 @@
             </tr>
         </tbody>
     </table>
+    <br>
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Host</th>
+                <td>{{ entity.user }}</td>
+            </tr>
+        </tbody>
+    </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('event') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('event_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-    <li><input type="submit" value="Join"></li>
-</ul>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('event') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('event_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+        <li><input type="submit" value="Join"></li>
+    </ul>
 {% endblock %}

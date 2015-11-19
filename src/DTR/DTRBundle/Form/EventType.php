@@ -18,7 +18,7 @@ class EventType extends AbstractType
             ->add('name')
             ->add('guestLimit')
             ->add('fundsLimit')
-            ->add('user')
+//            ->add('user')
         ;
     }
     
