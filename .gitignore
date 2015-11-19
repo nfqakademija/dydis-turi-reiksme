@@ -18,3 +18,4 @@
 /.idea/
 /src/AppBundle/Controller/RegistrationController.php~
 /nbproject/private/
+/web/.htaccess
