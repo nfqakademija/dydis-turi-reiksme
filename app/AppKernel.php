@@ -37,6 +37,6 @@ class AppKernel extends Kernel
 
     public function getCacheDir()
     {
-        return '/tmp/cache';
+        return '/tmp/vilnius4';
     }
 }
