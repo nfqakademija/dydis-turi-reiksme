@@ -7,7 +7,7 @@
         {% for shop in shops %}
             <div class="col-md-4">
                 <img src="{{ asset('' ~ shop.getImageLocation() ~ '') }}" class="img-thumbnail" .img-responsive>
-                <a href="{{ shop.getName() }}">{{ shop.getName() }}</a>
+                <a href="shops_list/{{ shop.getId() }}">{{ shop.getName() }}</a>
             </div>
         {% endfor %}
 

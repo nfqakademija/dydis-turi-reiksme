@@ -42,17 +42,31 @@ class DefaultController extends Controller
      * @Route("/shops_list", name="_shops_list")
      * @Template()
      */
-    public function shopAction()
+    public function shopsAction()
     {
-        // Repository object to fetch entities
-        $repository = $this->getDoctrine()
-            ->getRepository('DTRBundle:Shop');
+        $em = $this->getDoctrine()->getManager();
 
-        $shops = $repository->findAll();
+        $shops = $em->getRepository('DTRBundle:Shop')->FindAllShops();
 
         return $this->render(
             'views/default/shops_list.html.twig',
             array('shops' => $shops)
+        );
+    }
+
+    /**
+     * @Route("/shops_list/{shop_name}", name="_shop")
+     * @Template()
+     */
+    public function shopAction($shop_name)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $products = $em->getRepository('DTRBundle:Product')->findAllShopProducts($shop_name);
+
+        return $this->render(
+            'views/default/products.html.twig',
+            array('products' => $products)
         );
     }
 
@@ -130,17 +144,14 @@ class DefaultController extends Controller
      */
     public function dbAction()
     {
-        $shop =  $this->getDoctrine()->getRepository('DTRBundle:Shop')->find(6);
+        $shop =  $this->getDoctrine()->getRepository('DTRBundle:Shop')->find(2);
 
         $product = new Product();
-        $product->setName('Kebabas su paukstiena');
-        $product->setPrice(7);
+        $product->setName('Pica CanCan1');
+        $product->setPrice(5.40);
         $product->setShop($shop);
-
         $em = $this->getDoctrine()->getManager();
-
         $em->persist($product);
-        $em->flush();
 
         return new Response('Created product id '.$product->getId());
     }
