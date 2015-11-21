@@ -12,4 +12,12 @@ class ShopRepository extends EntityRepository
             ->createQuery('SELECT s FROM DTRBundle:Shop s')
             ->getResult();
     }
+
+    public function findShopId($shop_name)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT s FROM DTRBundle:Shop s WHERE s.slug = ?1')
+            ->setParameter(1, $shop_name)
+            ->getResult();
+    }
 }
