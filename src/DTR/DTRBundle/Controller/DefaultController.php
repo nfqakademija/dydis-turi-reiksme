@@ -39,7 +39,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/shops_list", name="_shops_list")
+     * @Route("/shops", name="_shops_list")
      * @Template()
      */
     public function shopsAction()
@@ -49,13 +49,13 @@ class DefaultController extends Controller
         $shops = $em->getRepository('DTRBundle:Shop')->FindAllShops();
 
         return $this->render(
-            'views/default/shops_list.html.twig',
+            'views/menu/shops.html.twig',
             array('shops' => $shops)
         );
     }
 
     /**
-     * @Route("/shops_list/{shop_name}", name="_shop")
+     * @Route("/shops/{shop_name}", name="_shop")
      * @Template()
      */
     public function shopAction($shop_name)
@@ -67,7 +67,7 @@ class DefaultController extends Controller
         $products = $em->getRepository('DTRBundle:Product')->findAllShopProducts($shop);
 
         return $this->render(
-            'views/default/products.html.twig',
+            'views/menu/products.html.twig',
             array('products' => $products)
         );
     }
