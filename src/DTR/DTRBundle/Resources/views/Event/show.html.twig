@@ -14,16 +14,12 @@
                 <td>{{ entity.name }}</td>
             </tr>
             <tr>
-                <th>Guestlimit</th>
+                <th>Guest limit</th>
                 <td>{{ entity.guestLimit }}</td>
             </tr>
             <tr>
-                <th>Fundslimit</th>
+                <th>Funds limit</th>
                 <td>{{ entity.fundsLimit }}</td>
-            </tr>
-            <tr>
-                <th>Guests</th>
-                <td>{{ entity.guestAmount }}</td>
             </tr>
         </tbody>
     </table>
@@ -31,10 +27,16 @@
         Host: {{ entity.user }}
     </p>
     Guests:
-    {% for guests in entity %}
+    {% set guests = 1 %}
+    <br>
+    {% for participations in entity.participations %}
+        {{ participations }}
         <br>
-        {{ guests }}
+        {% set guests = guests + 1 %}
     {% endfor %}
+    <br>
+    Total: {{ guests }}
+    <br>
     <ul class="record_actions">
         <li>
             <a href="{{ path('event') }}">
@@ -47,9 +49,13 @@
             </a>
         </li>
         <li>{{ form(delete_form) }}</li>
-        {% if app.user == entity.user %}You are the host.{% endif %}
+        {% if app.user == entity.user %}You are the host.
+        {% elseif guests < entity.guestLimit %}
         <li>
             <input type="submit" value="Join">
         </li>
+        {% else %}
+            Cannot join! Event full.
+        {% endif %}
     </ul>
 {% endblock %}

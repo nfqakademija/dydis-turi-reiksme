@@ -55,13 +55,6 @@ class Event {
     private $guestLimit;
 
     /**
-     * @var integer
-     * 
-     * @ORM\Column(name="guest_amount", type="integer")
-     */
-    private $guestAmount = 1;
-
-    /**
      * @var float
      *
      * @ORM\Column(name="funds_limit", type="float")
@@ -245,28 +238,6 @@ class Event {
      */
     public function getUser() {
         return $this->user;
-    }
-
-    /**
-     * Set guestAmount
-     *
-     * @param integer $guestAmount
-     *
-     * @return Event
-     */
-    public function setGuestAmount($guestAmount) {
-        $this->guestAmount = $guestAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get guestAmount
-     *
-     * @return integer
-     */
-    public function getGuestAmount() {
-        return $this->guestAmount;
     }
 
 }
