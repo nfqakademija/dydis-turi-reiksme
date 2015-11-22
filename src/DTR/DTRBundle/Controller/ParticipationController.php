@@ -15,8 +15,7 @@ use DTR\DTRBundle\Form\ParticipationType;
  *
  * @Route("/participation")
  */
-class ParticipationController extends Controller
-{
+class ParticipationController extends Controller {
 
     /**
      * Lists all Participation entities.
@@ -25,8 +24,7 @@ class ParticipationController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('DTRBundle:Participation')->findAll();
@@ -35,7 +33,7 @@ class ParticipationController extends Controller
             'entities' => $entities,
         );
     }
-    
+
     /**
      * Creates a new Participation entity.
      *
@@ -43,23 +41,33 @@ class ParticipationController extends Controller
      * @Method("POST")
      * @Template("DTRBundle:Participation:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new Participation();
+
+        $id = $request->get('id');
+        $entity->setEvent($this->getDoctrine()->getManager()->getRepository('DTRBundle:Event')->findOneById($id));
+
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            if ($this->get('security.context')->isGranted('ROLE_USER') === true) {
+                $entity->setUser($this->get('security.context')->getToken()->getUser());
+            }
+
+            $entity->setEvent($this->getDoctrine()->getManager()->getRepository('DTRBundle:Event')->findOneById($id));
+
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('participation_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('event_show', array('id' => $entity->getEvent()->getId())));
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -70,14 +78,14 @@ class ParticipationController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Participation $entity)
-    {
+    private function createCreateForm(Participation $entity) {
+        
         $form = $this->createForm(new ParticipationType(), $entity, array(
-            'action' => $this->generateUrl('participation_create'),
+            'action' => $this->generateUrl('participation_create', array('id' => $entity->getEvent()->getId())),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Join event'));
 
         return $form;
     }
@@ -85,18 +93,24 @@ class ParticipationController extends Controller
     /**
      * Displays a form to create a new Participation entity.
      *
-     * @Route("/new", name="participation_new")
+     * @Route("/new/{id}", name="participation_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction($id) {
         $entity = new Participation();
-        $form   = $this->createCreateForm($entity);
+
+        if ($this->get('security.context')->isGranted('ROLE_USER') === true) {
+            $entity->setUser($this->get('security.context')->getToken()->getUser());
+        }
+
+        $entity->setEvent($this->getDoctrine()->getManager()->getRepository('DTRBundle:Event')->findOneById($id));
+
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -107,8 +121,7 @@ class ParticipationController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DTRBundle:Participation')->find($id);
@@ -120,7 +133,7 @@ class ParticipationController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -132,8 +145,7 @@ class ParticipationController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DTRBundle:Participation')->find($id);
@@ -146,21 +158,20 @@ class ParticipationController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a Participation entity.
-    *
-    * @param Participation $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Participation $entity)
-    {
+     * Creates a form to edit a Participation entity.
+     *
+     * @param Participation $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Participation $entity) {
         $form = $this->createForm(new ParticipationType(), $entity, array(
             'action' => $this->generateUrl('participation_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -170,6 +181,7 @@ class ParticipationController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Participation entity.
      *
@@ -177,8 +189,7 @@ class ParticipationController extends Controller
      * @Method("PUT")
      * @Template("DTRBundle:Participation:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DTRBundle:Participation')->find($id);
@@ -198,19 +209,19 @@ class ParticipationController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Participation entity.
      *
      * @Route("/{id}", name="participation_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -236,13 +247,13 @@ class ParticipationController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('participation_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('participation_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
 }

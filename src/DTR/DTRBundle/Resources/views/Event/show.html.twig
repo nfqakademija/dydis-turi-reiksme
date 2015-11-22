@@ -38,24 +38,37 @@
     Total: {{ guests }}
     <br>
     <ul class="record_actions">
-        <li>
-            <a href="{{ path('event') }}">
-                Back to the list
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('event_edit', { 'id': entity.id }) }}">
-                Edit
-            </a>
-        </li>
-        <li>{{ form(delete_form) }}</li>
-        {% if app.user == entity.user %}You are the host.
+        {% if app.user == entity.user %}
+            <li>
+                <a href="{{ path('event') }}">
+                    Back to the list
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('event_edit', { 'id': entity.id }) }}">
+                    Edit
+                </a>
+            </li>
+            <li>{{ form(delete_form) }}</li>
+            {% endif %}
+
+        {% set joined = false %}
+        {% for participations in entity.participations %}
+            {% if participations == app.user.username %}
+                {% set joined = true %}
+            {% endif %}
+        {% endfor %}
+
+        {% if app.user == entity.user %}
+            You are the host.
+        {% elseif joined == true %}
+            <p style="color: #0f0"> Joined! </p>
         {% elseif guests < entity.guestLimit %}
-        <li>
-            <input type="submit" value="Join">
-        </li>
+            <li>
+                <a href="{{ path('participation_new', {'id': entity.getId }) }}"><input type="submit" value="Join"></a>
+            </li>
         {% else %}
-            Cannot join! Event full.
+            <p style="color: #f00">Cannot join! Event full.</p>
         {% endif %}
     </ul>
 {% endblock %}

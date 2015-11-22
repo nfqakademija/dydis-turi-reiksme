@@ -95,7 +95,6 @@ class EventController extends Controller {
 
         if ($this->get('security.context')->isGranted('ROLE_USER') === true) {
             $entity->setUser($this->get('security.context')->getToken()->getUser());
-            $entity->setGuestAmount(1);
         }
 
         $form = $this->createCreateForm($entity);
