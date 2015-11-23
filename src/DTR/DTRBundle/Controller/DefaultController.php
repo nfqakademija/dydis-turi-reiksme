@@ -42,15 +42,30 @@ class DefaultController extends Controller
      * @Route("/shops", name="_shops_list")
      * @Template()
      */
-    public function shopsAction()
+    public function shopsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         $shops = $em->getRepository('DTRBundle:Shop')->FindAllShops();
 
+//        $form = $this->createFormBuilder()
+//            ->add('search', 'submit', array('label' => 'Search'))
+//            ->getForm();
+//
+//        $form->handleRequest($request);
+//
+//        if ($form->isValid()) {
+//            // ... perform some action, such as saving the task to the database
+//
+//            // return $this->redirectToRoute('task_success');
+//        }
+
         return $this->render(
             'views/menu/shops.html.twig',
-            array('shops' => $shops)
+            array(
+                'shops' => $shops//,
+                //'form' => $form->createView())
+            )
         );
     }
 
@@ -95,6 +110,15 @@ class DefaultController extends Controller
             'form' => $form->createView()
         ]);
     }
+
+//    /**
+//     *
+//     * @Route("create_event", name="create_event")
+//     */
+//    public function shopSearchAction()
+//    {
+//
+//    }
 
     /**
      * @param $event
