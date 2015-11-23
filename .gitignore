@@ -18,5 +18,5 @@
 /.idea/
 /src/AppBundle/Controller/RegistrationController.php~
 /nbproject/private/
-/app/.htaccess
-
+/web/.htaccess
+/app/cach_
