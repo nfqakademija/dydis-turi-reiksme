@@ -1,21 +1,11 @@
-{%  extends 'base.html.twig' %}
+{%  extends 'menu/layout.html.twig' %}
 
-{% block body %}
-
-    <div class="search">
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-    </div>
-
+{% block content %}
     <div class="products_list">
-
         {% for product in products %}
             <div class="col-md-4">
                 <p>{{ product.getName() }}</p>
             </div>
         {% endfor %}
-
     </div>
-
 {% endblock %}
