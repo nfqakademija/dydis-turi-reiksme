@@ -4,7 +4,9 @@ namespace DTR\DTRBundle\Controller;
 
 use DTR\DTRBundle\Entity\Event;
 use DTR\DTRBundle\Entity\Product;
+use DTR\DTRBundle\Entity\Shop;
 use DTR\DTRBundle\Form\EventType;
+use DTR\DTRBundle\Form\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -46,26 +48,22 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $shops = $em->getRepository('DTRBundle:Shop')->FindAllShops();
+        $shops = $em->getRepository('DTRBundle:Shop')->findAllShops();
 
-//        $form = $this->createFormBuilder()
-//            ->add('search', 'submit', array('label' => 'Search'))
-//            ->getForm();
-//
-//        $form->handleRequest($request);
-//
-//        if ($form->isValid()) {
-//            // ... perform some action, such as saving the task to the database
-//
-//            // return $this->redirectToRoute('task_success');
-//        }
+        $form = $this->createForm(new SearchType());
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $query = $form->get('searchInput')->getData();
+            $shops = $em->getRepository('DTRBundle:Shop')->searchShops($query);
+        }
 
         return $this->render(
             'views/menu/shops.html.twig',
             array(
-                'shops' => $shops//,
-                //'form' => $form->createView())
-            )
+                'shops' => $shops,
+                'form' => $form->createView())
         );
     }
 
@@ -73,7 +71,7 @@ class DefaultController extends Controller
      * @Route("/shops/{shop_name}", name="_shop")
      * @Template()
      */
-    public function shopAction($shop_name)
+    public function shopAction(Request $request, $shop_name)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -81,9 +79,20 @@ class DefaultController extends Controller
 
         $products = $em->getRepository('DTRBundle:Product')->findAllShopProducts($shop);
 
+        $form = $this->createForm(new SearchType());
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $query = $form->get('searchInput')->getData();
+            $products = $em->getRepository('DTRBundle:Product')->searchProducts($query);
+        }
+
         return $this->render(
             'views/menu/products.html.twig',
-            array('products' => $products)
+            array(
+                'products' => $products,
+                'form' => $form->createView())
         );
     }
 
