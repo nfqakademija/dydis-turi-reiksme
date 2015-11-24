@@ -50,6 +50,13 @@ class Shop
      */
     private $products;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -162,5 +169,29 @@ class Shop
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Shop
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

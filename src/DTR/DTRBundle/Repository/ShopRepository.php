@@ -3,21 +3,21 @@
 namespace DTR\DTRBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use DTR\DTRBundle\Entity\Shop;
 
 class ShopRepository extends EntityRepository
 {
-    /**
-     * @param $name
-     * @return Shop
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findByName($name)
+    public function findAllShops()
     {
-        return $this
-            ->getEntityManager()
-            ->createQuery('SELECT sh FROM DTRBundle:Shop sh WHERE sh.name = :name')
-            ->setParameter('name', $name)
-            ->getOneOrNullResult();
+        return $this->getEntityManager()
+            ->createQuery('SELECT s FROM DTRBundle:Shop s')
+            ->getResult();
+    }
+
+    public function findShopId($shop_name)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT s FROM DTRBundle:Shop s WHERE s.slug = ?1')
+            ->setParameter(1, $shop_name)
+            ->getResult();
     }
 }
