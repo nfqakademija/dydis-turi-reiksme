@@ -45,6 +45,13 @@ class Event
     private $members;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="event")
+     */
+    private $orders;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="guest_limit", type="integer")

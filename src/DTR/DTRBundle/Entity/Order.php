@@ -35,6 +35,14 @@ class Order
      */
     private $user;
 
+    /**
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="orders")
+     * @ORM\JoinColumn(name="event_hash", referencedColumnName="hash")
+     */
+    private $event;
+
 
     /**
      * Get id
@@ -92,5 +100,29 @@ class Order
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set event
+     *
+     * @param \DTR\DTRBundle\Entity\Event $event
+     *
+     * @return Order
+     */
+    public function setEvent(\DTR\DTRBundle\Entity\Event $event = null)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \DTR\DTRBundle\Entity\Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }
