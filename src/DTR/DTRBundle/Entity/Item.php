@@ -35,6 +35,13 @@ class Item
      */
     private $order;
 
+    /**
+     * @var Product
+     *
+     * @ORM\OneToOne(targetEntity="Product")
+     */
+    private $product;
+
 
     /**
      * Get id
@@ -92,5 +99,29 @@ class Item
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \DTR\DTRBundle\Entity\Product $product
+     *
+     * @return Item
+     */
+    public function setProduct(Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \DTR\DTRBundle\Entity\Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
     }
 }
