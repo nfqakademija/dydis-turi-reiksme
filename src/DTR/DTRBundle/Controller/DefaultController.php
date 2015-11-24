@@ -48,7 +48,7 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $shops = $em->getRepository('DTRBundle:Shop')->FindAllShops();
+        $shops = $em->getRepository('DTRBundle:Shop')->findAllShops();
 
         $form = $this->createForm(new SearchType());
 
