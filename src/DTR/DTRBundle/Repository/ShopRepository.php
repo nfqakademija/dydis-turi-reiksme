@@ -24,8 +24,8 @@ class ShopRepository extends EntityRepository
     public function searchShops($query)
     {
         return $this->getEntityManager()
-            ->createQuery('SELECT s FROM DTRBundle:Shop s WHERE s.name = ?1')
-            ->setParameter(1, $query)
+            ->createQuery('SELECT s FROM DTRBundle:Shop s WHERE s.name LIKE :name')
+            ->setParameter('name', '%' . $query . '%')
             ->getResult();
     }
 }

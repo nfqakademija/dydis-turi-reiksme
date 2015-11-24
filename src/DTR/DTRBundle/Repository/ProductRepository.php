@@ -17,8 +17,8 @@ class ProductRepository extends EntityRepository
     public function searchProducts($query)
     {
         return $this->getEntityManager()
-            ->createQuery('SELECT p FROM DTRBundle:Product p WHERE p.name = ?1')
-            ->setParameter(1, $query)
+            ->createQuery('SELECT p FROM DTRBundle:Product p WHERE p.name LIKE :name')
+            ->setParameter('name', '%' . $query . '%')
             ->getResult();
     }
 }
