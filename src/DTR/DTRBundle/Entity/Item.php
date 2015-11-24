@@ -28,6 +28,13 @@ class Item
      */
     private $quantity;
 
+    /**
+     * @var Order
+     *
+     * @ORM\ManyToOne(targetEntity="Order", inversedBy="items")
+     */
+    private $order;
+
 
     /**
      * Get id
@@ -62,5 +69,28 @@ class Item
     {
         return $this->quantity;
     }
-}
 
+    /**
+     * Set order
+     *
+     * @param \DTR\DTRBundle\Entity\Order $order
+     *
+     * @return Item
+     */
+    public function setOrder(Order $order = null)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return \DTR\DTRBundle\Entity\Order
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+}
