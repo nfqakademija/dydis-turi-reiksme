@@ -28,6 +28,13 @@ class Order
      */
     private $debt;
 
+    /**
+     * @var User
+     *
+     * @ORM\OneToOne(targetEntity="User")
+     */
+    private $user;
+
 
     /**
      * Get id
@@ -62,5 +69,28 @@ class Order
     {
         return $this->debt;
     }
-}
 
+    /**
+     * Set user
+     *
+     * @param \DTR\DTRBundle\Entity\User $user
+     *
+     * @return Order
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \DTR\DTRBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+}
