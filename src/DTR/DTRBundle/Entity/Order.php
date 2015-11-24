@@ -26,7 +26,7 @@ class Order
      *
      * @ORM\Column(name="debt", type="float")
      */
-    private $debt;
+    private $debt = 0.00;
 
     /**
      * @var User
