@@ -3,6 +3,7 @@
 namespace DTR\DTRBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Item
@@ -25,8 +26,11 @@ class Item
      * @var integer
      *
      * @ORM\Column(name="quantity", type="integer")
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "Pasirinktas kiekis negali būti mažesnis už 1.")
      */
-    private $quantity;
+    private $quantity = 1;
 
     /**
      * @var Order
