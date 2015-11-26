@@ -120,7 +120,7 @@ class Shop
      *
      * @return Shop
      */
-    public function setShoptype(\DTR\DTRBundle\Entity\ShopType $shoptype = null)
+    public function setShoptype(ShopType $shoptype = null)
     {
         $this->shoptype = $shoptype;
 
@@ -144,7 +144,7 @@ class Shop
      *
      * @return Shop
      */
-    public function addProduct(\DTR\DTRBundle\Entity\Product $product)
+    public function addProduct(Product $product)
     {
         $this->products[] = $product;
 
@@ -156,7 +156,7 @@ class Shop
      *
      * @param \DTR\DTRBundle\Entity\Product $product
      */
-    public function removeProduct(\DTR\DTRBundle\Entity\Product $product)
+    public function removeProduct(Product $product)
     {
         $this->products->removeElement($product);
     }
