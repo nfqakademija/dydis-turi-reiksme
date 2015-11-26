@@ -23,11 +23,9 @@ class Member
     private $id;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="debt", type="float")
+     * @ORM\Column(name="is_host", type="boolean")
      */
-    private $debt;
+    private $is_host = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="members")
@@ -44,6 +42,13 @@ class Member
      * @ORM\OneToMany(targetEntity="Item", mappedBy="member")
      */
     private $items;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="debt", type="float")
+     */
+    private $debt;
 
 
     /**
@@ -62,6 +67,18 @@ class Member
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set member as host
+     *
+     * @return Member
+     */
+    public function setHost()
+    {
+        $this->is_host = true;
+
+        return $this;
     }
 
     /**
