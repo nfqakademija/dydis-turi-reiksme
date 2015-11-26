@@ -40,16 +40,9 @@ class Event
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="events")
+     * @ORM\OneToMany(targetEntity="Member", mappedBy="event")
      */
     private $members;
-
-    /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Order", mappedBy="event")
-     */
-    private $orders;
 
     /**
      * @var integer
@@ -169,13 +162,14 @@ class Event
     /**
      * Add member
      *
-     * @param \DTR\DTRBundle\Entity\User $member
+     * @param \DTR\DTRBundle\Entity\Member $member
      *
      * @return Event
      */
-    public function addMember(User $member)
+    public function addMember(Member $member)
     {
         $this->members[] = $member;
+        $member->setEvent($this);
 
         return $this;
     }
@@ -183,11 +177,12 @@ class Event
     /**
      * Remove member
      *
-     * @param \DTR\DTRBundle\Entity\User $member
+     * @param \DTR\DTRBundle\Entity\Member $member
      */
-    public function removeMember(User $member)
+    public function removeMember(Member $member)
     {
         $this->members->removeElement($member);
+        $member->setEvent(null);
     }
 
     /**
@@ -198,39 +193,5 @@ class Event
     public function getMembers()
     {
         return $this->members;
-    }
-
-    /**
-     * Add order
-     *
-     * @param \DTR\DTRBundle\Entity\Order $order
-     *
-     * @return Event
-     */
-    public function addOrder(Order $order)
-    {
-        $this->orders[] = $order;
-
-        return $this;
-    }
-
-    /**
-     * Remove order
-     *
-     * @param \DTR\DTRBundle\Entity\Order $order
-     */
-    public function removeOrder(Order $order)
-    {
-        $this->orders->removeElement($order);
-    }
-
-    /**
-     * Get orders
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getOrders()
-    {
-        return $this->orders;
     }
 }

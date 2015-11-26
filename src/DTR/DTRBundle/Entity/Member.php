@@ -28,6 +28,10 @@ class Member
      */
     private $debt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="members")
+     */
+    private $event;
 
     /**
      * Get id
@@ -62,5 +66,28 @@ class Member
     {
         return $this->debt;
     }
-}
 
+    /**
+     * Set event
+     *
+     * @param \DTR\DTRBundle\Entity\Event $event
+     *
+     * @return Member
+     */
+    public function setEvent(Event $event = null)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \DTR\DTRBundle\Entity\Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+}
