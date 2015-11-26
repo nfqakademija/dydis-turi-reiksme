@@ -31,6 +31,7 @@ class Member
 
     /**
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="members")
+     * @ORM\JoinColumn(name="event_hash", referencedColumnName="hash")
      */
     private $event;
 
