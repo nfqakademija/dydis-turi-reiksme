@@ -39,6 +39,11 @@ class Item
      */
     private $product;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Member", inversedBy="items")
+     */
+    private $member;
+
 
     /**
      * Get id
@@ -75,30 +80,6 @@ class Item
     }
 
     /**
-     * Set order
-     *
-     * @param \DTR\DTRBundle\Entity\Order $order
-     *
-     * @return Item
-     */
-    public function setOrder(Order $order = null)
-    {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return \DTR\DTRBundle\Entity\Order
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
      * Set product
      *
      * @param \DTR\DTRBundle\Entity\Product $product
@@ -120,5 +101,29 @@ class Item
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set member
+     *
+     * @param \DTR\DTRBundle\Entity\Member $member
+     *
+     * @return Item
+     */
+    public function setMember(Member $member = null)
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    /**
+     * Get member
+     *
+     * @return \DTR\DTRBundle\Entity\Member
+     */
+    public function getMember()
+    {
+        return $this->member;
     }
 }

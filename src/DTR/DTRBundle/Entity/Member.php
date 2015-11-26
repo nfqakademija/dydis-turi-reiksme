@@ -2,6 +2,7 @@
 
 namespace DTR\DTRBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +38,20 @@ class Member
      * @ORM\OneToOne(targetEntity="User")
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="member")
+     */
+    private $items;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -118,5 +133,41 @@ class Member
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add item
+     *
+     * @param \DTR\DTRBundle\Entity\Item $item
+     *
+     * @return Member
+     */
+    public function addItem(Item $item)
+    {
+        $this->items[] = $item;
+        $item->setMember($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove item
+     *
+     * @param \DTR\DTRBundle\Entity\Item $item
+     */
+    public function removeItem(Item $item)
+    {
+        $this->items->removeElement($item);
+        $item->setMember(null);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 }
