@@ -34,6 +34,11 @@ class Member
     private $event;
 
     /**
+     * @ORM\OneToOne(targetEntity="User")
+     */
+    private $user;
+
+    /**
      * Get id
      *
      * @return integer
@@ -89,5 +94,29 @@ class Member
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \DTR\DTRBundle\Entity\User $user
+     *
+     * @return Member
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \DTR\DTRBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
