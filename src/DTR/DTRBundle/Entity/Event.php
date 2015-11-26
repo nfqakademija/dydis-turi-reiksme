@@ -16,10 +16,10 @@ class Event {
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="string")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
-    protected $id;
+    protected $hash;
 
     /**
      * @var string
@@ -82,12 +82,12 @@ class Event {
     }
 
     /**
-     * Get id
+     * Get hash
      *
-     * @return integer
+     * @return string
      */
-    public function getId() {
-        return $this->id;
+    public function getHash() {
+        return $this->hash;
     }
 
     /**

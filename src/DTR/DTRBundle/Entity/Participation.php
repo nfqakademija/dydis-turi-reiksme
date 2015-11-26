@@ -23,7 +23,7 @@ class Participation {
 
     /**
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="participations")
-     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="event_hash", referencedColumnName="hash")
      */
     protected $event;
 
