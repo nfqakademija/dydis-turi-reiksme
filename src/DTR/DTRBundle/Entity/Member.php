@@ -82,6 +82,14 @@ class Member
     }
 
     /**
+     * @return bool
+     */
+    public function isHost()
+    {
+        return $this->is_host;
+    }
+
+    /**
      * Set debt
      *
      * @param float $debt
@@ -163,30 +171,6 @@ class Member
     public function getItems()
     {
         return $this->items;
-    }
-
-    /**
-     * Set isHost
-     *
-     * @param boolean $isHost
-     *
-     * @return Member
-     */
-    public function setIsHost($isHost)
-    {
-        $this->is_host = $isHost;
-
-        return $this;
-    }
-
-    /**
-     * Get isHost
-     *
-     * @return boolean
-     */
-    public function getIsHost()
-    {
-        return $this->is_host;
     }
 
     /**
