@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Event
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="DTR\DTRBundle\Repository\EventRepository")
  */
 class Event
 {
