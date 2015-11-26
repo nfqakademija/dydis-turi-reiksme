@@ -20,16 +20,8 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="Event", inversedBy="users")
-     * @ORM\JoinTable(
-     *      name="users_events",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="event_hash", referencedColumnName="hash")})
+     * Public constructor
      */
-    protected $events;
-
     public function __construct()
     {
         parent::__construct();
