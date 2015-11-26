@@ -83,3 +83,12 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: DTR\DTRBundle\Entity\User
+
+doctrine:
+    orm:
+        auto_mapping: true
+
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
