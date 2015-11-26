@@ -20,6 +20,12 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="Member", mappedBy="user")
+     */
+    protected $members;
+
+
+    /**
      * Public constructor
      */
     public function __construct()
@@ -27,7 +33,7 @@ class User extends BaseUser
         parent::__construct();
 
         $this->events = new ArrayCollection();
-        $this->orders = new ArrayCollection();
+        $this->members = new ArrayCollection();
     }
 
     /**
@@ -65,36 +71,36 @@ class User extends BaseUser
     }
 
     /**
-     * Add order
+     * Add member
      *
-     * @param \DTR\DTRBundle\Entity\Order $order
+     * @param \DTR\DTRBundle\Entity\Member $member
      *
      * @return User
      */
-    public function addOrder(Order $order)
+    public function addMember(Member $member)
     {
-        $this->orders[] = $order;
+        $this->members[] = $member;
 
         return $this;
     }
 
     /**
-     * Remove order
+     * Remove member
      *
-     * @param \DTR\DTRBundle\Entity\Order $order
+     * @param \DTR\DTRBundle\Entity\Member $member
      */
-    public function removeOrder(Order $order)
+    public function removeMember(Member $member)
     {
-        $this->orders->removeElement($order);
+        $this->members->removeElement($member);
     }
 
     /**
-     * Get orders
+     * Get members
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getOrders()
+    public function getMembers()
     {
-        return $this->orders;
+        return $this->members;
     }
 }

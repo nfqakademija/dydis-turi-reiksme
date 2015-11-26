@@ -34,7 +34,7 @@ class Member
     private $event;
 
     /**
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="")
      */
     private $user;
 
@@ -130,30 +130,6 @@ class Member
     }
 
     /**
-     * Set user
-     *
-     * @param \DTR\DTRBundle\Entity\User $user
-     *
-     * @return Member
-     */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \DTR\DTRBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Add item
      *
      * @param \DTR\DTRBundle\Entity\Item $item
@@ -187,5 +163,53 @@ class Member
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * Set isHost
+     *
+     * @param boolean $isHost
+     *
+     * @return Member
+     */
+    public function setIsHost($isHost)
+    {
+        $this->is_host = $isHost;
+
+        return $this;
+    }
+
+    /**
+     * Get isHost
+     *
+     * @return boolean
+     */
+    public function getIsHost()
+    {
+        return $this->is_host;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \DTR\DTRBundle\Entity\User $user
+     *
+     * @return Member
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \DTR\DTRBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
