@@ -33,13 +33,6 @@ class Item
     private $quantity = 1;
 
     /**
-     * @var Order
-     *
-     * @ORM\ManyToOne(targetEntity="Order", inversedBy="items")
-     */
-    private $order;
-
-    /**
      * @var Product
      *
      * @ORM\OneToOne(targetEntity="Product")
