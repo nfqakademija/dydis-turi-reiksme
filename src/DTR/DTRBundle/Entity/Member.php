@@ -147,7 +147,10 @@ class Member
     public function addItem(Item $item)
     {
         $this->items[] = $item;
+        $total_price = $this->event->getTotalPrice() + $item->getProduct()->getPrice();
+
         $item->setMember($this);
+        $this->event->setTotalPrice($total_price);
 
         return $this;
     }
@@ -156,11 +159,17 @@ class Member
      * Remove item
      *
      * @param \DTR\DTRBundle\Entity\Item $item
+     * @return $this
      */
     public function removeItem(Item $item)
     {
         $this->items->removeElement($item);
+        $total_price = $this->event->getTotalPrice() - $item->getProduct()->getPrice();
+
         $item->setMember(null);
+        $this->event->setTotalPrice($total_price);
+
+        return $this;
     }
 
     /**

@@ -69,6 +69,13 @@ class Event
     private $fundsLimit;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="total_price", type="float")
+     */
+    private $total_price = 0.00;
+
+    /**
      * Public constructor
      */
     public function __construct()
@@ -192,5 +199,29 @@ class Event
     public function getMembers()
     {
         return $this->members;
+    }
+
+    /**
+     * Set totalPrice
+     *
+     * @param float $totalPrice
+     *
+     * @return Event
+     */
+    public function setTotalPrice($totalPrice)
+    {
+        $this->total_price = $totalPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get totalPrice
+     *
+     * @return float
+     */
+    public function getTotalPrice()
+    {
+        return $this->total_price;
     }
 }
