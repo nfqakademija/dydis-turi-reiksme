@@ -2,13 +2,14 @@
 
 namespace DTR\DTRBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Shop
  *
  * @ORM\Table(name="shop")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="DTR\DTRBundle\Repository\ShopRepository")
  */
 class Shop
 {
@@ -20,6 +21,13 @@ class Shop
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image_location", type="string", length=255)
+     */
+    private $imageLocation;
 
     /**
      * @var integer
@@ -35,6 +43,24 @@ class Shop
      */
     private $name;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="shop")
+     */
+    private $products;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -70,6 +96,23 @@ class Shop
         return $this->name;
     }
 
+    public function setImageLocation($imageLocation)
+    {
+        $this->imageLocation = $imageLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get imageLocation
+     *
+     * @return string
+     */
+    public function getImageLocation()
+    {
+        return $this->imageLocation;
+    }
+
     /**
      * Set shoptype
      *
@@ -92,5 +135,63 @@ class Shop
     public function getShoptype()
     {
         return $this->shoptype;
+    }
+
+    /**
+     * Add product
+     *
+     * @param \DTR\DTRBundle\Entity\Product $product
+     *
+     * @return Shop
+     */
+    public function addProduct(\DTR\DTRBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \DTR\DTRBundle\Entity\Product $product
+     */
+    public function removeProduct(\DTR\DTRBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Shop
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

@@ -1,5 +1,5 @@
-dtrdtr:
-    resource: "@DTRDTRBundle/Controller/"
+dtr:
+    resource: "@DTRBundle/Controller/"
     type:     annotation
     prefix:   /
 
