@@ -14,7 +14,7 @@
                 {% for hosted_event in hosted_events %}
                     <tr>
                         <td>{{ hosted_event.name }}</td>
-                        <td><a href="{{ path('event', { 'hash' : hosted_event.hash }) }}">Žiūrėti</a></td>
+                        <td><a href="{{ path('dashboard', { 'hash' : hosted_event.hash }) }}">Žiūrėti</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
