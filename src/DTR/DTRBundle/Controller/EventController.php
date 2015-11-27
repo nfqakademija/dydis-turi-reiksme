@@ -12,7 +12,7 @@ class EventController extends Controller
      * @param $hash
      * @return mixed
      *
-     * @Route("/event/{hash}")
+     * @Route("/event/{hash}", name="dashboard")
      */
     public function dashboardAction($hash)
     {
