@@ -16,7 +16,7 @@ class EventRepository extends EntityRepository
     {
         return $this
             ->getEntityManager()
-            ->createQuery('SELECT e.hash, e.name
+            ->createQuery('SELECT e
                            FROM DTRBundle:Event e
                            JOIN e.members m
                            WHERE m.user = :user
