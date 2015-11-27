@@ -1,0 +1,23 @@
+{%  extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <table class="table table-striped">
+            <caption>Hosted events</caption>
+            <thead>
+                <tr>
+                    <th>Pavadinimas</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hosted_event in hosted_events %}
+                    <tr>
+                        <td>{{ hosted_event.name }}</td>
+                        <td><a href="{{ path('event', { 'hash' : hosted_event.hash }) }}">Žiūrėti</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

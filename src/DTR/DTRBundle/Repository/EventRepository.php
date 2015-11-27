@@ -1,29 +1,27 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: justas
- * Date: 15.11.26
- * Time: 21.14
- */
 
 namespace DTR\DTRBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use DTR\DTRBundle\Entity\Event;
+use DTR\DTRBundle\Entity\User;
 
 class EventRepository extends EntityRepository
 {
     /**
-     * @param $hash
-     * @return Event
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @param User $user
+     * @return array
      */
-//    public function findByHash($hash)
-//    {
-//        $this
-//            ->getEntityManager()
-//            ->createQuery('SELECT e FROM DTRBundle:Event e WHERE e.hash = :hash')
-//            ->setParameter('hash', $hash)
-//            ->getOneOrNullResult();
-//    }
+    public function findHostedEvents(User $user)
+    {
+        return $this
+            ->getEntityManager()
+            ->createQuery('SELECT e.hash, e.name
+                           FROM DTRBundle:Event e
+                           JOIN e.members m
+                           WHERE m.user = :user
+                           AND m.is_host = true')
+            ->setParameter('user', $user)
+            ->getResult();
+    }
 }
