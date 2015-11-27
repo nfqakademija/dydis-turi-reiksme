@@ -8,6 +8,7 @@
                 <tr>
                     <th>Pavadinimas</th>
                     <th>Bendra suma</th>
+                    <th>Bendra skola</th>
                     <th></th>
                 </tr>
             </thead>
@@ -15,7 +16,8 @@
                 {% for hosted_event in hosted_events %}
                     <tr>
                         <td>{{ hosted_event.name }}</td>
-                        <td>{{ hosted_event.getTotalPrice() }}</td>
+                        <td>{{ hosted_event.totalPrice }}</td>
+                        <td>{{ hosted_event.totalDebt }}</td>
                         <td><a class="btn btn-primary" href="{{ path('dashboard', { 'hash' : hosted_event.hash }) }}">Žiūrėti</a></td>
                     </tr>
                 {% endfor %}
