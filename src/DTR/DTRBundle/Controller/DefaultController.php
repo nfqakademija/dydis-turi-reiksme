@@ -179,16 +179,17 @@ class DefaultController extends Controller
      */
     public function dbAction()
     {
-        $shop =  $this->getDoctrine()->getRepository('DTRBundle:Shop')->find(2);
+        //$shop =  $this->getDoctrine()->getRepository('DTRBundle:Shop')->find(2);
 
-        $product = new Product();
-        $product->setName('Pica CanCan1');
-        $product->setPrice(5.40);
-        $product->setShop($shop);
+        $shop = new Shop();
+        $shop->setName('Kavine Test');
+        $shop->setImageLocation('images/test.png');
+
         $em = $this->getDoctrine()->getManager();
-        $em->persist($product);
+        $em->persist($shop);
+        $em->flush();
 
-        return new Response('Created product id '.$product->getId());
+        return new Response('Created product id ' . $shop->getId());
     }
 
     /**
