@@ -70,8 +70,6 @@ class Event
 
     /**
      * @var float
-     *
-     * @ORM\Column(name="total_price", type="float")
      */
     private $total_price = 0.00;
 
