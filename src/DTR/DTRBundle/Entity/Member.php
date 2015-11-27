@@ -90,15 +90,23 @@ class Member
     }
 
     /**
-     * Set debt
-     *
-     * @param float $debt
-     *
+     * @param float
      * @return Member
      */
-    public function setDebt($debt)
+    public function increaseDebt($amount)
     {
-        $this->debt = $debt;
+        $this->debt += $amount;
+
+        return $this;
+    }
+
+    /**
+     * @param float
+     * @return Member
+     */
+    public function decreaseDebt($amount)
+    {
+        $this->debt -= $amount;
 
         return $this;
     }
@@ -147,10 +155,15 @@ class Member
     public function addItem(Item $item)
     {
         $this->items[] = $item;
-        $total_price = $this->event->getTotalPrice() + $item->getProduct()->getPrice();
+
+        $price = $item->getProduct()->getPrice();
+        $total_price = $this->event->getTotalPrice() + $price;
+        $total_debt = $this->event->getTotalDebt() + $price;
 
         $item->setMember($this);
         $this->event->setTotalPrice($total_price);
+        $this->increaseDebt($price);
+        $this->event->setTotalDebt($total_debt);
 
         return $this;
     }
@@ -164,10 +177,15 @@ class Member
     public function removeItem(Item $item)
     {
         $this->items->removeElement($item);
-        $total_price = $this->event->getTotalPrice() - $item->getProduct()->getPrice();
+
+        $price = $item->getProduct()->getPrice();
+        $total_price = $this->event->getTotalPrice() - $price;
+        $total_debt = $this->event->getTotalDebt() - $price;
 
         $item->setMember(null);
         $this->event->setTotalPrice($total_price);
+        $this->decreaseDebt($price);
+        $this->event->setTotalDebt($total_debt);
 
         return $this;
     }

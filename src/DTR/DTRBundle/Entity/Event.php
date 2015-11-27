@@ -76,6 +76,13 @@ class Event
     private $total_price = 0.00;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="total_debt", type="float")
+     */
+    private $total_debt = 0.00;
+
+    /**
      * Public constructor
      */
     public function __construct()
@@ -223,5 +230,24 @@ class Event
     public function getTotalPrice()
     {
         return $this->total_price;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalDebt()
+    {
+        return $this->total_debt;
+    }
+
+    /**
+     * @param float $total_debt
+     * @return Event
+     */
+    public function setTotalDebt($total_debt)
+    {
+        $this->total_debt = $total_debt;
+
+        return $this;
     }
 }
