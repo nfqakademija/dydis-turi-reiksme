@@ -24,4 +24,21 @@ class EventRepository extends EntityRepository
             ->setParameter('user', $user)
             ->getResult();
     }
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    public function findParticipatingEvents(User $user)
+    {
+        return $this
+            ->getEntityManager()
+            ->createQuery('SELECT e.hash, e.name, m.debt
+                           FROM DTRBundle:Event e
+                           JOIN e.members m
+                           WHERE m.user = :user
+                           AND m.is_host = false')
+            ->setParameter('user', $user)
+            ->getResult();
+    }
 }

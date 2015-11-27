@@ -24,7 +24,8 @@ class UserController extends Controller
         $doctrine = $this->getDoctrine();
 
         $hosted_events = $doctrine->getRepository('DTRBundle:Event')->findHostedEvents($user);
+        $participating_events = $doctrine->getRepository('DTRBundle:Event')->findParticipatingEvents($user);
 
-        return $this->render('user/event_info.html.twig', compact('hosted_events'));
+        return $this->render('user/event_info.html.twig', compact('hosted_events', 'participating_events'));
     }
 }
