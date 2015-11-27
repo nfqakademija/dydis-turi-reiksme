@@ -3,6 +3,7 @@
 namespace DTR\DTRBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,7 +54,8 @@ class Shop
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=255, unique=true)
      */
     private $slug;
 
@@ -171,19 +173,19 @@ class Shop
         return $this->products;
     }
 
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     *
-     * @return Shop
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
+//    /**
+//     * Set slug
+//     *
+//     * @param string $slug
+//     *
+//     * @return Shop
+//     */
+//    public function setSlug($slug)
+//    {
+//        $this->slug = $slug;
+//
+//        return $this;
+//    }
 
     /**
      * Get slug
