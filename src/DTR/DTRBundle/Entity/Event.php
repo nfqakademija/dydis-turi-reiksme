@@ -2,6 +2,7 @@
 
 namespace DTR\DTRBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -45,11 +46,10 @@ class Event
     private $members;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
-     * @Assert\NotBlank(message="Pavadinimo laukas negali būti tuščias.")
-     * @Assert\DateTime(message="Netinkamas datos formatas.")
+     * @ORM\Column(name="date", type="date")
+     * 
      * @Assert\GreaterThan("now")
      */
     private $date;
@@ -59,6 +59,7 @@ class Event
      *
      * @ORM\Column(name="guest_limit", type="integer")
      *
+     * @Assert\NotBlank()
      * @Assert\Range(
      *      min=1,
      *      minMessage="Svečių limitas negali būti mažesnis už 1.",
@@ -72,6 +73,7 @@ class Event
      *
      * @ORM\Column(name="funds_limit", type="float")
      *
+     * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(
      *      value=5.00,
      *      message="Pinigų sumos limitas negali būti mažesnis už 5.00.")
@@ -98,6 +100,7 @@ class Event
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->date = new DateTime();
     }
 
     /**
@@ -264,7 +267,7 @@ class Event
     /**
      * Set date
      *
-     * @param \DateTime $date
+     * @param DateTime $date
      *
      * @return Event
      */
@@ -278,7 +281,7 @@ class Event
     /**
      * Get date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDate()
     {
@@ -290,7 +293,7 @@ class Event
      */
     public function isExpired()
     {
-        $current_date = new \DateTime();
+        $current_date = new DateTime();
 
         return $this->date > $current_date;
     }

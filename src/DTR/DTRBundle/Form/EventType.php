@@ -15,12 +15,11 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text')
-            ->add('guestLimit', 'integer', [
-                'empty_data' => '60' ])
-            ->add('fundsLimit', 'number', [
-                'scale' => 2, ])
-            ->add('save', 'submit', [ 'label' => 'Submit' ]);
+            ->add('name')
+            ->add('guestLimit')
+            ->add('fundsLimit')
+            ->add('date')
+            ->add('save', 'submit', [ 'label' => 'Sukurti' ]);
     }
     
     /**
