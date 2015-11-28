@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Event
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="DTR\DTRBundle\Repository\EventRepository")
  */
 class Event
 {
@@ -40,7 +40,7 @@ class Event
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="events")
+     * @ORM\OneToMany(targetEntity="Member", mappedBy="event")
      */
     private $members;
 
@@ -67,6 +67,20 @@ class Event
      *      message="Pinigų sumos limitas negali būti mažesnis už 5.00.")
      */
     private $fundsLimit;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="total_price", type="float")
+     */
+    private $total_price = 0.00;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="total_debt", type="float")
+     */
+    private $total_debt = 0.00;
 
     /**
      * Public constructor
@@ -161,13 +175,14 @@ class Event
     /**
      * Add member
      *
-     * @param \DTR\DTRBundle\Entity\User $member
+     * @param \DTR\DTRBundle\Entity\Member $member
      *
      * @return Event
      */
-    public function addMember(User $member)
+    public function addMember(Member $member)
     {
         $this->members[] = $member;
+        $member->setEvent($this);
 
         return $this;
     }
@@ -175,11 +190,12 @@ class Event
     /**
      * Remove member
      *
-     * @param \DTR\DTRBundle\Entity\User $member
+     * @param \DTR\DTRBundle\Entity\Member $member
      */
-    public function removeMember(User $member)
+    public function removeMember(Member $member)
     {
         $this->members->removeElement($member);
+        $member->setEvent(null);
     }
 
     /**
@@ -190,5 +206,48 @@ class Event
     public function getMembers()
     {
         return $this->members;
+    }
+
+    /**
+     * Set totalPrice
+     *
+     * @param float $totalPrice
+     *
+     * @return Event
+     */
+    public function setTotalPrice($totalPrice)
+    {
+        $this->total_price = $totalPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get totalPrice
+     *
+     * @return float
+     */
+    public function getTotalPrice()
+    {
+        return $this->total_price;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalDebt()
+    {
+        return $this->total_debt;
+    }
+
+    /**
+     * @param float $total_debt
+     * @return Event
+     */
+    public function setTotalDebt($total_debt)
+    {
+        $this->total_debt = $total_debt;
+
+        return $this;
     }
 }

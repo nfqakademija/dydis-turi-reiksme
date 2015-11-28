@@ -3,6 +3,8 @@
 namespace DTR\DTRBundle\Controller;
 
 use DTR\DTRBundle\Entity\Event;
+use DTR\DTRBundle\Entity\Item;
+use DTR\DTRBundle\Entity\Member;
 use DTR\DTRBundle\Entity\Product;
 use DTR\DTRBundle\Entity\Shop;
 use DTR\DTRBundle\Form\EventType;
@@ -12,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Tests\Fixtures\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter;
 
 
 class DefaultController extends Controller
@@ -152,25 +154,7 @@ class DefaultController extends Controller
      */
     public function testAction()
     {
-        $manager = $this->getDoctrine()->getManager();
-        $str1 = $str2 = '';
 
-        $productType = $manager->getRepository('DTRBundle:ProductType')->find(1);
-        $shop = $manager->getRepository('DTRBundle:Shop')->find(1);
-
-        $products = $productType->getProducts();
-
-        foreach ($products as $product) {
-            $str1 .= $product->getName(). ' ';
-        }
-
-        $products = $shop->getProducts();
-
-        foreach ($products as $product) {
-            $str2 .= $product->getName(). ' ';
-        }
-
-        return new Response($str1. '<br /><br />'. $str2);
     }
 
     /**
