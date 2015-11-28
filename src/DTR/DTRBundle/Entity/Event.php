@@ -45,6 +45,16 @@ class Event
     private $members;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     * @Assert\NotBlank(message="Pavadinimo laukas negali būti tuščias.")
+     * @Assert\DateTime(message="Netinkamas datos formatas.")
+     * @Assert\GreaterThan("now")
+     */
+    private $date;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="guest_limit", type="integer")
@@ -249,5 +259,39 @@ class Event
         $this->total_debt = $total_debt;
 
         return $this;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return Event
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExpired()
+    {
+        $current_date = new \DateTime();
+
+        return $this->date > $current_date;
     }
 }
