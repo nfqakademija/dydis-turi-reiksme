@@ -11,42 +11,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class EventController
+ *
+ * @Route("/event")
+ */
 class EventController extends Controller
 {
     /**
-     * @param $hash
-     * @return mixed
-     *
-     * @Route("/event/{hash}", name="dashboard")
-     */
-    public function dashboardAction($hash)
-    {
-        $user = $this->getUser();
-
-        if(!$user) {
-            return $this->redirectToRoute('fos_user_security_login');
-        }
-
-        $doctrine = $this->getDoctrine();
-
-        $event = $doctrine->getRepository('DTRBundle:Event')->findOneByHash($hash);
-        $member = $doctrine->getRepository('DTRBundle:Member')->findByEventUser($event, $user);
-
-        if($member == null) {
-            return new Response('Not a member yet. Need a join button');
-        }
-
-        if($member->isHost()) {
-            return new Response('Is a host. Need a moderator view.');
-        }
-
-        return new Response('Is a simple member. Need a simple view.');
-    }
-
-    /**
      * Displays a form to create a new Event entity.
      *
-     * @Route("/new_event", name="new_event")
+     * @Route("/new", name="new_event")
      * @Method("GET")
      */
     public function newAction()
@@ -88,7 +63,7 @@ class EventController extends Controller
      * @param Request $request
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Route("/new_event", name="process_event")
+     * @Route("/new", name="process_event")
      * @Method("POST")
      */
     public function createAction(Request $request)
@@ -121,6 +96,36 @@ class EventController extends Controller
             'event' => $event,
             'form'   => $form->createView()
         ]);
+    }
+
+    /**
+     * @param $hash
+     * @return mixed
+     *
+     * @Route("/{hash}", name="dashboard")
+     */
+    public function dashboardAction($hash)
+    {
+        $user = $this->getUser();
+
+        if(!$user) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+
+        $doctrine = $this->getDoctrine();
+
+        $event = $doctrine->getRepository('DTRBundle:Event')->findOneByHash($hash);
+        $member = $doctrine->getRepository('DTRBundle:Member')->findByEventUser($event, $user);
+
+        if($member == null) {
+            return new Response('Not a member yet. Need a join button');
+        }
+
+        if($member->isHost()) {
+            return new Response('Is a host. Need a moderator view.');
+        }
+
+        return new Response('Is a simple member. Need a simple view.');
     }
 
     /**
