@@ -49,10 +49,17 @@ class Event
      * @var DateTime
      *
      * @ORM\Column(name="date", type="date")
-     * 
+     *
      * @Assert\GreaterThan("now")
      */
     private $date;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="payment_made", type="boolean")
+     */
+    private $payment_made = false;
 
     /**
      * @var integer
@@ -296,5 +303,17 @@ class Event
         $current_date = new DateTime();
 
         return $this->date > $current_date;
+    }
+
+    public function isPaymentMade()
+    {
+        return $this->payment_made;
+    }
+
+    public function setPaymentMade($is_made)
+    {
+        $this->payment_made = $is_made;
+
+        return $this;
     }
 }

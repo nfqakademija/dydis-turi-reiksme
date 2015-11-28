@@ -185,4 +185,23 @@ class EventController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
+    public function paymentMadeAction(Event $event, $made)
+    {
+        switch($made)
+        {
+            case 'made':
+                $event->setPaymentMade(true);
+
+                break;
+            case 'unmade':
+                $event->setPaymentMade(false);
+
+                break;
+            default:
+                throw $this->createNotFoundException('Puslapis nerastas!');
+        }
+
+        return $this->redirectToRoute('dashboard', [ 'hash' => $event->getHash() ]);
+    }
 }
