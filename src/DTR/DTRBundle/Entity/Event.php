@@ -4,6 +4,7 @@ namespace DTR\DTRBundle\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="DTR\DTRBundle\Repository\EventRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Event
 {
@@ -108,6 +110,19 @@ class Event
     {
         $this->members = new ArrayCollection();
         $this->date = new DateTime();
+    }
+
+    /**
+     * @param LifecycleEventArgs $postPersist
+     *
+     * @ORM\PostPersist
+     */
+    public function setHash(LifecycleEventArgs $postPersist)
+    {
+        $event = $postPersist->getObject();
+        $hash = $event->getHash();
+
+        $this->hash = substr($hash, 0, 6);
     }
 
     /**

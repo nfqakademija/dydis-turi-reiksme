@@ -3,6 +3,7 @@
 namespace DTR\DTRBundle\Controller;
 
 use DTR\DTRBundle\Entity\Event;
+use DTR\DTRBundle\Entity\Member;
 use DTR\DTRBundle\Form\EventType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -50,6 +51,10 @@ class EventController extends Controller
      */
     public function newAction()
     {
+        if(!$this->getUser()) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+
         $event = new Event();
         $form   = $this->createCreateForm($event);
 
@@ -96,7 +101,17 @@ class EventController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+            $member = new Member();
+            $user = $this->getUser();
+
+            $member
+                ->setEvent($event)
+                ->setUser($user)
+                ->setHost();
+
             $em->persist($event);
+            $em->persist($member);
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('dashboard', [ 'hash' => $event->getHash() ]));
@@ -158,6 +173,9 @@ class EventController extends Controller
      *
      * @Route("/{id}", name="_update")
      * @Method("PUT")
+     * @param Request $request
+     * @param $id
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request, $id)
     {
