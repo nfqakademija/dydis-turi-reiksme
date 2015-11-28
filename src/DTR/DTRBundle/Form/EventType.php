@@ -18,8 +18,7 @@ class EventType extends AbstractType
             ->add('name')
             ->add('guestLimit')
             ->add('fundsLimit')
-            ->add('date')
-            ->add('save', 'submit', [ 'label' => 'Sukurti' ]);
+            ->add('date');
     }
     
     /**

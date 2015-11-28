@@ -34,8 +34,7 @@ class EventController extends Controller
         $form   = $this->createCreateForm($event);
 
         return $this->render('event/new.html.twig', [
-            'event' => $event,
-            'form'   => $form->createView()
+            'form' => $form->createView()
         ]);
     }
 
@@ -53,6 +52,8 @@ class EventController extends Controller
             'action' => $this->generateUrl('process_event'),
             'method' => 'POST',
         ));
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -131,40 +132,36 @@ class EventController extends Controller
     /**
      * Displays a form to edit an existing Event entity.
      *
-     * @Route("/{id}/edit", name="_edit")
+     * @Route("/{hash}/edit", name="edit_event")
      * @Method("GET")
+     * @param Event $event
+     * @return Response
      */
-    public function editAction($id)
+    public function editAction(Event $event)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('DTRBundle:Event')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Event entity.');
+        if(!$this->getUser()) {
+            return $this->redirectToRoute('fos_user_security_login');
         }
 
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($event);
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return $this->render('event/edit.html.twig', [
+            'form' => $editForm->createView()
+        ]);
     }
 
     /**
      * Creates a form to edit a Event entity.
      *
-     * @param Event $entity The entity
-     *
+     * @param Event $event
      * @return \Symfony\Component\Form\Form The form
+     * @internal param Event $entity The entity
+     *
      */
-    private function createEditForm(Event $entity)
+    private function createEditForm(Event $event)
     {
-        $form = $this->createForm(new EventType(), $entity, array(
-            'action' => $this->generateUrl('_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new EventType(), $event, array(
+            'action' => $this->generateUrl('update_event', array('hash' => $event->getHash())),
             'method' => 'PUT',
         ));
 
@@ -176,37 +173,30 @@ class EventController extends Controller
     /**
      * Edits an existing Event entity.
      *
-     * @Route("/{id}", name="_update")
-     * @Method("PUT")
      * @param Request $request
-     * @param $id
+     * @param Event $event
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/{hash}/edit", name="update_event")
+     * @Method("PUT")
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, Event $event)
     {
+
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DTRBundle:Event')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Event entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($event);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('dashboard', array('hash' => $event->getHash())));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return $this->render('event/edit.html.twig', [
+            'form' => $editForm->createView()
+        ]);
     }
 
     public function paymentMadeAction(Event $event, $made)
