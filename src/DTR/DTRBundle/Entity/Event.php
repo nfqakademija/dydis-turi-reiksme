@@ -121,6 +121,7 @@ class Event
     {
         $this->members = new ArrayCollection();
         $this->date = new DateTime();
+        $this->shops = new ArrayCollection();
     }
 
     /**
