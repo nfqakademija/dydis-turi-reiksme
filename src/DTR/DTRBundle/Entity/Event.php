@@ -2,7 +2,9 @@
 
 namespace DTR\DTRBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -11,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="DTR\DTRBundle\Repository\EventRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Event
 {
@@ -45,10 +48,27 @@ class Event
     private $members;
 
     /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="date", type="date")
+     *
+     * @Assert\GreaterThan("now")
+     */
+    private $date;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="payment_made", type="boolean")
+     */
+    private $payment_made = false;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="guest_limit", type="integer")
      *
+     * @Assert\NotBlank()
      * @Assert\Range(
      *      min=1,
      *      minMessage="Svečių limitas negali būti mažesnis už 1.",
@@ -62,6 +82,7 @@ class Event
      *
      * @ORM\Column(name="funds_limit", type="float")
      *
+     * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(
      *      value=5.00,
      *      message="Pinigų sumos limitas negali būti mažesnis už 5.00.")
@@ -88,6 +109,20 @@ class Event
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->date = new DateTime();
+    }
+
+    /**
+     * @param LifecycleEventArgs $postPersist
+     *
+     * @ORM\PostPersist
+     */
+    public function setHash(LifecycleEventArgs $postPersist)
+    {
+        $event = $postPersist->getObject();
+        $hash = $event->getHash();
+
+        $this->hash = substr($hash, 0, 6);
     }
 
     /**
@@ -247,6 +282,52 @@ class Event
     public function setTotalDebt($total_debt)
     {
         $this->total_debt = $total_debt;
+
+        return $this;
+    }
+
+    /**
+     * Set date
+     *
+     * @param DateTime $date
+     *
+     * @return Event
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExpired()
+    {
+        $current_date = new DateTime();
+
+        return $this->date > $current_date;
+    }
+
+    public function isPaymentMade()
+    {
+        return $this->payment_made;
+    }
+
+    public function setPaymentMade($is_made)
+    {
+        $this->payment_made = $is_made;
 
         return $this;
     }

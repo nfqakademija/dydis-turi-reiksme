@@ -95,7 +95,10 @@ class Member
      */
     public function increaseDebt($amount)
     {
+        $total_debt = $amount + $this->event->getTotalDebt();
+
         $this->debt += $amount;
+        $this->event->setTotalDebt($total_debt);
 
         return $this;
     }
@@ -106,7 +109,10 @@ class Member
      */
     public function decreaseDebt($amount)
     {
+        $total_debt = $amount - $this->event->getTotalDebt();
+
         $this->debt -= $amount;
+        $this->event->setTotalDebt($total_debt);
 
         return $this;
     }
@@ -158,12 +164,10 @@ class Member
 
         $price = $item->getProduct()->getPrice();
         $total_price = $this->event->getTotalPrice() + $price;
-        $total_debt = $this->event->getTotalDebt() + $price;
 
         $item->setMember($this);
         $this->event->setTotalPrice($total_price);
         $this->increaseDebt($price);
-        $this->event->setTotalDebt($total_debt);
 
         return $this;
     }
@@ -180,12 +184,10 @@ class Member
 
         $price = $item->getProduct()->getPrice();
         $total_price = $this->event->getTotalPrice() - $price;
-        $total_debt = $this->event->getTotalDebt() - $price;
 
         $item->setMember(null);
         $this->event->setTotalPrice($total_price);
         $this->decreaseDebt($price);
-        $this->event->setTotalDebt($total_debt);
 
         return $this;
     }
