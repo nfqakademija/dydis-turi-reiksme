@@ -171,10 +171,14 @@ class DefaultController extends Controller
      */
     public function dbAction()
     {
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
-        $item = $em->getRepository('DTRBundle:Item')->find('5');
-        $em->remove($item);
-
+        $event = $em->getRepository('DTRBundle:Event')->findByHash(283682);
+        $member = new Member();
+        $user->addMember($member);
+        $member->setUser($user);
+        $member->setEvent($event[0]);
+        $em->persist($member);
         $em->flush();
 
         return new Response('updated product id ');

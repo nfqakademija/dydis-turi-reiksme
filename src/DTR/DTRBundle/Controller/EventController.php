@@ -36,7 +36,6 @@ class EventController extends Controller
             return $this->render(
                 'views/dashboard/dashboard.html.twig',
                 array(
-                    'user' => $user,
                     'event' => $event,
                     'member' => $member
                 )
@@ -48,46 +47,69 @@ class EventController extends Controller
 
     /**
      *
-     * @Route("/remove-member/{memberId}/{eventHash}", name="_remove_member")
+     * @Route("/event/{hash}/remove-member/{memberId}", name="_remove_member")
      */
-    public function removeMemberAction($memberId, $eventHash)
+    public function removeMemberAction($memberId, $hash)
     {
         $em = $this->getDoctrine()->getManager();
-        $event = $em->getRepository('DTRBundle:Event')->findByHash($eventHash);
+        $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
         $member = $em->getRepository('DTRBundle:Member')->find($memberId);
 
         $event[0]->removeMember($member);
         $em->remove($member);
         $em->flush();
 
-        return new Response($member->getId() . $event[0]->getHash());
+        return $this->forward(
+            'DTRBundle:Event:dashboard',
+            array(
+                'hash' => $hash,
+                'event' => $event,
+                'member' => $member
+            )
+        );
     }
 
     /**
      *
-     * @Route("/remove-debt/{memberId}", name="_remove_debt")
+     * @Route("/event/{hash}/remove-debt/{memberId}", name="_remove_debt")
      */
-    public function removeDebtAction($memberId)
+    public function removeDebtAction($memberId, $hash)
     {
         $em = $this->getDoctrine()->getManager();
         $member = $em->getRepository('DTRBundle:Member')->find($memberId);
+        $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
         $member->decreaseDebt($member->getDebt());
         $em->flush();
 
-        return new Response($member->getId());
+        return $this->forward(
+            'DTRBundle:Event:dashboard',
+            array(
+                'hash' => $hash,
+                'event' => $event,
+                'member' => $member
+            )
+        );
     }
 
     /**
      *
-     * @Route("/make-host/{/memberId}", name="_make_host")
+     * @Route("/event/{hash}/make-host/{memberId}", name="_make_host")
      */
-    public function makeHostAction($memberId)
+    public function makeHostAction($memberId, $hash)
     {
         $em = $this->getDoctrine()->getManager();
         $member = $em->getRepository('DTRBundle:Member')->find($memberId);
+        $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
         $member->setHost();
         $em->flush();
 
-        return new Response($member->getId());
+        return $this->forward(
+            'DTRBundle:Event:dashboard',
+            array(
+                'hash' => $hash,
+                'event' => $event,
+                'member' => $member
+            )
+        );
     }
 }

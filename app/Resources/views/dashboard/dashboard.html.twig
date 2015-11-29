@@ -22,17 +22,17 @@
                 <td>{{ member.getDebt() }}</td>
                 <td>
                     {% if member.isHost() != true %}
-                        <a href="/remove-debt/{{ member.getId() }}">X</a>
+                        <a href="/event/{{ event.getHash() }}/remove-debt/{{ member.getId() }}">X</a>
                     {% endif %}
                 </td>
                 <td>
                     {% if member.isHost() != true %}
-                        <a href="/make-host/{{ member.getId() }}">X</a>
+                        <a href="/event/{{ event.getHash() }}/make-host/{{ member.getId() }}">X</a>
                     {% endif %}
                 </td>
                 <td>
                     {% if member.isHost() != true %}
-                        <a href="/remove-member/{{ member.getId() }}/{{ event.getHash() }}">X</a>
+                        <a href="/event/{{ event.getHash() }}/remove-member/{{ member.getId() }}">X</a>
                     {% endif %}
                 </td>
             </tr>
