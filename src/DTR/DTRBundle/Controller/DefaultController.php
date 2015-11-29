@@ -43,10 +43,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/shops", name="_shops_list")
+     * @Route("/event/{hash}/shops", name="_shops_list")
      * @Template()
      */
-    public function shopsAction(Request $request)
+    public function shopsAction(Request $request, $hash)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -70,16 +70,20 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/shops/{shop_name}", name="_shop")
+     * @Route("event/{hash}/shops/{shopName}", name="_shop")
      * @Template()
      */
-    public function shopAction(Request $request, $shop_name)
+    public function shopAction(Request $request, $shopName, $hash)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $shop = $em->getRepository('DTRBundle:Shop')->findShopId($shop_name);
+        $shop = $em->getRepository('DTRBundle:Shop')->findShopId($shopName);
 
         $products = $em->getRepository('DTRBundle:Product')->findAllShopProducts($shop);
+        $user = $this->getUser();
+        $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
+        $member = $em->getRepository('DTRBundle:Member')->findByEventUser($event[0], $user);
+        $items = $em->getRepository('DTRBundle:Item')->findByMember($member);
 
         $form = $this->createForm(new SearchType());
 
@@ -94,7 +98,11 @@ class DefaultController extends Controller
             'views/menu/products.html.twig',
             array(
                 'products' => $products,
-                'form' => $form->createView())
+                'hash' => $hash,
+                'items' => $items,
+                'shopName' => $shopName,
+                'form' => $form->createView()
+             )
         );
     }
 
@@ -163,17 +171,13 @@ class DefaultController extends Controller
      */
     public function dbAction()
     {
-        //$shop =  $this->getDoctrine()->getRepository('DTRBundle:Shop')->find(2);
-
-        $shop = new Shop();
-        $shop->setName('Kavine Test');
-        $shop->setImageLocation('images/test.png');
-
         $em = $this->getDoctrine()->getManager();
-        $em->persist($shop);
+        $item = $em->getRepository('DTRBundle:Item')->find('5');
+        $em->remove($item);
+
         $em->flush();
 
-        return new Response('Created product id ' . $shop->getId());
+        return new Response('updated product id ');
     }
 
     /**

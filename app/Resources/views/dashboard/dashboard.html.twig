@@ -1,0 +1,43 @@
+<div>
+    <p>Event name: {{ event.getName() }}</p>
+
+</div>
+
+<table style="text-align: left;border:1px solid black;">
+    <tr>
+        <th>User name</th>
+        <th>User type</th>
+        <th>Dept</th>
+        <th>Remove debt</th>
+        <th>Make a host</th>
+        <th>Remove member</th>
+    </tr>
+    <tr>
+        {% for member in event.getMembers() %}
+            <tr>
+                <td>{{ member.getUser() }}</td>
+                {% if member.isHost() == true %}<td>Host</td>
+                {% else %}<td>Simple</td>
+                {% endif %}
+                <td>{{ member.getDebt() }}</td>
+                <td>
+                    {% if member.isHost() != true %}
+                        <a href="/remove-debt/{{ member.getId() }}">X</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if member.isHost() != true %}
+                        <a href="/make-host/{{ member.getId() }}">X</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if member.isHost() != true %}
+                        <a href="/remove-member/{{ member.getId() }}/{{ event.getHash() }}">X</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tr>
+</table>
+
+<p>Total cost: {{ event.getTotalPrice() }}</p>
