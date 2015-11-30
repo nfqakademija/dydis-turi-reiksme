@@ -18,7 +18,19 @@ class EventType extends AbstractType
             ->add('name')
             ->add('guestLimit')
             ->add('fundsLimit')
-            ->add('date');
+            ->add('date')
+            ->add('shops', 'collection', [
+                'type' => 'entity',
+                'options' => [
+                    'class' => 'DTRBundle:Shop',
+                    'choice_label' => 'name',
+                    'label' => false
+                ],
+                'label' => 'Parduotuvės',
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true
+            ]);
     }
     
     /**
