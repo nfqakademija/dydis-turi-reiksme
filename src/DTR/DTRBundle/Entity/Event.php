@@ -90,6 +90,17 @@ class Event
     private $fundsLimit;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Shop")
+     * @ORM\JoinTable(
+     *      name="events_shops",
+     *      joinColumns={@ORM\JoinColumn(name="event_hash", referencedColumnName="hash")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="shop_id", referencedColumnName="id")})
+     */
+    private $shops;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="total_price", type="float")
@@ -110,6 +121,7 @@ class Event
     {
         $this->members = new ArrayCollection();
         $this->date = new DateTime();
+        $this->shops = new ArrayCollection();
     }
 
     /**
@@ -330,5 +342,49 @@ class Event
         $this->payment_made = $is_made;
 
         return $this;
+    }
+
+    /**
+     * Get paymentMade
+     *
+     * @return boolean
+     */
+    public function getPaymentMade()
+    {
+        return $this->payment_made;
+    }
+
+    /**
+     * Add shop
+     *
+     * @param \DTR\DTRBundle\Entity\Shop $shop
+     *
+     * @return Event
+     */
+    public function addShop(Shop $shop)
+    {
+        $this->shops[] = $shop;
+
+        return $this;
+    }
+
+    /**
+     * Remove shop
+     *
+     * @param \DTR\DTRBundle\Entity\Shop $shop
+     */
+    public function removeShop(Shop $shop)
+    {
+        $this->shops->removeElement($shop);
+    }
+
+    /**
+     * Get shops
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getShops()
+    {
+        return $this->shops;
     }
 }
