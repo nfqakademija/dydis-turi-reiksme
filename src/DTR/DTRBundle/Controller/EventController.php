@@ -28,10 +28,11 @@ class EventController extends Controller
         $doctrine = $this->getDoctrine();
 
         $event = $doctrine->getRepository('DTRBundle:Event')->findOneByHash('e37bc4');
+        $user = $this->getUser();
 
         list($host, $guests) = $event->getHostAndGuests();
 
-        return $this->render('event/dashboard/layout.html.twig', compact('event', 'host', 'guests'));
+        return $this->render('event/dashboard/dashboard_simple.html.twig', compact('event', 'host', 'guests', 'user'));
     }
 
     /**

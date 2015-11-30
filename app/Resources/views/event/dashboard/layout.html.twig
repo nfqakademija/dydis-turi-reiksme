@@ -13,11 +13,11 @@
                                 {{ host.name }}
                                 <div style="display: inline; float: right;">
                                     <span class="number-of-items">{{ host.numberOfItems }} psr.</span>
-                                    <span class="total-price">{{ host.totalPrice }}</span>
+                                    <span class="total-price">{{ host.totalPrice }}€</span>
                                 </div>
                             </h4>
                             <p style="float: right;">
-                                Kazkokie veiksmai. Veliau.
+
                             </p>
                         </div>
                     </li>
@@ -28,7 +28,7 @@
                                     {{ guest.name }}
                                     <div style="display: inline; float: right;">
                                         <span class="number-of-items">{{ guest.numberOfItems }} psr.</span>
-                                        <span class="total-price">{{ guest.totalPrice }}</span>
+                                        <span class="total-price">{{ guest.totalPrice }}€</span>
 
                                         {% if guest.debt == 0 %}
                                             <span class="guest-debt" style="color: limegreen;">0.00€</span>
@@ -37,9 +37,9 @@
                                         {% endif %}
                                     </div>
                                 </h4>
-                                <p style="float: right;">
-                                    {% block actions %}{% endblock %}
-                                </p>
+                                    {% if guest.user == user %}
+                                        {% block actions %}{% endblock %}
+                                    {% endif %}
                             </div>
                         </li>
                     {% endfor %}
