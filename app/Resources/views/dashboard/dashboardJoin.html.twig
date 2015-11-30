@@ -1,8 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div>
-        <h3>Sveiki, esate neprisijunges prie {{ event_name }}</h3>
-        <a href="{{ path('join_event', { 'hash' : event_hash }) }}" class="btn btn-primary">Prisijungti</a>
+    <div class="container-fluid">
+        {% if event.isFull() %}
+            <h1>Atsiprašome, bet šiame įvykyje nebėra laisvų vietų.</h1>
+        {% else %}
+            <h3>Sveiki, esate neprisijunges prie {{ event.name }}</h3>
+            <a href="{{ path('join_event', { 'hash' : event.hash }) }}" class="btn btn-primary">Prisijungti</a>
+        {% endif %}
     </div>
 {% endblock %}

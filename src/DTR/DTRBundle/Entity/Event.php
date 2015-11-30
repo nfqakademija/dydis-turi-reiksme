@@ -387,4 +387,14 @@ class Event
     {
         return $this->shops;
     }
+
+    /**
+     * @return bool
+     */
+    public function isFull()
+    {
+        $members_count = $this->members->count() - 1;
+
+        return $this->guestLimit == $members_count;
+    }
 }
