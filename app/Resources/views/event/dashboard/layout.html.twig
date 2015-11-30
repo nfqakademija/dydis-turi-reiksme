@@ -16,9 +16,7 @@
                                     <span class="total-price">{{ host.totalPrice }}€</span>
                                 </div>
                             </h4>
-                            <p style="float: right;">
-
-                            </p>
+                            {% block host_actions %}{% endblock %}
                         </div>
                     </li>
                     {% for guest in guests %}
