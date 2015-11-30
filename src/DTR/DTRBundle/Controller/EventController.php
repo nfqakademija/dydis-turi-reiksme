@@ -125,15 +125,25 @@ class EventController extends Controller
         if($member->isHost()) {
 
             return $this->render(
-                'views/dashboard/dashboard.html.twig',
+                'views/dashboard/dashboardHost.html.twig',
                 array(
                     'event' => $event,
+                    'hash' => $hash,
+                    'user' => $user,
                     'member' => $member
                 )
             );
         }
 
-        return new Response('Is a simple member. Need a simple view.');
+        return $this->render(
+            'views/dashboard/dashboardSimple.html.twig',
+            array(
+                'event' => $event,
+                'hash' => $hash,
+                'user' => $user,
+                'member' => $member
+            )
+    );
     }
 
     /**
@@ -289,6 +299,32 @@ class EventController extends Controller
                 'hash' => $hash,
                 'event' => $event,
                 'member' => $member
+            )
+        );
+    }
+
+    /**
+     *
+     * @Route("/{hash}/check-order/{memberId}", name="_check_order")
+     */
+    public function checkOrderAction($hash, $memberId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $member = $em->getRepository('DTRBundle:Member')->find($memberId);
+        $items = $em->getRepository('DTRBundle:Item')->findByMember($member);
+
+        $totalCost = 0.0;
+        foreach ($items as $item) {
+            $productPrice = $item->getProduct()->getPrice() * $item->getQuantity();
+            $totalCost += $productPrice;
+        }
+
+        return $this->render(
+            'views/dashboard/order.html.twig',
+            array(
+                'items' => $items,
+                'totalCost' => $totalCost
             )
         );
     }

@@ -1,0 +1,29 @@
+{% extends 'dashboard/layout.html.twig' %}
+
+{% block tableHeader %}
+<th>Remove debt</th>
+<th>Make a host</th>
+<th>Remove member</th>
+{% endblock %}
+
+{% block tableRows %}
+    <td>
+        {% if member.getUser() != user  %}
+            <a href="/event/{{ event.getHash() }}/remove-debt/{{ member.getId() }}">X</a>
+        {% endif %}
+    </td>
+    <td>
+        {% if member.getUser() != user %}
+            <a href="/event/{{ event.getHash() }}/make-host/{{ member.getId() }}">X</a>
+        {% endif %}
+    </td>
+    <td>
+        {% if member.getUser() != user %}
+            <a href="/event/{{ event.getHash() }}/remove-member/{{ member.getId() }}">X</a>
+        {% endif %}
+    </td>
+{% endblock %}
+
+{% block content %}
+    <a href="/event/{{ hash }}/edit">Edit event</a>
+{% endblock %}

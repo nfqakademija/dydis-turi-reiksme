@@ -119,9 +119,20 @@ class DefaultController extends Controller
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
-        $item = $em->getRepository('DTRBundle:Item')->find('42');
-        //return new Response(var_dump($item));
-        $em->remove($item);
+
+//        $member = $em->getRepository('DTRBundle:Member')->find('5');
+//        $member->increaseDebt(100);
+//
+//        $member = $em->getRepository('DTRBundle:Member')->find('7');
+//        $member->increaseDebt(60);
+
+        $member = $em->getRepository('DTRBundle:Member')->find('9');
+        $member->increaseDebt(70);
+
+//        $event = $em->getRepository('DTRBundle:Event')->findByHash(283682);
+//        $event[0]->setTotalDebt(0);
+
+
         $em->flush();
 
         return new Response('updated product id ');

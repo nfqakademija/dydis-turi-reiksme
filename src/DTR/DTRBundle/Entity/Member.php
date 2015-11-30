@@ -111,6 +111,9 @@ class Member
     {
         $total_debt = $amount - $this->event->getTotalDebt();
 
+        if ($total_debt < 0)
+            $total_debt = $total_debt * (-1);
+
         $this->debt -= $amount;
         $this->event->setTotalDebt($total_debt);
 
