@@ -50,6 +50,13 @@ class Member
      */
     private $debt = 0.00;
 
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="total_price", type="float")
+     */
+    private $total_price = 0.00;
+
 
     /**
      * Constructor
@@ -67,6 +74,14 @@ class Member
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->user->getUsername();
     }
 
     /**
@@ -90,44 +105,79 @@ class Member
     }
 
     /**
+     * Increase debt for current member.
+     *
      * @param float
      * @return Member
      */
     public function increaseDebt($amount)
     {
-        $total_debt = $amount + $this->event->getTotalDebt();
-
         $this->debt += $amount;
-        $this->event->setTotalDebt($total_debt);
+        $this->event->increaseTotalDebt($amount);
 
         return $this;
     }
 
     /**
+     * Decrease debt for current member.
+     *
      * @param float
      * @return Member
      */
     public function decreaseDebt($amount)
     {
-        $total_debt = $amount - $this->event->getTotalDebt();
-
-        if ($total_debt < 0)
-            $total_debt = $total_debt * (-1);
-
         $this->debt -= $amount;
-        $this->event->setTotalDebt($total_debt);
+        $this->event->decreaseTotalDebt($amount);
 
         return $this;
     }
 
     /**
-     * Get debt
+     * Get debt of current member.
      *
      * @return float
      */
     public function getDebt()
     {
         return $this->debt;
+    }
+
+    /**
+     * Increase total price for current member.
+     *
+     * @param $amount
+     * @return Member
+     */
+    public function increaseTotalPrice($amount)
+    {
+        $this->total_price += $amount;
+        $this->event->incraeseTotalPrice($amount);
+
+        return $this;
+    }
+
+    /**
+     * Decrease total price for current member.
+     *
+     * @param $amount
+     * @return Member
+     */
+    public function decreaseTotalPrice($amount)
+    {
+        $this->total_price -= $amount;
+        $this->event->decreaseTotalPrice($amount);
+
+        return $this;
+    }
+
+    /**
+     * Get total price of current member.
+     *
+     * @return float
+     */
+    public function getTotalPrice()
+    {
+        return $this->total_price;
     }
 
     /**
@@ -164,13 +214,12 @@ class Member
     public function addItem(Item $item)
     {
         $this->items[] = $item;
+        $item->setMember($this);
 
         $price = $item->getProduct()->getPrice();
-        $total_price = $this->event->getTotalPrice() + $price;
 
-        $item->setMember($this);
-        $this->event->setTotalPrice($total_price);
         $this->increaseDebt($price);
+        $this->increaseTotalPrice($price);
 
         return $this;
     }
@@ -184,13 +233,12 @@ class Member
     public function removeItem(Item $item)
     {
         $this->items->removeElement($item);
+        $item->setMember(null);
 
         $price = $item->getProduct()->getPrice();
-        $total_price = $this->event->getTotalPrice() - $price;
 
-        $item->setMember(null);
-        $this->event->setTotalPrice($total_price);
         $this->decreaseDebt($price);
+        $this->decreaseTotalPrice($price);
 
         return $this;
     }
@@ -203,6 +251,14 @@ class Member
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfItems()
+    {
+        return $this->items->count();
     }
 
     /**

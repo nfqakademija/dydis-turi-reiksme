@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div style="width: 40%">
+        <div class="container-fluid">
+            <h1>{{ event.name }}</h1>
+
+            {% block content %}
+                <ul style="list-style: none; padding-left: 0;">
+                    <li class="panel panel-default">
+                        <div class="panel-body">
+                            <h4>
+                                {{ host.name }}
+                                <div style="display: inline; float: right;">
+                                    <span class="number-of-items">{{ host.numberOfItems }} psr.</span>
+                                    <span class="total-price">{{ host.totalPrice }}</span>
+                                </div>
+                            </h4>
+                            <p style="float: right;">
+                                Kazkokie veiksmai. Veliau.
+                            </p>
+                        </div>
+                    </li>
+                    {% for guest in guests %}
+                        <li class="panel panel-default">
+                            <div class="panel-body">
+                                <h4>
+                                    {{ guest.name }}
+                                    <div style="display: inline; float: right;">
+                                        <span class="number-of-items">{{ guest.numberOfItems }} psr.</span>
+                                        <span class="total-price">{{ guest.totalPrice }}</span>
+
+                                        {% if guest.debt == 0 %}
+                                            <span class="guest-debt" style="color: limegreen;">0.00€</span>
+                                        {% else %}
+                                            <span class="guest-debt" style="color: red;">{{ guest.debt }}€</span>
+                                        {% endif %}
+                                    </div>
+                                </h4>
+                                <p style="float: right;">
+                                    {% block actions %}{% endblock %}
+                                </p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

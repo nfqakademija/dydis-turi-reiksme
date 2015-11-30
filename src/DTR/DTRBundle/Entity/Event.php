@@ -256,15 +256,50 @@ class Event
     }
 
     /**
-     * Set totalPrice
+     * Get construct of host member entity and guest member entities.
      *
-     * @param float $totalPrice
+     * @return array
+     */
+    public function getHostAndGuests()
+    {
+        $guests = new ArrayCollection();
+        $host = null;
+
+        foreach($this->members as $member)
+        {
+            if($member->isHost()) {
+                $host = $member;
+            }
+            else {
+                $guests[] = $member;
+            }
+        }
+
+        return [ $host, $guests ];
+    }
+
+    /**
+     * Increase total price.
      *
+     * @param $amount
      * @return Event
      */
-    public function setTotalPrice($totalPrice)
+    public function increaseTotalPrice($amount)
     {
-        $this->total_price = $totalPrice;
+        $this->total_price += $amount;
+
+        return $this;
+    }
+
+    /**
+     * Decrease total price.
+     *
+     * @param $amount
+     * @return Event
+     */
+    public function decreaseTotalPrice($amount)
+    {
+        $this->total_price -= $amount;
 
         return $this;
     }
@@ -280,22 +315,37 @@ class Event
     }
 
     /**
+     * Increase total debt.
+     *
+     * @param $amount
+     * @return Event
+     */
+    public function increaseTotalDebt($amount)
+    {
+        $this->total_debt += $amount;
+
+        return $this;
+    }
+
+    /**
+     * Decrease total debt.
+     *
+     * @param $amount
+     * @return Event
+     */
+    public function decreaseTotalDebt($amount)
+    {
+        $this->total_debt -= $amount;
+
+        return $this;
+    }
+
+    /**
      * @return float
      */
     public function getTotalDebt()
     {
         return $this->total_debt;
-    }
-
-    /**
-     * @param float $total_debt
-     * @return Event
-     */
-    public function setTotalDebt($total_debt)
-    {
-        $this->total_debt = $total_debt;
-
-        return $this;
     }
 
     /**

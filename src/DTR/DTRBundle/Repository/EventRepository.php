@@ -13,4 +13,15 @@ class EventRepository extends EntityRepository
             ->setParameter(1, $hash)
             ->getResult();
     }
+
+    public function findEventWithMembers($hash)
+    {
+        return $this
+            ->getEntityManager()
+            ->createQuery('SELECT e, m FROM DTRBundle:Event e
+                           JOIN e.members m
+                           WHERE e.hash = :hash')
+            ->setParameter('hash', $hash)
+            ->getOneOrNullResult();
+    }
 }

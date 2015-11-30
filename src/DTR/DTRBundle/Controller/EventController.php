@@ -19,6 +19,22 @@ use Symfony\Component\HttpFoundation\Response;
 class EventController extends Controller
 {
     /**
+     * @return Response
+     *
+     * @Route("/test")
+     */
+    public function testAction()
+    {
+        $doctrine = $this->getDoctrine();
+
+        $event = $doctrine->getRepository('DTRBundle:Event')->findOneByHash('e37bc4');
+
+        list($host, $guests) = $event->getHostAndGuests();
+
+        return $this->render('event/dashboard/layout.html.twig', compact('event', 'host', 'guests'));
+    }
+
+    /**
      * Displays a form to create a new Event entity.
      *
      * @Route("/new", name="new_event")
