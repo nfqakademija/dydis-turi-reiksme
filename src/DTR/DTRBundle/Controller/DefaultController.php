@@ -73,6 +73,12 @@ class DefaultController extends Controller
         $member = $em->getRepository('DTRBundle:Member')->findByEventUser($event[0], $user);
         $items = $em->getRepository('DTRBundle:Item')->findByMember($member);
 
+        $totalCost = 0.0;
+        foreach ($items as $item) {
+            $productPrice = $item->getProduct()->getPrice() * $item->getQuantity();
+            $totalCost += $productPrice;
+        }
+
         $form = $this->createForm(new SearchType());
 
         $form->handleRequest($request);
@@ -89,6 +95,7 @@ class DefaultController extends Controller
                 'hash' => $hash,
                 'items' => $items,
                 'shopName' => $shopName,
+                'totalCost' => $totalCost,
                 'form' => $form->createView()
              )
         );
@@ -112,12 +119,9 @@ class DefaultController extends Controller
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
-        $event = $em->getRepository('DTRBundle:Event')->findByHash(283682);
-        $member = new Member();
-        $user->addMember($member);
-        $member->setUser($user);
-        $member->setEvent($event[0]);
-        $em->persist($member);
+        $item = $em->getRepository('DTRBundle:Item')->find('42');
+        //return new Response(var_dump($item));
+        $em->remove($item);
         $em->flush();
 
         return new Response('updated product id ');

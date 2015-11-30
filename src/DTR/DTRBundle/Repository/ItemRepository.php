@@ -12,10 +12,17 @@ class ItemRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findByMemberId($member) {
+    public function findByMember($member) {
         return $this->getEntityManager()
-            ->createQuery('SELECT i FROM DTRBundle:Item i WHERE i = ?1')
-            ->setParameter(1, $member->getId())
+            ->createQuery('SELECT i FROM DTRBundle:Item i WHERE i.member = ?1')
+            ->setParameter(1, $member)
             ->getResult();
+    }
+
+    public function findByProduct($product) {
+        return $this->getEntityManager()
+        ->createQuery('SELECT i FROM DTRBundle:Item i WHERE i.product = ?1')
+            ->setParameter(1, $product->getId())
+            ->getOneOrNullResult();
     }
 }

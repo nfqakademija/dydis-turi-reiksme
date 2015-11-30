@@ -31,11 +31,17 @@ class CartController extends Controller
         $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
         $member = $em->getRepository('DTRBundle:Member')->findByEventUser($event[0], $user);
 
-        $item = new Item();
-        $item->setProduct($product);
-        $item->setMember($member);
+        $item = $em->getRepository('DTRBundle:Item')->findByProduct($product);
 
-        $em->persist($item);
+        if ($item) {
+            $item->setQuantity($item->getQuantity()+1);
+        } else {
+            $item = new Item();
+            $item->setProduct($product);
+            $item->setMember($member);
+            $em->persist($item);
+        }
+
         $em->flush();
 
         return $this->forward('DTRBundle:Default:shop', array(
@@ -63,5 +69,29 @@ class CartController extends Controller
             'shopName' => $shopName
         ));
     }
+
+    /**
+     * @Route("/event/{hash}/shops/{shopName}/delete-cart", name="_delete_cart")
+     * @Template()
+     */
+    public function deleteCartAction($hash, $shopName)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
+        $member = $em->getRepository('DTRBundle:Member')->findByEventUser($event[0], $user);
+        $items = $em->getRepository('DTRBundle:Item')->findByMember($member);
+        foreach ($items as $item) {
+            $em->remove($item);
+        }
+        $em->flush();
+
+        return $this->forward('DTRBundle:Default:shop', array(
+            'hash' => $hash,
+            'shopName' => $shopName
+        ));
+
+    }
+
 
 }

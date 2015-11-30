@@ -5,9 +5,11 @@
         </div>
         <div>
             {% for item in items %}
-                <p>{{ item.getProduct().getName() }}</p>
+                <p>{{ item.getProduct().getName() }} {{ item.getProduct().getPrice() * item.getQuantity() }}€ ({{ item.getQuantity() }})</p>
                 <a href="/event/{{ hash }}/shops/{{ shopName }}/remove-from-cart/{{ item.getId() }}">Remove</a>
             {% endfor %}
         </div>
+            <a href="/event/{{ hash }}/shops/{{ shopName }}/delete-cart">Delete cart</a>
+            <p>Total cost: {{ totalCost }}€</p>
     </div>
 {% endif %}
