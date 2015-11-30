@@ -119,7 +119,10 @@ class EventController extends Controller
         $member = $doctrine->getRepository('DTRBundle:Member')->findByEventUser($event, $user);
 
         if($member == null) {
-            return new Response('Not a member yet. Need a join button');
+            return $this->render('dashboard/dashboardJoin.html.twig', [
+                'event_name' => $event->getName(),
+                'event_hash' => $event->getHash()
+            ]);
         }
 
         if($member->isHost()) {
@@ -144,6 +147,29 @@ class EventController extends Controller
                 'member' => $member
             )
         );
+    }
+
+    /**
+     * @param Event $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/{hash}/join", name="join_event")
+     */
+    public function joinAction(Event $event)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+        $member = new Member();
+
+        $member
+            ->setEvent($event)
+            ->setUser($user);
+
+        $em->persist($member);
+        $em->flush();
+
+        return $this->redirectToRoute('dashboard', [ 'hash' => $event->getHash() ]);
     }
 
     /**
