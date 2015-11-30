@@ -143,7 +143,7 @@ class EventController extends Controller
                 'user' => $user,
                 'member' => $member
             )
-    );
+        );
     }
 
     /**
@@ -214,25 +214,6 @@ class EventController extends Controller
         return $this->render('event/edit.html.twig', [
             'form' => $editForm->createView()
         ]);
-    }
-
-    public function paymentMadeAction(Event $event, $made)
-    {
-        switch($made)
-        {
-            case 'made':
-                $event->setPaymentMade(true);
-
-                break;
-            case 'unmade':
-                $event->setPaymentMade(false);
-
-                break;
-            default:
-                throw $this->createNotFoundException('Puslapis nerastas!');
-        }
-
-        return $this->redirectToRoute('dashboard', [ 'hash' => $event->getHash() ]);
     }
 
     /**
@@ -327,5 +308,31 @@ class EventController extends Controller
                 'totalCost' => $totalCost
             )
         );
+    }
+
+    /**
+     * @param Event $event
+     * @param $made
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/{hash}/{made}")
+     */
+    public function paymentMadeAction(Event $event, $made)
+    {
+        switch($made)
+        {
+            case 'made':
+                $event->setPaymentMade(true);
+
+                break;
+            case 'unmade':
+                $event->setPaymentMade(false);
+
+                break;
+            default:
+                throw $this->createNotFoundException('Puslapis nerastas!');
+        }
+
+        return $this->redirectToRoute('dashboard', [ 'hash' => $event->getHash() ]);
     }
 }
