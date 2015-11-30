@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div style="width: 40%">
-        <div class="container-fluid">
-            <h1>{{ event.name }}</h1>
+    <div class="container-fluid">
+        <h1>{{ event.name }}</h1>
 
-            {% block content %}
+        {% block content %}
+            <div style="width: 40%">
                 <ul style="list-style: none; padding-left: 0;">
                     <li class="panel panel-default">
                         <div class="panel-body">
@@ -42,7 +42,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-            {% endblock %}
-        </div>
+            </div>
+        {% endblock %}
     </div>
 {% endblock %}
