@@ -35,9 +35,7 @@
                                         {% endif %}
                                     </div>
                                 </h4>
-                                    {% if guest.user == user %}
-                                        {% block actions %}{% endblock %}
-                                    {% endif %}
+                                    {% block actions %}{% endblock %}
                             </div>
                         </li>
                     {% endfor %}

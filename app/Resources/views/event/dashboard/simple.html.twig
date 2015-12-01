@@ -1,7 +1,9 @@
 {% extends 'event/dashboard/layout.html.twig' %}
 
 {% block actions %}
+    {% if guest.user == user %}
         <p style="float: right;">
             <span class="glyphicon glyphicon-search"></span>
         </p>
+    {% endif %}
 {% endblock %}
