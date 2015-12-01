@@ -135,31 +135,27 @@ class EventController extends Controller
         $member = $doctrine->getRepository('DTRBundle:Member')->findByEventUser($event, $user);
 
         if($member == null) {
-            return $this->render('dashboard/dashboardJoin.html.twig', compact('event'));
+            return $this->render('event/dashboard/join.html.twig', [ 'event' => $event ]);
         }
 
         if($member->isHost()) {
+            $guests = $event->getGuests();
 
-            return $this->render(
-                'views/dashboard/dashboardHost.html.twig',
-                array(
-                    'event' => $event,
-                    'hash' => $hash,
-                    'user' => $user,
-                    'member' => $member
-                )
-            );
-        }
-
-        return $this->render(
-            'views/dashboard/dashboardSimple.html.twig',
-            array(
+            return $this->render('event/dashboard/host.html.twig', [
                 'event' => $event,
-                'hash' => $hash,
-                'user' => $user,
-                'member' => $member
-            )
-        );
+                'host' => $member,
+                'guests' => $guests
+            ]);
+        }   
+
+        list($host, $guests) = $event->getHostAndGuests();
+
+        return $this->render('event/dashboard/guest.html.twig', [
+            'event' => $event,
+            'host' => $host,
+            'guests' => $guests,
+            'current' => $member
+        ]);
     }
 
     /**
