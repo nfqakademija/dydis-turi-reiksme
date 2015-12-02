@@ -160,6 +160,17 @@ class EventController extends Controller
 
     /**
      * @param Event $event
+     * @return Response
+     *
+     * @Route("/{hash}/overview")
+     */
+    public function overviewAction(Event $event)
+    {
+        return $this->render('event/overview.html.twig', [ 'event' => $event ]);
+    }
+
+    /**
+     * @param Event $event
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Route("/{hash}/join", name="join_event")

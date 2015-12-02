@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Įvykio santrauka: <small>{{ event.name }}</small></h1>
+        <hr />
+
+        <div class="well well-lg">
+            <p>Įvykio nuoroda: <strong>{{ url('dashboard', { 'hash' : event.hash }) }}</strong></p>
+            <a class="btn btn-success" href="{{ path('dashboard', { 'hash' : event.hash }) }}">Eiti į įvykį</a>
+        </div>
+    </div>
+{% endblock %}
