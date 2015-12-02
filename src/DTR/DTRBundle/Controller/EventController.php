@@ -42,10 +42,6 @@ class EventController extends Controller
      */
     public function newAction()
     {
-        if(!$this->getUser()) {
-            return $this->redirectToRoute('fos_user_security_login');
-        }
-
         $event = new Event();
         $form   = $this->createCreateForm($event);
 
@@ -116,22 +112,17 @@ class EventController extends Controller
     }
 
     /**
-     * @param $hash
+     * @param Event $event
      * @return mixed
+     * @internal param $hash
      *
      * @Route("/{hash}", name="dashboard")
      */
-    public function dashboardAction($hash)
+    public function dashboardAction(Event $event)
     {
-        $user = $this->getUser();
-
-        if(!$user) {
-            return $this->redirectToRoute('fos_user_security_login');
-        }
-
         $doctrine = $this->getDoctrine();
 
-        $event = $doctrine->getRepository('DTRBundle:Event')->findOneByHash($hash);
+        $user = $this->getUser();
         $member = $doctrine->getRepository('DTRBundle:Member')->findByEventUser($event, $user);
 
         if($member == null) {
@@ -202,10 +193,6 @@ class EventController extends Controller
      */
     public function editAction(Event $event)
     {
-        if(!$this->getUser()) {
-            return $this->redirectToRoute('fos_user_security_login');
-        }
-
         $editForm = $this->createEditForm($event);
 
         return $this->render('event/edit.html.twig', [
@@ -245,7 +232,6 @@ class EventController extends Controller
      */
     public function updateAction(Request $request, Event $event)
     {
-
         $em = $this->getDoctrine()->getManager();
 
         $editForm = $this->createEditForm($event);
