@@ -1,45 +1,50 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <h1 style="text-align: center;">{{ event.name }}</h1>
+    <hr />
+
     <div class="container-fluid">
-        <h1>{{ event.name }}</h1>
-
         {% block content %}
-            <div style="width: 40%">
-                <ul style="list-style: none; padding-left: 0;">
-                    <li class="panel panel-default">
-                        <div class="panel-body">
-                            <h4>
-                                {{ host.name }}
-                                <div style="display: inline; float: right;">
-                                    <span class="number-of-items">{{ host.numberOfItems }} psr.</span>
-                                    <span class="total-price">{{ host.totalPrice }}€</span>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="container-fluid">
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li class="panel panel-default">
+                                <div class="panel-body">
+                                    <h4>
+                                        {{ host.name }}
+                                        <div style="display: inline; float: right;">
+                                            <span class="number-of-items">{{ host.numberOfItems }} psr.</span>
+                                            <span class="total-price">{{ host.totalPrice }}€</span>
+                                        </div>
+                                    </h4>
+                                    {% block host_actions %}{% endblock %}
                                 </div>
-                            </h4>
-                            {% block host_actions %}{% endblock %}
-                        </div>
-                    </li>
-                    {% for guest in guests %}
-                        <li class="panel panel-default">
-                            <div class="panel-body">
-                                <h4>
-                                    {{ guest.name }}
-                                    <div style="display: inline; float: right;">
-                                        <span class="number-of-items">{{ guest.numberOfItems }} psr.</span>
-                                        <span class="total-price">{{ guest.totalPrice }}€</span>
+                            </li>
+                            {% for guest in guests %}
+                                <li class="panel panel-default">
+                                    <div class="panel-body">
+                                        <h4>
+                                            {{ guest.name }}
+                                            <div style="display: inline; float: right;">
+                                                <span class="number-of-items">{{ guest.numberOfItems }} psr.</span>
+                                                <span class="total-price">{{ guest.totalPrice }}€</span>
 
-                                        {% if guest.debt == 0 %}
-                                            <span class="guest-debt" style="color: limegreen;">0.00€</span>
-                                        {% else %}
-                                            <span class="guest-debt" style="color: red;">{{ guest.debt }}€</span>
-                                        {% endif %}
+                                                {% if guest.debt == 0 %}
+                                                    <span class="guest-debt" style="color: limegreen;">0.00€</span>
+                                                {% else %}
+                                                    <span class="guest-debt" style="color: red;">{{ guest.debt }}€</span>
+                                                {% endif %}
+                                            </div>
+                                        </h4>
+                                            {% block actions %}{% endblock %}
                                     </div>
-                                </h4>
-                                    {% block actions %}{% endblock %}
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </div>
         {% endblock %}
     </div>
