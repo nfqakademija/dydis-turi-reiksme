@@ -16,7 +16,7 @@
                                         {{ host.name }}
                                         <div style="display: inline; float: right;">
                                             <span class="number-of-items">{{ host.numberOfItems }} psr.</span>
-                                            <span class="total-price">{{ host.totalPrice }}€</span>
+                                            <span class="total-price">{{ host.totalPrice|number_format(2, ',') }}€</span>
                                         </div>
                                     </h4>
                                     {% block host_actions %}{% endblock %}
@@ -29,12 +29,12 @@
                                             {{ guest.name }}
                                             <div style="display: inline; float: right;">
                                                 <span class="number-of-items">{{ guest.numberOfItems }} psr.</span>
-                                                <span class="total-price">{{ guest.totalPrice }}€</span>
+                                                <span class="total-price">{{ guest.totalPrice|number_format(2, ',') }}€</span>
 
                                                 {% if guest.debt == 0 %}
                                                     <span class="guest-debt" style="color: limegreen;">0.00€</span>
                                                 {% else %}
-                                                    <span class="guest-debt" style="color: red;">{{ guest.debt }}€</span>
+                                                    <span class="guest-debt" style="color: red;">{{ guest.debt|number_format(2, ',') }}€</span>
                                                 {% endif %}
                                             </div>
                                         </h4>
