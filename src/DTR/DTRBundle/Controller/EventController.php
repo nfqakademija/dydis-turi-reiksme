@@ -42,10 +42,6 @@ class EventController extends Controller
      */
     public function newAction()
     {
-        if(!$this->getUser()) {
-            return $this->redirectToRoute('fos_user_security_login');
-        }
-
         $event = new Event();
         $form   = $this->createCreateForm($event);
 
@@ -116,50 +112,52 @@ class EventController extends Controller
     }
 
     /**
-     * @param $hash
+     * @param Event $event
      * @return mixed
+     * @internal param $hash
      *
      * @Route("/{hash}", name="dashboard")
      */
-    public function dashboardAction($hash)
+    public function dashboardAction(Event $event)
     {
-        $user = $this->getUser();
-
-        if(!$user) {
-            return $this->redirectToRoute('fos_user_security_login');
-        }
-
         $doctrine = $this->getDoctrine();
 
-        $event = $doctrine->getRepository('DTRBundle:Event')->findOneByHash($hash);
+        $user = $this->getUser();
         $member = $doctrine->getRepository('DTRBundle:Member')->findByEventUser($event, $user);
 
         if($member == null) {
-            return $this->render('dashboard/dashboardJoin.html.twig', compact('event'));
+            return $this->render('event/dashboard/join.html.twig', [ 'event' => $event ]);
         }
 
         if($member->isHost()) {
+            $guests = $event->getGuests();
 
-            return $this->render(
-                'views/dashboard/dashboardHost.html.twig',
-                array(
-                    'event' => $event,
-                    'hash' => $hash,
-                    'user' => $user,
-                    'member' => $member
-                )
-            );
-        }
-
-        return $this->render(
-            'views/dashboard/dashboardSimple.html.twig',
-            array(
+            return $this->render('event/dashboard/host.html.twig', [
                 'event' => $event,
-                'hash' => $hash,
-                'user' => $user,
-                'member' => $member
-            )
-        );
+                'host' => $member,
+                'guests' => $guests
+            ]);
+        }   
+
+        list($host, $guests) = $event->getHostAndGuests();
+
+        return $this->render('event/dashboard/guest.html.twig', [
+            'event' => $event,
+            'host' => $host,
+            'guests' => $guests,
+            'current' => $member
+        ]);
+    }
+
+    /**
+     * @param Event $event
+     * @return Response
+     *
+     * @Route("/{hash}/overview")
+     */
+    public function overviewAction(Event $event)
+    {
+        return $this->render('event/overview.html.twig', [ 'event' => $event ]);
     }
 
     /**
@@ -195,10 +193,6 @@ class EventController extends Controller
      */
     public function editAction(Event $event)
     {
-        if(!$this->getUser()) {
-            return $this->redirectToRoute('fos_user_security_login');
-        }
-
         $editForm = $this->createEditForm($event);
 
         return $this->render('event/edit.html.twig', [
@@ -238,7 +232,6 @@ class EventController extends Controller
      */
     public function updateAction(Request $request, Event $event)
     {
-
         $em = $this->getDoctrine()->getManager();
 
         $editForm = $this->createEditForm($event);

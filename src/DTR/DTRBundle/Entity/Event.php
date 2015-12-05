@@ -279,6 +279,16 @@ class Event
     }
 
     /**
+     * @return \Doctrine\Common\Collections\Collection|static
+     */
+    public function getGuests()
+    {
+        return $this->members->filter(function(Member $member) {
+            return !$member->isHost();
+        });
+    }
+
+    /**
      * Increase total price.
      *
      * @param $amount
