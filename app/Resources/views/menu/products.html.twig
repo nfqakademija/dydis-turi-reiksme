@@ -5,9 +5,13 @@
         {% for product in products %}
             <div>
                 <p>{{ product.getName() }}</p>
-                <a href="/event/{{ hash }}/shops/{{ shopName }}/add-to-cart/{{ product.getId() }}" class="button">Add to cart</a>
+                <a href="/event/{{ hash }}/shops/{{ shopName }}/add-to-cart/{{ product.getId() }}" class="addToCart">Add to cart</a>
             </div>
         {% endfor %}
     </div>
-    {% include 'menu/cart.html.twig'%}
+    {% include 'menu/cart.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('js/cart.js') }}"></script>
 {% endblock %}

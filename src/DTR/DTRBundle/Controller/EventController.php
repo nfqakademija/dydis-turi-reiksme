@@ -27,7 +27,7 @@ class EventController extends Controller
     {
         $doctrine = $this->getDoctrine();
 
-        $event = $doctrine->getRepository('DTRBundle:Event')->findOneByHash('e37bc4');
+        $event = $doctrine->getRepository('DTRBundle:Event')->findOneByHash('283682');
 
         list($host, $guests) = $event->getHostAndGuests();
 
