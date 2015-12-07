@@ -63,76 +63,52 @@ class CartController extends Controller
     }
 
     /**
-     * @Route("/event/{hash}/remove-from-cart/{itemId}", name="_remove_from_cart")
+     * @Route("/event/{hash}/remove-from-cart/{itemId}/{urlLength}", name="_remove_from_cart")
      * @Template()
      */
-    public function removeFromCartAction(Request $request, $itemId, $hash)
+    public function removeFromCartAction(Request $request, $itemId, $hash, $urlLength)
     {
-        if($request->isXmlHttpRequest()) {
-            return "hello";
-        } else {
-            $em = $this->getDoctrine()->getManager();
-            $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
-            $item = $em->getRepository('DTRBundle:Item')->find($itemId);
-            $shopName = $item->getProduct()->getShop()->getSlug();
-            $member = $item->getMember();
-            $member->removeItem($item);
-            $em->remove($item);
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
+        $item = $em->getRepository('DTRBundle:Item')->find($itemId);
+        $shopName = $item->getProduct()->getShop()->getSlug();
+        $member = $item->getMember();
+        $member->removeItem($item);
+        $em->remove($item);
 
-            $em->flush();
+        $em->flush();
 
+        if ($urlLength > 13) {
             return $this->redirectToRoute('_shop', ['hash' => $event[0]->getHash(), 'shopName' => $shopName]);
+        } else {
+            return $this->redirectToRoute('dashboard', ['hash' => $event[0]->getHash(), 'event' => $event[0]]);
         }
+
     }
 
     /**
-     * @Route("/event/{hash}/remove-from-cart/{itemId}", name="_remove_from_cart_ajax")
+     * @Route("/event/{hash}/delete-cart/{urlLength}", name="_delete_cart")
      * @Template()
-     * @Method({"POST"})
      */
-    public function removeFromCartAjaxAction(Request $request, $itemId, $hash)
+    public function deleteCartAction(Request $request, $hash, $urlLength)
     {
-        if($request->isXmlHttpRequest()) {
-            return new Response("HELLO!");
-        } else {
-            $em = $this->getDoctrine()->getManager();
-            $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
-            $item = $em->getRepository('DTRBundle:Item')->find($itemId);
-            $shopName = $item->getProduct()->getShop()->getSlug();
-            $member = $item->getMember();
-            $member->removeItem($item);
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
+        $member = $em->getRepository('DTRBundle:Member')->findByEventUser($event[0], $user);
+        $items = $em->getRepository('DTRBundle:Item')->findByMember($member);
+        $shopName = $items[0]->getProduct()->getShop()->getSlug();
+
+        foreach ($items as $item) {
             $em->remove($item);
-
-            $em->flush();
-
-            return $this->redirectToRoute('_shop', ['hash' => $event[0]->getHash(), 'shopName' => $shopName]);
         }
-    }
+        $em->flush();
 
-    /**
-     * @Route("/event/{hash}/delete-cart", name="_delete_cart")
-     * @Template()
-     */
-    public function deleteCartAction(Request $request, $hash)
-    {
-        if($request->isXmlHttpRequest()) {
-            return new Response("HELLO!");
+        if ($urlLength > 13) {
+            return $this->redirectToRoute('_shop', ['hash' => $event[0]->getHash(), 'shopName' => $shopName]);
         } else {
-            $em = $this->getDoctrine()->getManager();
-            $user = $this->getUser();
-            $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
-            $member = $em->getRepository('DTRBundle:Member')->findByEventUser($event[0], $user);
-            $items = $em->getRepository('DTRBundle:Item')->findByMember($member);
-            $shopName = $items[0]->getProduct()->getShop()->getSlug();
-            foreach ($items as $item) {
-                $em->remove($item);
-            }
-            $em->flush();
-
-
-            return $this->redirectToRoute('_shop', ['hash' => $event[0]->getHash(), 'shopName' => $shopName]);
+            return $this->redirectToRoute('dashboard', ['hash' => $event[0]->getHash(), 'event' => $event[0]]);
         }
-
 
     }
 

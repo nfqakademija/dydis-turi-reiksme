@@ -130,9 +130,11 @@ class EventController extends Controller
         $member = $doctrine->getRepository('DTRBundle:Member')->findByEventUser($event, $user);
         $items = $doctrine->getRepository('DTRBundle:Item')->findByMember($member);
         $totalCost = 0.0;
+        $totalItems = 0;
         foreach ($items as $item) {
             $productPrice = $item->getProduct()->getPrice() * $item->getQuantity();
             $totalCost += $productPrice;
+            $totalItems += $item->getQuantity();
         }
 
         if($member == null) {
@@ -147,7 +149,8 @@ class EventController extends Controller
                 'host' => $member,
                 'guests' => $guests,
                 'items' => $items,
-                'totalCost' => $totalCost
+                'totalCost' => $totalCost,
+                'totalItems' => $totalItems
             ]);
         }   
 
@@ -159,7 +162,8 @@ class EventController extends Controller
             'guests' => $guests,
             'current' => $member,
             'items' => $items,
-            'totalCost' => $totalCost
+            'totalCost' => $totalCost,
+            'totalItems' => $totalItems
         ]);
     }
 

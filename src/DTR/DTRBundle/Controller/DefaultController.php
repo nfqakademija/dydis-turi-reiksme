@@ -39,7 +39,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $shops = $em->getRepository('DTRBundle:Shop')->findAllShops();
-
+        $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
         $form = $this->createForm(new SearchType());
 
         $form->handleRequest($request);
@@ -53,6 +53,7 @@ class DefaultController extends Controller
             'views/menu/shops.html.twig',
             array(
                 'shops' => $shops,
+                'event' => $event[0],
                 'form' => $form->createView())
         );
     }

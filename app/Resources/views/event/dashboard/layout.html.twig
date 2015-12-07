@@ -15,8 +15,8 @@
                                     <h4>
                                         {{ host.name }}
                                         <div style="display: inline; float: right;">
-                                            <span class="number-of-items">{{ host.numberOfItems }} psr.</span>
-                                            <span class="total-price">{{ host.totalPrice|number_format(2, ',') }}€</span>
+                                            <span class="number-of-items">{{ totalItems }} psr.</span>
+                                            <span class="total-price">{{ totalCost|number_format(2, ',') }}€</span>
                                         </div>
                                     </h4>
                                     {% block host_actions %}{% endblock %}
@@ -28,9 +28,8 @@
                                         <h4>
                                             {{ guest.name }}
                                             <div style="display: inline; float: right;">
-                                                <span class="number-of-items">{{ guest.numberOfItems }} psr.</span>
-                                                <span class="total-price">{{ guest.totalPrice|number_format(2, ',') }}€</span>
-
+                                                <span class="number-of-items">{{ totalItems }} psr.</span>
+                                                <span class="total-price">{{ totalCost|number_format(2, ',') }}€</span>
                                                 {% if guest.debt == 0 %}
                                                     <span class="guest-debt" style="color: limegreen;">0.00€</span>
                                                 {% else %}
@@ -45,7 +44,8 @@
                         </ul>
                     </div>
                 </div>
-                <div><a href="{{ path('edit_event', {'hash': event.hash, 'event': event}) }}">Redaguoti įvykį</a></dov>
+                <div><a href="{{ path('edit_event', {'hash': event.hash, 'event': event}) }}">Redaguoti įvykį</a></div>
+                <div><a href="{{ path('_shops_list', {'hash': event.hash}) }}">Parduotuvės, maistas</a></div>
                 {% include 'menu/cart.html.twig' %}
             </div>
         {% endblock %}

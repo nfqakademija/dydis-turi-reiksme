@@ -40,7 +40,7 @@ class Item
     private $product;
 
     /**
-     * @ORM\OneToOne(targetEntity="Member")
+     * @ORM\ManyToOne(targetEntity="Member")
      */
     private $member;
 
