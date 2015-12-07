@@ -32,6 +32,7 @@
                                 <li class="dtr_register"><a href="{{ url('fos_user_registration_register') }}">Registruotis</a></li>
                             {% else %}
                                 <li class="dtr_user"><a href="">{{ app.user.username }}</a></li>
+                                <li class="dtr_user_events"><a href="{{ path('_info') }}">Mano įvykiai</a></li>
                                 <li class="dtr_logout"><a href="{{ url('fos_user_security_logout') }}">Atsijungti</a></li>
                             {% endif %}
                         </ul>

@@ -45,6 +45,7 @@
                         </ul>
                     </div>
                 </div>
+                <div><a href="{{ path('edit_event', {'hash': event.hash, 'event': event}) }}">Redaguoti įvykį</a></dov>
                 {% include 'menu/cart.html.twig' %}
             </div>
         {% endblock %}

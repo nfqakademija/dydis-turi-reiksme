@@ -1,0 +1,11 @@
+{%  extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for member in members %}
+        <div>
+            <a href="{{ path('_overview', {'hash': member.event.hash}) }}">{{ member.event.name }}</a>
+        </div>
+    {% endfor %}
+
+{% endblock %}

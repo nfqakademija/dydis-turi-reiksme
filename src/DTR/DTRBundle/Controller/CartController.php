@@ -32,7 +32,7 @@ class CartController extends Controller
         $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
         $member = $em->getRepository('DTRBundle:Member')->findByEventUser($event[0], $user);
 
-        $item = $em->getRepository('DTRBundle:Item')->findByProduct($product);
+        $item = $em->getRepository('DTRBundle:Item')->findByProductAndMember($product, $member);
 
         if ($item) {
             $item->setQuantity($item->getQuantity()+1);
@@ -123,6 +123,32 @@ class CartController extends Controller
         }
 
 
+    }
+
+    /**
+     * @Route("/event/{hash}/cart-overview/{memberId}", name="_cart_overview")
+     * @Template()
+     */
+    public function cartOverviewAction($hash, $memberId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $member = $em->getRepository('DTRBundle:Member')->find($memberId);
+        $items = $em->getRepository('DTRBundle:Item')->findByMember($member);
+        $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
+        $totalCost = 0.0;
+        foreach ($items as $item) {
+            $productPrice = $item->getProduct()->getPrice() * $item->getQuantity();
+            $totalCost += $productPrice;
+        }
+
+        return $this->render(
+            'views/menu/cart.html.twig',
+            array(
+                'items' => $items,
+                'event' => $event[0]    ,
+                'totalCost' => $totalCost
+            )
+        );
     }
 
 

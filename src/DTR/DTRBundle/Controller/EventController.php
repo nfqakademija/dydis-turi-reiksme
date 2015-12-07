@@ -97,7 +97,11 @@ class EventController extends Controller
                 ->setUser($user)
                 ->setHost();
 
+            $user
+                ->addEvent($event);
+
             $em->persist($event);
+            $em->persist($user);
             $em->persist($member);
 
             $em->flush();
@@ -163,7 +167,7 @@ class EventController extends Controller
      * @param Event $event
      * @return Response
      *
-     * @Route("/{hash}/overview")
+     * @Route("/{hash}/overview", name="_overview")
      */
     public function overviewAction(Event $event)
     {
@@ -275,9 +279,8 @@ class EventController extends Controller
         return $this->forward(
             'DTRBundle:Event:dashboard',
             array(
-                'hash' => $hash,
-                'event' => $event,
-                'member' => $member
+            'event' => $event[0],
+            'hash' => $event[0]->getHash()
             )
         );
     }
@@ -319,9 +322,8 @@ class EventController extends Controller
         return $this->forward(
             'DTRBundle:Event:dashboard',
             array(
-                'hash' => $hash,
-                'event' => $event,
-                'member' => $member
+                'event' => $event[0],
+                'hash' => $event[0]->getHash()
             )
         );
     }
