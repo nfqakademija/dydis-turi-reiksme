@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="container-fluid">
-        {% if (participating_events is empty) and (hosted_events is empty) %}
+        {% if (participations is empty) and (hosted_events is empty) %}
             <p>Jus nedalyvaujate jokiuose įvykiuose</p>
         {% else %}
             {% if hosted_events is empty %}
@@ -13,6 +13,7 @@
                     <thead>
                     <tr>
                         <th>Pavadinimas</th>
+                        <th>Dalyvių skaičius</th>
                         <th>Bendra suma</th>
                         <th>Bendra skola</th>
                         <th></th>
@@ -22,6 +23,7 @@
                     {% for hosted_event in hosted_events %}
                         <tr>
                             <td>{{ hosted_event.name }}</td>
+                            <td>{{ hosted_event.membersCount }}</td>
                             <td>{{ hosted_event.totalPrice }}</td>
                             <td>{{ hosted_event.totalDebt }}</td>
                             <td><a class="btn btn-primary" href="{{ path('dashboard', { 'hash' : hosted_event.hash }) }}">Žiūrėti</a></td>
@@ -31,7 +33,7 @@
                 </table>
             {% endif %}
 
-            {% if participating_events is empty %}
+            {% if participations is empty %}
                 <p>Jūs nedalyvaujate įvykiuose.</p>
             {% else %}
                 <table class="table table-striped">
@@ -39,16 +41,18 @@
                     <thead>
                     <tr>
                         <th>Pavadinimas</th>
+                        <th>Dalyvių skaičius</th>
                         <th>Skolingas</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for participating_event in participating_events %}
+                    {% for participation in participations %}
                         <tr>
-                            <td>{{ participating_event.name }}</td>
-                            <td>{{ participating_event.debt }}</td>
-                            <td><a class="btn btn-primary" href="{{ path('dashboard', { 'hash' : participating_event.hash }) }}">Žiūrėti</a></td>
+                            <td>{{ participation.event.name }}</td>
+                            <td>{{ participation.event.membersCount }}</td>
+                            <td>{{ participation.debt }}</td>
+                            <td><a class="btn btn-primary" href="{{ path('dashboard', { 'hash' : participation.event.hash }) }}">Žiūrėti</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>

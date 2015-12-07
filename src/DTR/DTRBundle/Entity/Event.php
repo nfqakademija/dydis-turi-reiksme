@@ -256,7 +256,19 @@ class Event
     }
 
     /**
+<<<<<<< Updated upstream
      * Get construct of host member entity and guest member entities.
+=======
+     * @return int
+     */
+    public function getMembersCount()
+    {
+        return $this->members->count();
+    }
+
+    /**
+     * Set totalPrice
+>>>>>>> Stashed changes
      *
      * @return array
      */
