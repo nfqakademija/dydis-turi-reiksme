@@ -22,4 +22,13 @@ class MemberRepository extends EntityRepository
             ->setParameter('user', $user)
             ->getOneOrNullResult();
     }
+
+    public function findParticipations(User $user)
+    {
+        return $this
+            ->getEntityManager()
+            ->createQuery('SELECT m FROM DTRBundle:Member m JOIN m.event e WHERE m.user = :user')
+            ->setParameter('user', $user)
+            ->getResult();
+    }
 }
