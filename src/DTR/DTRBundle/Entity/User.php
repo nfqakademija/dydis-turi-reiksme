@@ -20,21 +20,20 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="Event", inversedBy="users")
-     * @ORM\JoinTable(
-     *      name="users_events",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="event_hash", referencedColumnName="hash")})
+     * @ORM\OneToMany(targetEntity="Member", mappedBy="user")
      */
-    protected $events;
+    protected $members;
 
+
+    /**
+     * Public constructor
+     */
     public function __construct()
     {
         parent::__construct();
 
         $this->events = new ArrayCollection();
+        $this->members = new ArrayCollection();
     }
 
     /**
@@ -69,5 +68,39 @@ class User extends BaseUser
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Add member
+     *
+     * @param \DTR\DTRBundle\Entity\Member $member
+     *
+     * @return User
+     */
+    public function addMember(Member $member)
+    {
+        $this->members[] = $member;
+
+        return $this;
+    }
+
+    /**
+     * Remove member
+     *
+     * @param \DTR\DTRBundle\Entity\Member $member
+     */
+    public function removeMember(Member $member)
+    {
+        $this->members->removeElement($member);
+    }
+
+    /**
+     * Get members
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMembers()
+    {
+        return $this->members;
     }
 }

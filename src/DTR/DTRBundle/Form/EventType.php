@@ -15,12 +15,22 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text')
-            ->add('guestLimit', 'integer', [
-                'empty_data' => '60' ])
-            ->add('fundsLimit', 'number', [
-                'scale' => 2, ])
-            ->add('save', 'submit', [ 'label' => 'Submit' ]);
+            ->add('name')
+            ->add('guestLimit')
+            ->add('fundsLimit')
+            ->add('date')
+            ->add('shops', 'collection', [
+                'type' => 'entity',
+                'options' => [
+                    'class' => 'DTRBundle:Shop',
+                    'choice_label' => 'name',
+                    'label' => false
+                ],
+                'label' => 'Parduotuvės',
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true
+            ]);
     }
     
     /**

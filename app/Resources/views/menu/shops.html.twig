@@ -1,0 +1,18 @@
+{%  extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="searchForm">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+    <div class="shops_list">
+
+        {% for shop in event.shops %}
+            <div id="shop" class="col-md-4">
+                <img src="{{ asset('' ~ shop.getImageLocation() ~ '') }}" class="img-thumbnail" .img-responsive>
+                <a class="shop_name" href="shops/{{ shop.slug }}">{{ shop.name() }}</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

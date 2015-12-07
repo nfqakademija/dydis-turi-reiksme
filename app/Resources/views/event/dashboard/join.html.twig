@@ -1,0 +1,15 @@
+{% extends 'event/dashboard/layout.html.twig' %}
+
+{% block content %}
+    {% if event.isFull() %}
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">Vietų neliko!</h3>
+            </div>
+            <p class="panel-body">Atsiprašome, bet šiame įvykyje nebėra laisvų vietų. Dėl klaidos kreipkitės pas įvykio organizatorių.</p>
+        </div>
+    {% else %}
+        <p>Sveiki, esate neprisijunges prie "{{ event.name }}"</p>
+        <a href="{{ path('join_event', { 'hash' : event.hash }) }}" class="btn btn-primary">Prisijungti</a>
+    {% endif %}
+{% endblock %}

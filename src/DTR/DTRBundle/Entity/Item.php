@@ -3,14 +3,19 @@
 namespace DTR\DTRBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="item")
+ * Item
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="DTR\DTRBundle\Repository\ItemRepository")
  */
 class Item
 {
     /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -20,29 +25,25 @@ class Item
     /**
      * @var integer
      *
-     * @ORM\Column(name="shop_id", type="integer")
+     * @ORM\Column(name="quantity", type="integer")
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "Pasirinktas kiekis negali būti mažesnis už 1.")
      */
-    private $shop;
+    private $quantity = 1;
 
     /**
-     * @var integer
+     * @var Product
      *
-     * @ORM\Column(name="itemtype_id", type="integer")
-     * @ORM\OneToMany(targetEntity="ItemType", mappedBy="items")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="items")
      */
-    private $itemType;
+    private $product;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Member")
      */
-    private $name;
+    private $member;
 
-    /**
-     * @ORM\Column(name="price", type="float", scale=2)
-     */
-    private $price;
 
     /**
      * Get id
@@ -55,94 +56,74 @@ class Item
     }
 
     /**
-     * Set shop
+     * Set quantity
      *
-     * @param integer $shop
+     * @param integer $quantity
      *
-     * @return shop
+     * @return Item
      */
-    public function setShop($shop)
+    public function setQuantity($quantity)
     {
-        $this->shop = $shop;
+        $this->quantity = $quantity;
+
         return $this;
     }
 
     /**
-     * Get shop
+     * Get quantity
      *
      * @return integer
      */
-    public function getShop()
+    public function getQuantity()
     {
-        return $this->shop;
+        return $this->quantity;
     }
 
     /**
-     * Set itemTypeId
+     * Set product
      *
-     * @param integer $itemTypeId
+     * @param \DTR\DTRBundle\Entity\Product $product
      *
      * @return Item
      */
-    public function setItemType(\DTR\DTRBundle\Entity\ItemType $itemType = null)
+    public function setProduct(Product $product = null)
     {
-        $this->itemTypeId = $itemType;
+        $this->product = $product;
+
         return $this;
     }
 
     /**
-     * Get itemTypeId
+     * Get product
      *
-     * @return integer
+     * @return \DTR\DTRBundle\Entity\Product
      */
-    public function getItemType()
+    public function getProduct()
     {
-        return $this->itemType;
+        return $this->product;
     }
 
     /**
-     * Set name
+     * Set member
      *
-     * @param string $name
+     * @param \DTR\DTRBundle\Entity\Member $member
      *
      * @return Item
      */
-    public function setName($name)
+    public function setMember(Member $member = null)
     {
-        $this->name = $name;
+        $this->member = $member;
+
         return $this;
     }
 
     /**
-     * Get name
+     * Get member
      *
-     * @return string
+     * @return \DTR\DTRBundle\Entity\Member
      */
-    public function getName()
+    public function getMember()
     {
-        return $this->name;
-    }
-
-    /**
-     * Set price
-     *
-     * @param float $price
-     *
-     * @return Item
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
+        return $this->member;
     }
 }

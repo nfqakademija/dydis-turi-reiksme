@@ -2,13 +2,15 @@
 
 namespace DTR\DTRBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Shop
  *
  * @ORM\Table(name="shop")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="DTR\DTRBundle\Repository\ShopRepository")
  */
 class Shop
 {
@@ -29,19 +31,31 @@ class Shop
     private $imageLocation;
 
     /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="ShopType", inversedBy="shops")
-     */
-    private $shoptype;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="shop")
+     */
+    private $products;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -95,26 +109,46 @@ class Shop
     }
 
     /**
-     * Set shoptype
+     * Add product
      *
-     * @param \DTR\DTRBundle\Entity\ShopType $shoptype
+     * @param \DTR\DTRBundle\Entity\Product $product
      *
      * @return Shop
      */
-    public function setShoptype(\DTR\DTRBundle\Entity\ShopType $shoptype = null)
+    public function addProduct(Product $product)
     {
-        $this->shoptype = $shoptype;
+        $this->products[] = $product;
 
         return $this;
     }
 
     /**
-     * Get shoptype
+     * Remove product
      *
-     * @return \DTR\DTRBundle\Entity\ShopType
+     * @param \DTR\DTRBundle\Entity\Product $product
      */
-    public function getShoptype()
+    public function removeProduct(Product $product)
     {
-        return $this->shoptype;
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

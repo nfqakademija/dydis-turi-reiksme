@@ -1,0 +1,9 @@
+{% extends 'event/dashboard/layout.html.twig' %}
+
+{% block actions %}
+    {% if guest == current %}
+        <p style="float: right;">
+            <a href="{{ path('_cart_overview', {'memberId': guest.id, 'hash': event.hash }) }}"><span class="glyphicon glyphicon-search"></span></a>
+        </p>
+    {% endif %}
+{% endblock %}

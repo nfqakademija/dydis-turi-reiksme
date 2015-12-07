@@ -8,9 +8,13 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
             <!-- Bootstrap Yeti theme -->
             <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha256-gJ9rCvTS5xodBImuaUYf1WfbdDKq54HCPz9wk8spvGs= sha512-weqt+X3kGDDAW9V32W7bWc6aSNCMGNQsdOpfJJz/qD/Yhp+kNeR+YyvvWojJ+afETB31L0C4eO0pcygxfTgjgw==" crossorigin="anonymous">
+            {#<link src="css/stylesheet.css">#}
+            {#<link href="css/stylesheets.css" type="text/css" rel="stylesheet" />#}
+            {#<link rel="stylesheet" href="{{ absolute_url(asset("css/stylesheets.css")) }}" />#}
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+    <div class="container">
     <body>
         {% block navigation %}
             <nav class="navbar navbar-default">
@@ -23,19 +27,41 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="{{ url('fos_user_security_login') }}">Prisijungti</a></li>
-                            <li><a href="{{ url('fos_user_registration_register') }}">Registruotis</a></li>
+                            {% if not app.user %}
+                                <li class="dtr_login"><a href="{{ url('fos_user_security_login') }}">Prisijungti</a></li>
+                                <li class="dtr_register"><a href="{{ url('fos_user_registration_register') }}">Registruotis</a></li>
+                            {% else %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ app.user.username }}<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li class="dtr_user_events"><a href="{{ path('_info') }}">Mano įvykiai</a></li>
+                                        <li class="dtr_logout"><a href="{{ url('fos_user_security_logout') }}">Atsijungti</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dtr_new_event"><a href="{{ path('new_event') }}">Naujas įvykis</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
             </nav>
         {%  endblock %}
-        {% block body %}{% endblock %}
+
+            {% block body %}{% endblock %}
+        {% block footer %}
+            <footer class="footer">
+                <div class="container">
+                    <p>© 2015 Dydis turi reikšmę.
+                </div>
+            </footer>
+        {% endblock %}
         {% block javascripts %}
             <!-- jQuery -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
             <!-- Bootstrap compiled and minified JavaScript -->
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+            <script src="{{ absolute_url(asset("js/add_remove_shops.js")) }}"></script>
+            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
         {% endblock %}
     </body>
 </html>

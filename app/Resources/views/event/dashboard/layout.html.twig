@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 style="text-align: center;">{{ event.name }}</h1>
+    <hr />
+
+    <div class="container-fluid">
+        {% block content %}
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="container-fluid">
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li class="panel panel-default">
+                                <div class="panel-body">
+                                    <h4>
+                                        {{ host.name }}
+                                        <div style="display: inline; float: right;">
+                                            <span class="number-of-items">{{ totalItems }} psr.</span>
+                                            <span class="total-price">{{ totalCost|number_format(2, ',') }}€</span>
+                                        </div>
+                                    </h4>
+                                    {% block host_actions %}{% endblock %}
+                                </div>
+                            </li>
+                            {% for guest in guests %}
+                                <li class="panel panel-default">
+                                    <div class="panel-body">
+                                        <h4>
+                                            {{ guest.name }}
+                                            <div style="display: inline; float: right;">
+                                                <span class="number-of-items">{{ totalItems }} psr.</span>
+                                                <span class="total-price">{{ totalCost|number_format(2, ',') }}€</span>
+                                                {% if guest.debt == 0 %}
+                                                    <span class="guest-debt" style="color: limegreen;">0.00€</span>
+                                                {% else %}
+                                                    <span class="guest-debt" style="color: red;">{{ guest.debt|number_format(2, ',') }}€</span>
+                                                {% endif %}
+                                            </div>
+                                        </h4>
+                                            {% block actions %}{% endblock %}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div><a href="{{ path('edit_event', {'hash': event.hash, 'event': event}) }}">Redaguoti įvykį</a></div>
+                <div><a href="{{ path('_shops_list', {'hash': event.hash}) }}">Parduotuvės, maistas</a></div>
+                {% include 'menu/cart.html.twig' %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
