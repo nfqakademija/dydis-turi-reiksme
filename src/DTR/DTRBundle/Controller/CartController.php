@@ -132,7 +132,7 @@ class CartController extends Controller
             'views/menu/cart.html.twig',
             array(
                 'items' => $items,
-                'event' => $event[0]    ,
+                'event' => $event[0],
                 'totalCost' => $totalCost
             )
         );

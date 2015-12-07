@@ -305,7 +305,7 @@ class EventController extends Controller
             'DTRBundle:Event:dashboard',
             array(
                 'hash' => $hash,
-                'event' => $event,
+                'event' => $event[0],
                 'member' => $member
             )
         );
