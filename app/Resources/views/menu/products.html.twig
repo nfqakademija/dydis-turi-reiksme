@@ -9,8 +9,9 @@
     <div class="products_list">
         {% for product in products %}
             <div>
-                <p >{{  product.getName() }}</p>
+                <img src="{{ asset('' ~ product.imageLocation ~ '') }}" class="img-thumbnail" .img-responsive>
                 <a href="/event/{{ event.hash }}/shops/{{ shopName }}/add-to-cart/{{ product.getId() }}" class="addToCart">Add to cart</a>
+                <p >{{  product.getName() }}</p>
             </div>
         {% endfor %}
     </div>

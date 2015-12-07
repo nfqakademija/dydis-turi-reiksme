@@ -140,22 +140,10 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = $em->getRepository('DTRBundle:Shop')->find(2);
-        $product->setSlug('can_can');
+        $shop = $em->getRepository('DTRBundle:Shop')->searchShops('Čili Pica');
 
-        $product = $em->getRepository('DTRBundle:Shop')->find(3);
-        $product->setSlug('panda_kinija');
-
-        $product = $em->getRepository('DTRBundle:Shop')->find(4);
-        $product->setSlug('kinu_vysnia');
-
-        $product = $em->getRepository('DTRBundle:Shop')->find(5);
-        $product->setSlug('jammi_kebabai');
-
-        $product = $em->getRepository('DTRBundle:Shop')->find(6);
-        $product->setSlug('alikebabai');
-
-        $em->flush();
+        var_dump($shop);
+        die();
 
         return new Response('Updated product id '.$product->getId());
     }
