@@ -44,13 +44,6 @@ class Product
     private $shop;
 
     /**
-     * @var \DTR\DTRBundle\Entity\ProductType
-     *
-     * @ORM\ManyToOne(targetEntity="ProductType", inversedBy="products")
-     */
-    private $productType;
-
-    /**
      * @var
      *
      * @ORM\OneToMany(targetEntity="Item", mappedBy="product")
@@ -139,29 +132,7 @@ class Product
         return $this->shop;
     }
 
-    /**
-     * Set productType
-     *
-     * @param \DTR\DTRBundle\Entity\ProductType $productType
-     *
-     * @return Product
-     */
-    public function setProductType(ProductType $productType = null)
-    {
-        $this->productType = $productType;
-
-        return $this;
-    }
-
-    /**
-     * Get productType
-     *
-     * @return \DTR\DTRBundle\Entity\ProductType
-     */
-    public function getProductType()
-    {
-        return $this->productType;
-    }
+    
     /**
      * Constructor
      */

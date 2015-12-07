@@ -31,13 +31,6 @@ class Shop
     private $imageLocation;
 
     /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="ShopType", inversedBy="shops")
-     */
-    private $shoptype;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -116,30 +109,6 @@ class Shop
     }
 
     /**
-     * Set shoptype
-     *
-     * @param \DTR\DTRBundle\Entity\ShopType $shoptype
-     *
-     * @return Shop
-     */
-    public function setShoptype(ShopType $shoptype = null)
-    {
-        $this->shoptype = $shoptype;
-
-        return $this;
-    }
-
-    /**
-     * Get shoptype
-     *
-     * @return \DTR\DTRBundle\Entity\ShopType
-     */
-    public function getShoptype()
-    {
-        return $this->shoptype;
-    }
-
-    /**
      * Add product
      *
      * @param \DTR\DTRBundle\Entity\Product $product
@@ -172,20 +141,6 @@ class Shop
     {
         return $this->products;
     }
-
-//    /**
-//     * Set slug
-//     *
-//     * @param string $slug
-//     *
-//     * @return Shop
-//     */
-//    public function setSlug($slug)
-//    {
-//        $this->slug = $slug;
-//
-//        return $this;
-//    }
 
     /**
      * Get slug
