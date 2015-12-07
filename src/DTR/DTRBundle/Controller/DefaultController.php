@@ -148,24 +148,4 @@ class DefaultController extends Controller
 
         return new Response('Updated product id '.$product->getId());
     }
-
-    /**
-     *
-     * @Route("/events", name="_events")                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            name="_events")
-     */
-    public function eventsAction()
-    {
-
-        $em = $this->getDoctrine()->getManager();
-
-        $user = $this->getUser();
-        $members = $user->getMembers();
-
-        return $this->render(
-            'views/default/events.html.twig',
-            array(
-                'members' => $members
-            )
-        );
-    }
 }
