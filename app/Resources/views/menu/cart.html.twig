@@ -13,8 +13,7 @@
             <div>
                 <p>Bendra suma: {{ totalCost|number_format(2, ',') }}€</p>
                 {% if items|length > 0 %}
-                    <a href="{{ path('_delete_cart', {'hash': event.hash, 'urlLength': app.request.requestUri|length}) }}" class="btn btn-default btn-sm dtr_delete_cart" role="button"">Delete cart</a>
-                    <button class="btn btn-default btn-sm">Checkout</button>
+                    <a href="{{ path('_delete_cart', {'hash': event.hash, 'urlLength': app.request.requestUri|length}) }}" class="btn btn-default btn-sm dtr_delete_cart" role="button">Ištrinti krepšelį</a>
                 {% endif %}
             </div>
     </div>
