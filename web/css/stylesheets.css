@@ -16,7 +16,7 @@
 }
 
 
-.jumbotron h1, p {
+.jumbotron h1, h1, p {
     color: #fff;
 }
 
@@ -36,8 +36,8 @@
 }
 
 .btn
-                                                                                                                                                    {
-                                                                                                                                                        background-color: #ffb03b;
+{
+    background-color: #ffb03b;
     border-color: #ffb03b;
 }
 
@@ -46,4 +46,40 @@
     padding-top: 19px;
     color: #777;
     border-top: 1px solid #e5e5e5;
+}
+
+div#dtr_dtrbundle_event {
+    width: 350px;
+    margin: 0 auto;
+}
+
+div#dtr_dtrbundle_event label {
+    width: 100px;
+    color: #fff;
+}
+
+div#dtr_dtrbundle_event input {
+    width: 200px;
+}
+
+div#dtr_dtrbundle_event_date {
+    display: inline;
+}
+
+div#fos_user_registration_form {
+    width: 500px;
+    margin: 0 auto;
+}
+
+div#fos_user_registration_form label {
+    width: 100px;
+}
+
+div#fos_user_registration_form input {
+    width: 200px;
+    margin: 0!important;
+}
+
+form.fos_user_registration_register div input {
+    margin: 10px 420px;
 }
