@@ -10,7 +10,7 @@
         {% for product in products %}
             <div>
                 <img src="{{ asset('' ~ product.imageLocation ~ '') }}" class="img-thumbnail" .img-responsive>
-                <a href="/event/{{ event.hash }}/shops/{{ shopName }}/add-to-cart/{{ product.getId() }}" class="addToCart">Add to cart</a>
+                <a href="/event/{{ event.hash }}/shops/{{ shopName }}/add-to-cart/{{ product.getId() }}" class="addToCart">Pridėti į krepšelį</a>
                 <p>{{  product.name }} {{ product.price|number_format(2, ',') }}€</p >
             </div>
         {% endfor %}

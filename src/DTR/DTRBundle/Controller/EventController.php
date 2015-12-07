@@ -65,7 +65,7 @@ class EventController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Sukurti'));
 
         return $form;
     }
@@ -233,7 +233,7 @@ class EventController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Atnaujinti'));
 
         return $form;
     }

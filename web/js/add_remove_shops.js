@@ -1,5 +1,5 @@
-var _add_button_html = '<button type="button" id="add-shop" class="btn btn-primary">Add shop</button>';
-var _remove_button_html = '<button type="button" class="remove-shop btn btn-danger">Remove shop</button>';
+var _add_button_html = '<button type="button" id="add-shop" class="btn btn-primary">Pridėti kavinę</button>';
+var _remove_button_html = '<button type="button" class="remove-shop btn btn-danger">Panaikinti kavinę</button>';
 
 var $shops_div, $add_button;
 
