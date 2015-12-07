@@ -6,31 +6,14 @@
             {% for item in items %}
                 <div>
                 <p>{{ item.getProduct().getName() }} {{ item.getProduct().getPrice() * item.getQuantity() }}€ ({{ item.getQuantity() }})</p>
-                <a href="/event/{{ hash }}/shops/{{ shopName }}/remove-from-cart/{{ item.getId() }}">Remove</a>
+                {#<a href="/event/{{ hash }}/shops/{{ shopName }}/remove-from-cart/{{ item.getId() }}">Remove</a>#}
+                <a href="{{ path('_remove_from_cart', {'hash': event.getHash(), 'itemId': item.getId() }) }}" class="dtr_remove_product" role="button" data-hash="{{ event.getHash() }}" data-id="{{ item.getId() }}">Remove</a>
                 </div>
             {% endfor %}
             <div>
                 <p>Total cost: {{ totalCost }}€</p>
-                <a class="btn btn-default btn-sm" role="button" href="/event/{{ hash }}/shops/{{ shopName }}/delete-cart">Delete cart</a>
+                <a href="{{ path('_delete_cart', {'hash': event.getHash() }) }}" class="btn btn-default btn-sm dtr_delete_cart" role="button" data-hash="{{ event.getHash() }}">Delete cart</a>
                 <button class="btn btn-default btn-sm">Checkout</button>
             </div>
     </div>
 {% endif %}
-
-{#<div class="modal">#}
-    {#<div class="modal-dialog">#}
-        {#<div class="modal-content">#}
-            {#<div class="modal-header">#}
-                {#<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&close;</button>#}
-                {#<h4 class="modal-title">Modal title</h4>#}
-            {#</div>#}
-            {#<div class="modal-body">#}
-                {#<p>One fine body…</p>#}
-            {#</div>#}
-            {#<div class="modal-footer">#}
-                {#<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
-                {#<button type="button" class="btn btn-primary">Save changes</button>#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
-{#</div>#}

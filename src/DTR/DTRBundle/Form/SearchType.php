@@ -12,7 +12,7 @@ class SearchType extends AbstractType
         $builder
             ->setMethod('GET')
             ->add('searchInput', 'search', array('label' => false))
-            ->add('searchButton', 'submit', array('label' => 'Search'))
+            ->add('searchButton', 'submit', array('label' => 'Ieškoti'))
         ;
     }
 

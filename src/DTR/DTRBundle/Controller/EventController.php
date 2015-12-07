@@ -124,6 +124,12 @@ class EventController extends Controller
 
         $user = $this->getUser();
         $member = $doctrine->getRepository('DTRBundle:Member')->findByEventUser($event, $user);
+        $items = $doctrine->getRepository('DTRBundle:Item')->findByMember($member);
+        $totalCost = 0.0;
+        foreach ($items as $item) {
+            $productPrice = $item->getProduct()->getPrice() * $item->getQuantity();
+            $totalCost += $productPrice;
+        }
 
         if($member == null) {
             return $this->render('event/dashboard/join.html.twig', [ 'event' => $event ]);
@@ -135,7 +141,9 @@ class EventController extends Controller
             return $this->render('event/dashboard/host.html.twig', [
                 'event' => $event,
                 'host' => $member,
-                'guests' => $guests
+                'guests' => $guests,
+                'items' => $items,
+                'totalCost' => $totalCost
             ]);
         }   
 
@@ -145,7 +153,9 @@ class EventController extends Controller
             'event' => $event,
             'host' => $host,
             'guests' => $guests,
-            'current' => $member
+            'current' => $member,
+            'items' => $items,
+            'totalCost' => $totalCost
         ]);
     }
 

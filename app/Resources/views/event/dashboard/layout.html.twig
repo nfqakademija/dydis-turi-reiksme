@@ -16,7 +16,7 @@
                                         {{ host.name }}
                                         <div style="display: inline; float: right;">
                                             <span class="number-of-items">{{ host.numberOfItems }} psr.</span>
-                                            <span class="total-price">{{ host.totalPrice|number_format(2, ',') }}€</span>
+                                            <span class="total-price">{{ host.totalPrice|number_format(2, ',') }}€</span>}
                                         </div>
                                     </h4>
                                     {% block host_actions %}{% endblock %}
@@ -45,6 +45,7 @@
                         </ul>
                     </div>
                 </div>
+                {% include 'menu/cart.html.twig' %}
             </div>
         {% endblock %}
     </div>

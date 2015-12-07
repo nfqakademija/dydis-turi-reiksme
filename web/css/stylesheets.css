@@ -1,5 +1,5 @@
 .navbar, .jumbotron, body {
-    background-color: #468966;
+    background-color: #00a388;
 }
 
 .dtr_login, .dtr_register, .dtr_user, .dtr_logout {
@@ -7,8 +7,9 @@
     font-weight: 500;
 }
 
-.dtr_login:hover, .dtr_register:hover, .dtr_user:hover, .dtr_logout:hover {
-    background-color: #ffb03b;
+.dtr_login:hover {
+    background: #ffb03b;
+
 }
 
 .jumbotron h1 {
@@ -16,7 +17,7 @@
 }
 
 
-.jumbotron h1, p {
+.jumbotron h1, p, .shop_name {
     color: #fff;
 }
 
@@ -47,3 +48,132 @@
     color: #777;
     border-top: 1px solid #e5e5e5;
 }
+
+/* Login
+-------------------------------------------------- */
+
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #00a388;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#remember_label, #remember_me {
+    display: inline-block;
+    float: left;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    /*width: 100%;*/
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    /*background-color: #f5f5f5;*/
+}
+
+/* Shops
+-------------------------------------------------- */
+
+.shop_name:hover {
+    color: #ffb03b;
+    text-decoration: none;
+}
+
+.shop_name {
+    display: block;
+    margin-bottom: 20px;
+}
+
+#shop {
+    padding-right: 5px;
+    margin: auto;
+}
+
+.searchForm {
+    margin-bottom: 40px;
+}
+
+#dtr_dtrbundle_search_searchButton {
+    background-color: #ffb03b;
+    color: #fff;
+    margin-left: 15px;
+}
+
+#dtr_dtrbundle_search_searchInput {
+    float: left;
+    margin-left: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
