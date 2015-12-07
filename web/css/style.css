@@ -1,0 +1,50 @@
+.navbar, .jumbotron, body {
+    background-color: #468966 !important;
+    border-bottom: 1px solid #ffffff;
+}
+
+.dtr_login, .dtr_register, .dtr_user, .dtr_logout {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.dtr_login:hover, .dtr_register:hover, .dtr_user:hover, .dtr_logout:hover {
+    background-color: #ffb03b;
+}
+
+.jumbotron h1 {
+    font-size: 60px;
+}
+
+
+.jumbotron h1, p {
+    color: #fff;
+}
+
+.navbar-brand {
+    font-weight: 500;
+}
+
+.navbar-header .navbar-brand:hover {
+    color: #ffb03b;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+
+    background-color: #fff;
+    border-color: #ffb03b;
+    color: #ffb03b;
+}
+
+.btn
+                                                                                                                                                    {
+                                                                                                                                                        background-color: #ffb03b;
+    border-color: #ffb03b;
+}
+
+
+.footer {
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+}
