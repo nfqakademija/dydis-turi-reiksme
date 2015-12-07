@@ -31,17 +31,28 @@ class CartController extends Controller
         $product = $em->getRepository('DTRBundle:Product')->find($productId);
         $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
         $member = $em->getRepository('DTRBundle:Member')->findByEventUser($event[0], $user);
-
         $item = $em->getRepository('DTRBundle:Item')->findByProductAndMember($product, $member);
 
-        if ($item) {
+        if($item) {
             $item->setQuantity($item->getQuantity()+1);
         } else {
             $item = new Item();
             $item->setProduct($product);
             $item->setMember($member);
+            $member->addItem($item);
             $em->persist($item);
         }
+
+//        if ($item) {
+//            $item->setQuantity($item->getQuantity()+1);
+//        } else {
+//            $item = new Item();
+//            $item->setProduct($product);
+//            $item->setMember($member);
+//            $em->persist($item);
+//        }
+
+
 
         $em->flush();
 

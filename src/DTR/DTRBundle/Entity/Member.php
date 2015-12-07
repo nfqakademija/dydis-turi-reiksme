@@ -151,7 +151,7 @@ class Member
     public function increaseTotalPrice($amount)
     {
         $this->total_price += $amount;
-        $this->event->incraeseTotalPrice($amount);
+        $this->event->increaseTotalPrice($amount);
 
         return $this;
     }

@@ -42,12 +42,27 @@ class Product
      */
     private $shop;
 
+
+    /**
+//     * @var \DTR\DTRBundle\Entity\Item
+//     *
+//     * @ORM\OneToMany(targetEntity="Item", inversedBy="product")
+//     */
+//    private $items;
+
     /**
      * @var \DTR\DTRBundle\Entity\ProductType
      *
      * @ORM\ManyToOne(targetEntity="ProductType", inversedBy="products")
      */
     private $productType;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image_location", type="string", length=255)
+     */
+    private $imageLocation;
 
     /**
      * Get id
@@ -153,5 +168,22 @@ class Product
     public function getProductType()
     {
         return $this->productType;
+    }
+
+    public function setImageLocation($imageLocation)
+    {
+        $this->imageLocation = $imageLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get imageLocation
+     *
+     * @return string
+     */
+    public function getImageLocation()
+    {
+        return $this->imageLocation;
     }
 }
