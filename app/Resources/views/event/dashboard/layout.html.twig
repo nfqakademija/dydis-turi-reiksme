@@ -16,7 +16,7 @@
                                         <span style="color: #fff;">{{ host.name }}</span>
                                         <div style="display: inline; float: right;">
                                             <span style="color: #fff;"class="number-of-items">{{ host.numberOfItems }} psr.</span>
-                                            <span style="color: #fff;"class="total-price">{{ host.totalPrice|number_format(2, ',') }}€</span>
+                                            <span style="color: #fff;"class="total-price">{{ host.priceWithQuantity|number_format(2, ',') }}€</span>
                                         </div>
                                     </h4>
                                     {% block host_actions %}{% endblock %}
@@ -29,11 +29,11 @@
                                             <span style="color: #fff;">{{ guest.name }}</span>
                                             <div style="display: inline; float: right;">
                                                 <span style="color: #fff;"class="number-of-items">{{ guest.numberOfItems }} psr.</span>
-                                                <span style="color: #fff;"class="total-price">{{ guest.totalPrice|number_format(2, ',') }}€</span>
+                                                <span style="color: #fff;"class="total-price">{{ guest.priceWithQuantity|number_format(2, ',') }}€</span>
                                                 {% if guest.debt == 0 %}
                                                     <span style="color: #fff;"class="guest-debt" style="color: limegreen;">0.00€</span>
                                                 {% else %}
-                                                    <span class="guest-debt" style="color: red;">{{ guest.debt|number_format(2, ',') }}€</span>
+                                                    <span class="guest-debt" style="color: red;">{{ guest.priceWithQuantity|number_format(2, ',') }}€</span>
                                                 {% endif %}
                                             </div>
                                         </h4>
