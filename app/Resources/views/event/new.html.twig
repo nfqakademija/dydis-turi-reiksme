@@ -4,7 +4,7 @@
     <div>
         {{ form_start(form) }}
         {{ form_widget(form) }}
-        {{ form_end(form) }}
+        {{ form_end(form, { 'attr': {'class': 'dtr_event_new'} }) }}
     </div>
 
     <script src="{{ asset('js/add_remove_shops.js') }}"></script>

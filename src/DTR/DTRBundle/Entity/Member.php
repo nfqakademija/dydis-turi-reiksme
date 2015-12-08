@@ -258,7 +258,12 @@ class Member
      */
     public function getNumberOfItems()
     {
-        return $this->items->count();
+        $totalItems = 0;
+        foreach ($this->items as $item) {
+            $totalItems += $item->getQuantity();
+        }
+
+        return $totalItems;
     }
 
     /**
