@@ -255,3 +255,26 @@ form.fos_user_registration_register div input {
     margin-left: 100px;
     margin-top: 5px;
 }
+
+h1.reg{
+    margin-left: 100px;
+}
+
+div#shop img{
+    max-width: 300px;
+    max-height: 300px;
+}
+
+button#dtr_dtrbundle_search_searchButton {
+    margin: 3px;
+    height: 40px;
+}
+
+div.products_list {
+    margin: 100px 0 0 0;
+}
+
+a.addToCart:hover {
+    text-decoration: none;
+    color: #ffb03b !important;
+}

@@ -8,9 +8,9 @@
     </div>
     <div class="products_list">
         {% for product in products %}
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <img src="{{ asset('' ~ product.imageLocation ~ '') }}" class="img-thumbnail" .img-responsive>
-                <a style="color: #fff" href="/event/{{ event.hash }}/shops/{{ shopName }}/add-to-cart/{{ product.id }}" class="addToCart">Pridėti į krepšelį</a>
+                <a style="color: #fff" href="/event/{{ event.hash }}/shops/{{ shopName }}/add-to-cart/{{ product.id }}" class="addToCart"><span style="font-size: 15px;" class="glyphicon glyphicon-plus"> Pridėti</span></a>
                 <p>{{  product.name }} {{ product.price|number_format(2, ',') }}€</p >
             </div>
         {% endfor %}
