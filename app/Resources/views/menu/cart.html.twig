@@ -7,11 +7,11 @@
                 <div>
                 <p>{{ item.product.name }} {{ (item.product.price * item.quantity)|number_format(2, ',') }}€ ({{ item.quantity }})</p>
                 {#<a href="/event/{{ hash }}/shops/{{ shopName }}/remove-from-cart/{{ item.getId() }}">Remove</a>#}
-                <a href="{{ path('_remove_from_cart', {'hash': event.hash, 'itemId': item.id, 'urlLength': app.request.requestUri|length}) }}" class="dtr_remove_product" role="button">Remove</a>
+                <a style="color: #e74c3c"href="{{ path('_remove_from_cart', {'hash': event.hash, 'itemId': item.id, 'urlLength': app.request.requestUri|length}) }}" class="dtr_remove_product" role="button">Pašalinti</a>
                 </div>
             {% endfor %}
             <div>
-                <p>Bendra suma: {{ totalCost|number_format(2, ',') }}€</p>
+                <p>Suma: {{ totalCost|number_format(2, ',') }}€</p>
                 {% if items|length > 0 %}
                     <a href="{{ path('_delete_cart', {'hash': event.hash, 'urlLength': app.request.requestUri|length}) }}" class="btn btn-default btn-sm dtr_delete_cart" role="button">Ištrinti krepšelį</a>
                 {% endif %}

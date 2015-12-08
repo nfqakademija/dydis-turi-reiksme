@@ -1,31 +1,31 @@
 {%  extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container-fluid">
+    <div class="container-fluid dtr_event_info">
         {% if (participations is empty) and (hosted_events is empty) %}
-            <p>Jus nedalyvaujate jokiuose įvykiuose</p>
+            <p class="dtr_event_info_title dtr_event_font">Jus nedalyvaujate jokiuose įvykiuose</p>
         {% else %}
             {% if hosted_events is empty %}
-                <p>Jūs nemoderuojate jokių įvykių.</p>
+                <p class="dtr_event_info_title dtr_event_font">Jūs nemoderuojate jokių įvykių.</p>
             {% else %}
                 <table class="table table-striped">
-                    <caption>Moderuojami įvykiai</caption>
+                    <caption class="dtr_event_info_title dtr_event_font">Moderuojami įvykiai</caption>
                     <thead>
-                    <tr>
-                        <th>Pavadinimas</th>
-                        <th>Dalyvių skaičius</th>
-                        <th>Bendra suma</th>
-                        <th>Bendra skola</th>
-                        <th></th>
+                    <tr style="background-color:#17607d;">
+                        <th class="dtr_event_info_title">Pavadinimas</th>
+                        <th class="dtr_event_info_title">Dalyvių skaičius</th>
+                        <th class="dtr_event_info_title">Bendra suma</th>
+                        <th class="dtr_event_info_title">Bendra skola</th>
+                        <th class="dtr_event_info_title"></th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for hosted_event in hosted_events %}
-                        <tr>
-                            <td>{{ hosted_event.name }}</td>
-                            <td>{{ hosted_event.membersCount }}</td>
-                            <td>{{ hosted_event.totalPrice }}</td>
-                            <td>{{ hosted_event.totalDebt }}</td>
+                        <tr style="background-color:#17607d;">
+                            <td class="dtr_event_info_title">{{ hosted_event.name }}</td>
+                            <td class="dtr_event_info_title">{{ hosted_event.membersCount }}</td>
+                            <td class="dtr_event_info_title">{{ hosted_event.totalPrice }}</td>
+                            <td class="dtr_event_info_title">{{ hosted_event.totalDebt }}</td>
                             <td><a class="btn btn-primary" href="{{ path('dashboard', { 'hash' : hosted_event.hash }) }}">Žiūrėti</a></td>
                         </tr>
                     {% endfor %}
@@ -34,25 +34,25 @@
             {% endif %}
 
             {% if participations is empty %}
-                <p>Jūs nedalyvaujate įvykiuose.</p>
+                <p class="dtr_event_info_title dtr_event_font">Jūs nedalyvaujate įvykiuose.</p>
             {% else %}
                 <table class="table table-striped">
-                    <caption>Įvykiai, kuriuose dalyvauju</caption>
+                    <caption class="dtr_event_info_title dtr_event_font">Įvykiai, kuriuose dalyvauju</caption>
                     <thead>
-                    <tr>
-                        <th>Pavadinimas</th>
-                        <th>Dalyvių skaičius</th>
-                        <th>Skolingas</th>
+                    <tr style="background-color:#17607d;">
+                        <th class="dtr_event_info_title">Pavadinimas</th>
+                        <th class="dtr_event_info_title">Dalyvių skaičius</th>
+                        <th class="dtr_event_info_title">Skolingas</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for participation in participations %}
-                        <tr>
-                            <td>{{ participation.event.name }}</td>
-                            <td>{{ participation.event.membersCount }}</td>
-                            <td>{{ participation.debt }}</td>
-                            <td><a class="btn btn-primary" href="{{ path('dashboard', { 'hash' : participation.event.hash }) }}">Žiūrėti</a></td>
+                        <tr style="background-color:#17607d;">
+                            <td class="dtr_event_info_title">{{ participation.event.name }}</td>
+                            <td class="dtr_event_info_title">{{ participation.event.membersCount }}</td>
+                            <td class="dtr_event_info_title">{{ participation.debt }}</td>
+                            <td class="dtr_event_info_title"><a class="btn btn-primary" href="{{ path('dashboard', { 'hash' : participation.event.hash }) }}">Žiūrėti</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>

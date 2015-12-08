@@ -1,8 +1,12 @@
-.navbar, .jumbotron, body {
-    background-color: #00a388;
+body {
+    color: #fff;
 }
 
-.dtr_login, .dtr_register, .dtr_user, .dtr_logout {
+.navbar, .jumbotron, body {
+    background-color: #17607d;
+}
+
+.dtr_login, .dtr_register, .dtr_user, .dtr_logout, .dropdown-toggle, .dtr_new_event {
     font-size: 16px;
     font-weight: 500;
 }
@@ -15,9 +19,8 @@
 .jumbotron h1 {
     font-size: 60px;
 }
-
-
-.jumbotron h1, p, .shop_name {
+  
+.jumbotron h1, p, h1, .shop_name {
     color: #fff;
 }
 
@@ -29,7 +32,8 @@
     color: #ffb03b;
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active,
+.open .dropdown-toggle.btn-primary{
 
     background-color: #fff;
     border-color: #ffb03b;
@@ -37,8 +41,8 @@
 }
 
 .btn
-                                                                                                                                                    {
-                                                                                                                                                        background-color: #ffb03b;
+{
+    background-color: #ffb03b;
     border-color: #ffb03b;
 }
 
@@ -49,20 +53,59 @@
     border-top: 1px solid #e5e5e5;
 }
 
+div#dtr_dtrbundle_event {
+    width: 350px;
+    margin: 0 auto;
+}
+
+div#dtr_dtrbundle_event label {
+    width: 100px;
+    color: #fff;
+}
+
+div#dtr_dtrbundle_event input {
+    width: 200px;
+}
+
+div#dtr_dtrbundle_event_date {
+    display: inline;
+}
+
+div#fos_user_registration_form {
+    width: 500px;
+    margin: 0 auto;
+}
+
+div#fos_user_registration_form label {
+    width: 100px;
+}
+
+div#fos_user_registration_form input {
+    width: 200px;
+    margin: 3px 0!important;
+}
+
+form.fos_user_registration_register div input {
+    width: 300px !important;
+    height: 44px;
+    margin: 10px 0 0 420px;
+}
 /* Login
 -------------------------------------------------- */
 
 body {
     padding-top: 40px;
     padding-bottom: 40px;
-    background-color: #00a388;
+    background-color: #17607d;
 }
 
-.form-signin {
+.form-signin, .fos_user_registration_register,
+.dtr_event_new {
     max-width: 330px;
     padding: 15px;
     margin: 0 auto;
 }
+
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
     margin-bottom: 10px;
@@ -150,6 +193,53 @@ body {
     margin-left: 15px;
 }
 
+/* Event info
+-------------------------------------------------- */
+.dtr_event_info .dtr_event_info_title {
+    color: #fff;
+}
+button {
+    background: #ffb03b;
+    border: 0px none;
+    color: #fff;
+    height: 39px;
+    margin: 10px auto;
+    padding: 0 15px;
+}
+
+.dtr_event_info .dtr_event_font {
+    font-size: 16px;
+    font-weight: 700;
+}
+div input {
+    width: 300px;
+    height: 44px;
+    margin: 2px 0;
+    color: #000;
+}
+
+/* Colors
+-------------------------------------------------- */
+.required {
+    color: #fff;
+}
+div#dtr_dtrbundle_event_date select{
+    height: 44px;
+    margin: 2px 0;
+}
+
+/* Dashboard
+-------------------------------------------------- */
+.dtr_dash_link:hover, .dtr_dash_link:active {
+    background-color: #ffb03b;
+    text-decoration: none;
+}
+
+/* Cart
+-------------------------------------------------- */
+.dtr_remove_product:hover, .dtr_remove_product:active {
+    text-decoration: none;
+}
 
 
 
@@ -170,10 +260,7 @@ body {
 
 
 
-
-
-
-
-
-
-
+select {
+    color: #000;
+    margin: 0 2px;
+}

@@ -65,7 +65,7 @@ class EventController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Sukurti'));
+        $form->add('submit', 'submit', array('label' => 'Sukurti įvykį'));
 
         return $form;
     }
@@ -130,11 +130,9 @@ class EventController extends Controller
         $member = $doctrine->getRepository('DTRBundle:Member')->findByEventUser($event, $user);
         $items = $doctrine->getRepository('DTRBundle:Item')->findByMember($member);
         $totalCost = 0.0;
-        $totalItems = 0;
         foreach ($items as $item) {
             $productPrice = $item->getProduct()->getPrice() * $item->getQuantity();
             $totalCost += $productPrice;
-            $totalItems += $item->getQuantity();
         }
 
         if($member == null) {
@@ -149,8 +147,7 @@ class EventController extends Controller
                 'host' => $member,
                 'guests' => $guests,
                 'items' => $items,
-                'totalCost' => $totalCost,
-                'totalItems' => $totalItems
+                'totalCost' => $totalCost
             ]);
         }   
 
@@ -162,8 +159,7 @@ class EventController extends Controller
             'guests' => $guests,
             'current' => $member,
             'items' => $items,
-            'totalCost' => $totalCost,
-            'totalItems' => $totalItems
+            'totalCost' => $totalCost
         ]);
     }
 
@@ -233,7 +229,7 @@ class EventController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Atnaujinti'));
+        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -305,7 +301,7 @@ class EventController extends Controller
             'DTRBundle:Event:dashboard',
             array(
                 'hash' => $hash,
-                'event' => $event[0],
+                'event' => $event,
                 'member' => $member
             )
         );
