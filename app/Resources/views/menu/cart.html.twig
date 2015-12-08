@@ -5,10 +5,12 @@
         </div>
             {% for item in items %}
                 <div>
-                <p>{{ item.product.name }} {{ (item.product.price * item.quantity)|number_format(2, ',') }}€ ({{ item.quantity }})</p>
+                <span>{{ item.product.name }} {{ (item.product.price * item.quantity)|number_format(2, ',') }}€ ({{ item.quantity }})</span>
                 {#<a href="/event/{{ hash }}/shops/{{ shopName }}/remove-from-cart/{{ item.getId() }}">Remove</a>#}
+                <br>
                 <a style="color: #e74c3c"href="{{ path('_remove_from_cart', {'hash': event.hash, 'itemId': item.id, 'urlLength': app.request.requestUri|length}) }}" class="dtr_remove_product" role="button">Pašalinti</a>
                 </div>
+                <br>
             {% endfor %}
             <div>
                 <p>Suma: {{ totalCost|number_format(2, ',') }}€</p>
