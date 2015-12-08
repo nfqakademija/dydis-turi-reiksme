@@ -333,6 +333,12 @@ class Event
      */
     public function getTotalPrice()
     {
+        $totalPrice = 0.0;
+
+        foreach($this->members as $member) {
+            $totalPrice += $member->getPriceWithQuantity();
+        }
+        $this->total_price = $totalPrice;
         return $this->total_price;
     }
 
@@ -367,6 +373,12 @@ class Event
      */
     public function getTotalDebt()
     {
+        $totalDebt = 0.0;
+
+        foreach($this->members as $member) {
+            $totalDebt += $member->getPriceWithQuantity();
+        }
+        $this->total_debt = $totalDebt;
         return $this->total_debt;
     }
 

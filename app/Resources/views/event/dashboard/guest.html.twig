@@ -4,6 +4,7 @@
     {% if guest == current %}
         <p style="float: right;">
             <a href="{{ path('_cart_overview', {'memberId': guest.id, 'hash': event.hash }) }}"><span style="color: #ffb03b" class="glyphicon glyphicon-search"></span></a>
+            <span style="color: #ffb03b" class="glyphicon glyphicon-user"></span>
         </p>
     {% endif %}
 {% endblock %}
