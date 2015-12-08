@@ -15,22 +15,23 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('guestLimit')
-            ->add('fundsLimit')
-            ->add('date')
-            ->add('shops', 'collection', [
-                'type' => 'entity',
-                'options' => [
-                    'class' => 'DTRBundle:Shop',
-                    'choice_label' => 'name',
-                    'label' => false
-                ],
-                'label' => 'Parduotuvės',
-                'allow_add' => true,
-                'by_reference' => false,
-                'allow_delete' => true
-            ]);
+            ->add('name', null, array('label' => 'Pavadinimas'))
+            ->add('guestLimit', null, array('label' => 'Max svečiai'))
+            ->add('fundsLimit', null, array('label' => 'Max išlaidos'))
+            ->add('date', null, array('label' => 'Data'))
+//            ->add('shops', 'collection', [
+//                'type' => 'entity',
+//                'options' => [
+//                    'class' => 'DTRBundle:Shop',
+//                    'choice_label' => 'name',
+//                    'label' => false
+//                ],
+//                'label' => 'Parduotuvės',
+//                'allow_add' => true,
+//                'by_reference' => false,
+//                'allow_delete' => true
+//            ])
+                ;
     }
     
     /**
