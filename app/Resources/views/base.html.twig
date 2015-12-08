@@ -9,7 +9,6 @@
             <!-- Bootstrap Yeti theme -->
             <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha256-gJ9rCvTS5xodBImuaUYf1WfbdDKq54HCPz9wk8spvGs= sha512-weqt+X3kGDDAW9V32W7bWc6aSNCMGNQsdOpfJJz/qD/Yhp+kNeR+YyvvWojJ+afETB31L0C4eO0pcygxfTgjgw==" crossorigin="anonymous">
             <link href="{{ asset('css/stylesheets.css') }}" rel="stylesheet" type="text/css" />
-            <!-- jQuery -->
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -27,11 +26,17 @@
 
                         <ul class="nav navbar-nav navbar-right">
                             {% if not app.user %}
-                                <li class="dtr_login"><a class="dtr_login" href="{{ url('fos_user_security_login') }}">Prisijungti</a></li>
-                                <li><a class="dtr_register" href="{{ url('fos_user_registration_register') }}">Registruotis</a></li>
+                                <li class="dtr_login"><a href="{{ url('fos_user_security_login') }}">Prisijungti</a></li>
+                                <li class="dtr_register"><a href="{{ url('fos_user_registration_register') }}">Registruotis</a></li>
                             {% else %}
-                                <li><a class="dtr_user" href="">{{ app.user.username }}</a></li>
-                                <li><a class="dtr_logout" href="{{ url('fos_user_security_logout') }}">Atsijungti</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ app.user.username }}<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li class="dtr_user_events"><a href="{{ path('_info') }}">Mano įvykiai</a></li>
+                                        <li class="dtr_logout"><a href="{{ url('fos_user_security_logout') }}">Atsijungti</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dtr_new_event"><a href="{{ path('new_event') }}">Naujas įvykis</a></li>
                             {% endif %}
                         </ul>
                     </div>
@@ -41,15 +46,20 @@
 
             {% block body %}{% endblock %}
         {% block footer %}
-            <foooter class="footer" role="contentinfo">
+            <footer class="footer">
                 <div class="container">
                     <p>© 2015 Dydis turi reikšmę.
                 </div>
-            </foooter>
+            </footer>
         {% endblock %}
         {% block javascripts %}
+            <!-- jQuery -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
             <!-- Bootstrap compiled and minified JavaScript -->
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+            <script src="{{ absolute_url(asset("js/cart.js")) }}"></script>
+            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+{#            <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>#}
         {% endblock %}
     </body>
 </html>

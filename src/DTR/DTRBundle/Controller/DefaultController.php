@@ -92,7 +92,7 @@ class DefaultController extends Controller
             'views/menu/products.html.twig',
             array(
                 'products' => $products,
-                'hash' => $hash,
+                'event' => $event[0],
                 'items' => $items,
                 'shopName' => $shopName,
                 'totalCost' => $totalCost,
@@ -117,20 +117,14 @@ class DefaultController extends Controller
      */
     public function dbAction()
     {
-        $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-//        $member = $em->getRepository('DTRBundle:Member')->find('5');
-//        $member->increaseDebt(100);
-//
-//        $member = $em->getRepository('DTRBundle:Member')->find('7');
-//        $member->increaseDebt(60);
+        $member = $em->getRepository('DTRBundle:Shop')->find(8);
 
-        $member = $em->getRepository('DTRBundle:Member')->find('9');
-        $member->increaseDebt(70);
+        $em->remove($member);
 
-//        $event = $em->getRepository('DTRBundle:Event')->findByHash(283682);
-//        $event[0]->setTotalDebt(0);
+        $member = $em->getRepository('DTRBundle:Shop')->find(7);
+        $em->remove($member);
 
 
         $em->flush();
@@ -164,5 +158,25 @@ class DefaultController extends Controller
         $em->flush();
 
         return new Response('Updated product id '.$product->getId());
+    }
+
+    /**
+     *
+     * @Route("/events", name="_events")                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            name="_events")
+     */
+    public function eventsAction()
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+        $members = $user->getMembers();
+
+        return $this->render(
+            'views/default/events.html.twig',
+            array(
+                'members' => $members
+            )
+        );
     }
 }

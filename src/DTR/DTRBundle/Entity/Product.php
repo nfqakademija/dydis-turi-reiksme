@@ -2,6 +2,7 @@
 
 namespace DTR\DTRBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,11 +44,18 @@ class Product
     private $shop;
 
     /**
-     * @var \DTR\DTRBundle\Entity\ProductType
+     * @var
      *
-     * @ORM\ManyToOne(targetEntity="ProductType", inversedBy="products")
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="product")
      */
-    private $productType;
+    private $items;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image_location", type="string", length=255)
+     */
+    private $imageLocation;
 
     /**
      * Get id
@@ -131,27 +139,63 @@ class Product
         return $this->shop;
     }
 
+    
     /**
-     * Set productType
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
+
+    /**
+     * Add item
      *
-     * @param \DTR\DTRBundle\Entity\ProductType $productType
+     * @param \DTR\DTRBundle\Entity\Item $item
      *
      * @return Product
      */
-    public function setProductType(ProductType $productType = null)
+    public function addItem(Item $item)
     {
-        $this->productType = $productType;
+        $this->items[] = $item;
 
         return $this;
     }
 
     /**
-     * Get productType
+     * Remove item
      *
-     * @return \DTR\DTRBundle\Entity\ProductType
+     * @param \DTR\DTRBundle\Entity\Item $item
      */
-    public function getProductType()
+    public function removeItem(Item $item)
     {
-        return $this->productType;
+        $this->items->removeElement($item);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    public function setImageLocation($imageLocation)
+    {
+        $this->imageLocation = $imageLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get imageLocation
+     *
+     * @return string
+     */
+    public function getImageLocation()
+    {
+        return $this->imageLocation;
     }
 }

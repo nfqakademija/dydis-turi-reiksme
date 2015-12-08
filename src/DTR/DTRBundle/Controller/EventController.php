@@ -97,7 +97,11 @@ class EventController extends Controller
                 ->setUser($user)
                 ->setHost();
 
+            $user
+                ->addEvent($event);
+
             $em->persist($event);
+            $em->persist($user);
             $em->persist($member);
 
             $em->flush();
@@ -124,6 +128,12 @@ class EventController extends Controller
 
         $user = $this->getUser();
         $member = $doctrine->getRepository('DTRBundle:Member')->findByEventUser($event, $user);
+        $items = $doctrine->getRepository('DTRBundle:Item')->findByMember($member);
+        $totalCost = 0.0;
+        foreach ($items as $item) {
+            $productPrice = $item->getProduct()->getPrice() * $item->getQuantity();
+            $totalCost += $productPrice;
+        }
 
         if($member == null) {
             return $this->render('event/dashboard/join.html.twig', [ 'event' => $event ]);
@@ -135,7 +145,9 @@ class EventController extends Controller
             return $this->render('event/dashboard/host.html.twig', [
                 'event' => $event,
                 'host' => $member,
-                'guests' => $guests
+                'guests' => $guests,
+                'items' => $items,
+                'totalCost' => $totalCost
             ]);
         }   
 
@@ -145,7 +157,9 @@ class EventController extends Controller
             'event' => $event,
             'host' => $host,
             'guests' => $guests,
-            'current' => $member
+            'current' => $member,
+            'items' => $items,
+            'totalCost' => $totalCost
         ]);
     }
 
@@ -153,7 +167,7 @@ class EventController extends Controller
      * @param Event $event
      * @return Response
      *
-     * @Route("/{hash}/overview")
+     * @Route("/{hash}/overview", name="_overview")
      */
     public function overviewAction(Event $event)
     {
@@ -265,9 +279,8 @@ class EventController extends Controller
         return $this->forward(
             'DTRBundle:Event:dashboard',
             array(
-                'hash' => $hash,
-                'event' => $event,
-                'member' => $member
+            'event' => $event[0],
+            'hash' => $event[0]->getHash()
             )
         );
     }
@@ -309,9 +322,8 @@ class EventController extends Controller
         return $this->forward(
             'DTRBundle:Event:dashboard',
             array(
-                'hash' => $hash,
-                'event' => $event,
-                'member' => $member
+                'event' => $event[0],
+                'hash' => $event[0]->getHash()
             )
         );
     }

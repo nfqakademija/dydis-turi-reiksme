@@ -35,12 +35,12 @@ class Item
     /**
      * @var Product
      *
-     * @ORM\OneToOne(targetEntity="Product")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="items")
      */
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Member", inversedBy="items")
+     * @ORM\OneToOne(targetEntity="Member")
      */
     private $member;
 

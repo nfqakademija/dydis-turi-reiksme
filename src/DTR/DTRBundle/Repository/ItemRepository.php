@@ -19,10 +19,11 @@ class ItemRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findByProduct($product) {
+    public function findByProductAndMember($product, $member) {
         return $this->getEntityManager()
-        ->createQuery('SELECT i FROM DTRBundle:Item i WHERE i.product = ?1')
+        ->createQuery('SELECT i FROM DTRBundle:Item i WHERE i.product = ?1 AND i.member = ?2')
             ->setParameter(1, $product->getId())
+            ->setParameter(2, $member->getId())
             ->getOneOrNullResult();
     }
 }

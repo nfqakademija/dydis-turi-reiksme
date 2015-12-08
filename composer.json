@@ -21,7 +21,8 @@
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "squizlabs/php_codesniffer": "2.3.4",
         "gedmo/doctrine-extensions": "2.4.8",
-        "stof/doctrine-extensions-bundle": "1.2.1"
+        "stof/doctrine-extensions-bundle": "1.2.1",
+        "friendsofsymfony/jsrouting-bundle": "@stable"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
