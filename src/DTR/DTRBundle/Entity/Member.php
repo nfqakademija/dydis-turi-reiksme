@@ -139,7 +139,12 @@ class Member
      */
     public function getDebt()
     {
+        $this->debt = $this->total_price;
         return $this->debt;
+    }
+
+    public function removeDebt() {
+        $this->debt = 0.0;
     }
 
     /**
@@ -177,6 +182,17 @@ class Member
      */
     public function getTotalPrice()
     {
+        return $this->total_price;
+    }
+
+    public function getPriceWithQuantity()
+    {
+        $totalPrice = 0.0;
+        foreach ($this->items as $item) {
+            $productPrice = $item->getProduct()->getPrice() * $item->getQuantity();
+            $totalPrice += $productPrice;
+        }
+        $this->total_price = $totalPrice;
         return $this->total_price;
     }
 

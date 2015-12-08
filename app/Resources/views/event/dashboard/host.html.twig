@@ -3,6 +3,7 @@
 {% block host_actions %}
     <p style="float: right;">
         <a href="{{ path('_cart_overview', {'memberId': host.id, 'hash': event.hash, }) }}"><span style="color: #ffb03b" class="glyphicon glyphicon-search"></span></a>
+        <span style="color: #ffb03b" class="glyphicon glyphicon-user"></span>
     </p>
 {% endblock %}
 
@@ -10,7 +11,6 @@
     <p style="float: right;">
         <a href="{{ path('_remove_member', {'hash': event.hash, 'memberId': guest.id }) }}"><span style="color: #ffb03b" class="glyphicon glyphicon-remove-circle"></span></a>
         <a href="{{ path('_remove_debt', {'hash': event.hash, 'memberId': guest.id }) }}"><span style="color: #ffb03b" class="glyphicon glyphicon-ok"></span></a>
-        <span style="color: #ffb03b" class="glyphicon glyphicon-euro"></span>
         <a href="{{ path('_make_host', {'hash': event.hash, 'memberId': guest.id }) }}"><span style="color: #ffb03b" class="glyphicon glyphicon-education"></span></a>
         <a href="{{ path('_cart_overview', {'memberId': guest.id, 'hash': event.hash, }) }}"><span style="color: #ffb03b" class="glyphicon glyphicon-search"></span></a>
     </p>

@@ -294,7 +294,7 @@ class EventController extends Controller
         $em = $this->getDoctrine()->getManager();
         $member = $em->getRepository('DTRBundle:Member')->find($memberId);
         $event = $em->getRepository('DTRBundle:Event')->findByHash($hash);
-        $member->decreaseDebt($member->getDebt());
+        $member->removeDebt();
         $em->flush();
 
         return $this->forward(

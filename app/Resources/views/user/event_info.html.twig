@@ -51,7 +51,7 @@
                         <tr style="background-color:#17607d;">
                             <td class="dtr_event_info_title">{{ participation.event.name }}</td>
                             <td class="dtr_event_info_title">{{ participation.event.membersCount }}</td>
-                            <td class="dtr_event_info_title">{{ participation.debt }}</td>
+                            <td class="dtr_event_info_title">{{ participation.priceWithQuantity }}</td>
                             <td class="dtr_event_info_title"><a class="btn btn-primary" href="{{ path('dashboard', { 'hash' : participation.event.hash }) }}">Žiūrėti</a></td>
                         </tr>
                     {% endfor %}

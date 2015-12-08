@@ -88,7 +88,6 @@ div#fos_user_registration_form input {
 form.fos_user_registration_register div input {
     width: 300px !important;
     height: 44px;
-    margin: 10px 0 0 420px;
 }
 /* Login
 -------------------------------------------------- */
@@ -241,26 +240,41 @@ div#dtr_dtrbundle_event_date select{
     text-decoration: none;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 select {
     color: #000;
     margin: 0 2px;
+}
+
+input#remember_me {
+    width: 5px;
+    height: 5px;
+    margin-right: 5px;
+}
+
+form.fos_user_registration_register div input {
+    margin-left: 100px;
+    margin-top: 5px;
+}
+
+h1.reg{
+    margin-left: 100px;
+}
+
+div#shop img{
+    max-width: 300px;
+    max-height: 300px;
+}
+
+button#dtr_dtrbundle_search_searchButton {
+    margin: 3px;
+    height: 40px;
+}
+
+div.products_list {
+    margin: 100px 0 0 0;
+}
+
+a.addToCart:hover {
+    text-decoration: none;
+    color: #ffb03b !important;
 }
