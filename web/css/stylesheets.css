@@ -253,4 +253,5 @@ input#remember_me {
 
 form.fos_user_registration_register div input {
     margin-left: 100px;
+    margin-top: 5px;
 }
