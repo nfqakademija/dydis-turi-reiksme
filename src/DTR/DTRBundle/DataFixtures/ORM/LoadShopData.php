@@ -19,12 +19,14 @@ class LoadShopData implements FixtureInterface
         $product = new Product();
         $product->setName('STUDENTŲ pica');
         $product->setPrice(9,78);
+        $product->setDescription("1");
         $product->setImageLocation('images/products/STUDENTU.jpeg');
         $product->setShop($shop);
         $manager->persist($product);
 
         $product = new Product();
         $product->setName('KAPRIO pica');
+        $product->setDescription("1");
         $product->setPrice(9,75);
         $product->setImageLocation('images/products/KAPRIO.jpeg');
         $product->setShop($shop);
@@ -32,6 +34,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('KAIMIŠKA pica');
+        $product->setDescription("1");
         $product->setPrice(8,65);
         $product->setImageLocation('images/products/KAIMISKA.jpeg');
         $product->setShop($shop);
@@ -46,6 +49,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('GRAIKIŠKA pica');
+        $product->setDescription("1");
         $product->setPrice(6.29);
         $product->setImageLocation('images/products/GRAIKISKA.jpg');
         $product->setShop($shop);
@@ -53,6 +57,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('GRYBŲ pica');
+        $product->setDescription("1");
         $product->setPrice(6.29);
         $product->setImageLocation('images/products/GRYBU.jpg');
         $product->setShop($shop);
@@ -60,6 +65,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('STAMBULO pica');
+        $product->setDescription("1");
         $product->setPrice(7.59);
         $product->setImageLocation('images/products/STAMBULO.jpg');
         $product->setShop($shop);
