@@ -1,6 +1,0 @@
-parameters:
-
-
-services:
-    shops_populator:
-        class:  DTR\DTRBundle\Services\ShopsPopulator

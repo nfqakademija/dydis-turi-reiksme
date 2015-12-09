@@ -2,6 +2,9 @@
 
 namespace DTR\CrawlerBundle\Command;
 
+use DTR\CrawlerBundle\Services\Helpers\PopulatorInterface;
+use DTR\DTRBundle\Entity\Product;
+use DTR\DTRBundle\Entity\Shop;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -29,6 +32,8 @@ class CrawlerCommand extends ContainerAwareCommand
 
     protected $number_of_lines;
 
+    protected $populator;
+
     /**
      *
      * Public constructor
@@ -36,13 +41,15 @@ class CrawlerCommand extends ContainerAwareCommand
      * @param $engine_str
      * @param $directory
      * @param $number_of_lines
+     * @param PopulatorInterface $populator
      */
-    public function __construct($crawler_str, $engine_str, $directory, $number_of_lines)
+    public function __construct($crawler_str, $engine_str, $directory, $number_of_lines, $populator)
     {
         $this->crawler = $crawler_str;
         $this->engine = $engine_str;
         $this->directory = $directory;
         $this->number_of_lines = $number_of_lines;
+        $this->populator = $populator;
 
         parent::__construct();
     }
@@ -127,7 +134,14 @@ class CrawlerCommand extends ContainerAwareCommand
                 $menu = $new_menu;
         }
 
+        /*$menu_populator = $container->get($this->populator);
+
+        $output->writeln($menu_populator->getMenu($menu, $this->name));*/
+
+        $em = $container->get('doctrine.orm.entity_manager');
+
         unlink($this->directory. '/'. $this->filename);
+        $this->populateMenu($menu, $this->name, $em);
     }
 
     /**
@@ -283,5 +297,31 @@ class CrawlerCommand extends ContainerAwareCommand
 
         fwrite($file, json_encode($menu, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
         fclose($file);
+    }
+
+    public function populateMenu(array $menu, $shop_name, $em)
+    {
+        $shop = new Shop();
+
+        $shop
+            ->setName($shop_name)
+            ->setImageLocation($menu['logo']);
+
+        $em->persist($shop);
+
+        foreach($menu['products'] as $menu_entry)
+        {
+            $product = new Product();
+            $product
+                ->setImageLocation($menu_entry['image'])
+                ->setName($menu_entry['title'])
+                ->setDescription($menu_entry['description'])
+                ->setPrice($menu_entry['price'])
+                ->setShop($shop);
+
+            $em->persist($product);
+        }
+
+        $em->flush();
     }
 }

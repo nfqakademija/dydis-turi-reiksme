@@ -3,6 +3,7 @@ parameters:
     crawler.default_algorithm:  "class_matcher"
     crawler.default_directory:   "/var/www/nfqakademija/src/DTR/CrawlerBundle/Resources/Files"
     crawler.snippet_lines:  22
+    crawler.populator:  "menu_populator"
 
 services:
     inspector:
@@ -23,6 +24,6 @@ services:
         arguments:  ["@component_inspector"]
     crawler.command:
         class:  DTR\CrawlerBundle\Command\CrawlerCommand
-        arguments:  ["%crawler.default_crawler%", "%crawler.default_algorithm%", "%crawler.default_directory%", "%crawler.snippet_lines%"]
+        arguments:  ["%crawler.default_crawler%", "%crawler.default_algorithm%", "%crawler.default_directory%", "%crawler.snippet_lines%", "%crawler.populator%"]
         tags:
             - { name: console.command }

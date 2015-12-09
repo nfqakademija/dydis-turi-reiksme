@@ -23,38 +23,4 @@ class DefaultController extends Controller
         //return new Response('Wrote to file.');
         return new JsonResponse($menu);
     }
-
-    /**
-     * @param $url string
-     * @return string
-     */
-    public function getUrlContents($url)
-    {
-        $curl_handle=curl_init();
-
-        curl_setopt($curl_handle, CURLOPT_URL, $url);
-        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-
-        $contents = curl_exec($curl_handle);
-
-        curl_close($curl_handle);
-
-        return $contents;
-    }
-
-    /**
-     * @Route("/services")
-     */
-    public function testAction()
-    {
-        $class_matcher = $this->get('class_matcher');
-
-        $str = 'Not set';
-
-        if($class_matcher->isConstructed())
-            $str = 'Set';
-
-        return new Response($str);
-    }
 }
