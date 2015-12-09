@@ -41,6 +41,7 @@ class Item
 
     /**
      * @ORM\ManyToOne(targetEntity="Member")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $member;
 
