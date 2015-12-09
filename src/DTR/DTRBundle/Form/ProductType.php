@@ -5,7 +5,7 @@ namespace DTR\DTRBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class SearchType extends AbstractType
+class ProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -13,7 +13,7 @@ class SearchType extends AbstractType
             ->setMethod('GET')
             ->add('searchInput', 'search', array(
                 'attr' => array(
-                'placeholder' => 'Ieškoti parduotuvių'),
+                    'placeholder' => 'Ieškoti prekių'),
                 'label' => false))
             ->add('searchButton', 'submit', array('label' => 'Ieškoti'))
         ;
@@ -21,6 +21,6 @@ class SearchType extends AbstractType
 
     public function getName()
     {
-        return 'dtr_dtrbundle_search';
+        return 'dtr_dtrbundle_product';
     }
 }
