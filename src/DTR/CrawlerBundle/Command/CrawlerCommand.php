@@ -47,7 +47,7 @@ class CrawlerCommand extends ContainerAwareCommand
     {
         $this->crawler = $crawler_str;
         $this->engine = $engine_str;
-        $this->directory = $directory;
+        $this->directory = getcwd(). '/src/CrawlerBundle/Resources/Files';
         $this->number_of_lines = $number_of_lines;
         $this->populator = $populator;
 
