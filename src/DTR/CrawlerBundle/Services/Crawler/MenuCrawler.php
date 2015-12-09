@@ -73,7 +73,71 @@ class MenuCrawler implements CrawlerInterface
                 $products[] = $product;
         }
 
-        return $products;
+        $logo = $this->getLogo($crawler->filter('body'));
+
+        if(empty($logo))
+            $logo = $products[0]['image'];
+
+        return [
+            'logo' => $logo,
+            'products' => $products
+        ];
+    }
+
+    /**
+     * @param Crawler $body
+     * @return string
+     */
+    public function getLogo(Crawler $body)
+    {
+        $all_elements = $body->filter('*')->slice(1);
+
+        foreach($all_elements as $element)
+        {
+            if($element->hasAttributes())
+            {
+                $attr_str = '';
+
+                foreach($element->attributes as $attr)
+                    $attr_str .= $attr->nodeName. ' '. $attr->nodeValue. ' ';
+
+                if(preg_match_all('/logo/i', $attr_str) > 0)
+                {
+                    $element = new Crawler($element);
+                    $element = $element->filter('img');
+
+                    if($element->getNode(0) != null)
+                        return $this->component_inspector->getSource($element);
+                }
+            }
+        }
+
+        return '';
+
+
+        /*$all_elements = $all_elements->reduce(function(Crawler $element) {
+            $classes = $element->extract([ 'class' ]);
+
+            if(empty($classes[0]))
+                return false;
+
+            if(preg_match_all('/logo/i', $classes[0]) == 0)
+                return false;
+
+            $image = $element->filter('img');
+
+            if($image->getNode(0) == null)
+                return false;
+
+            return true;
+        });
+
+        $logo = '';
+
+        if($all_elements->getNode(0) != null)
+            $logo = $this->component_inspector->getSource($all_elements->first());
+
+        return $logo;*/
     }
 
     /**

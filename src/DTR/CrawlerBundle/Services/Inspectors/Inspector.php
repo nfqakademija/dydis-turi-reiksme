@@ -99,7 +99,11 @@ class Inspector
             $parts = explode('.', $str);
 
         $above_one = (int)$parts[0];
-        $below_one = (float)$parts[1] / 100;
+
+        $below_one = 0;
+
+        if(isset($parts[1]))
+            $below_one = (float)$parts[1] / 100;
 
         return $above_one + $below_one;
     }
