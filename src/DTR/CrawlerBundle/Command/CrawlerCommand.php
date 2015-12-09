@@ -116,28 +116,30 @@ class CrawlerCommand extends ContainerAwareCommand
 
         $output->writeln('<fg=green>Fetching data from</> '. $this->url);
         $menu = $crawler->getMenu($this->url);
-        $output->writeln('<fg=green>Data fetched!</>');
+//        $output->writeln('<fg=green>Data fetched!</>');
 
-        $this->filename = $this->name. '-'. date('Y-m-d_H-i-s'). '.json';
-        $this->writeToFile($menu);
+//        $this->filename = $this->name. '-'. date('Y-m-d_H-i-s'). '.json';
+//        $this->writeToFile($menu);
 
-        $this->manageSnippet($input, $output);
-
-        if(!$this->edit)
-            $this->manageEditFile($input, $output);
-
-        if($this->edit)
-        {
-            $new_menu = $this->editFile($input, $output);
-
-            if($new_menu !== false)
-                $menu = $new_menu;
-        }
+//        $this->manageSnippet($input, $output);
+//
+//        if(!$this->edit)
+//            $this->manageEditFile($input, $output);
+//
+//        if($this->edit)
+//        {
+//            $new_menu = $this->editFile($input, $output);
+//
+//            if($new_menu !== false)
+//                $menu = $new_menu;
+//        }
 
         $em = $container->get('doctrine.orm.entity_manager');
 
-        unlink($this->directory. '/'. $this->filename);
+//        unlink($this->directory. '/'. $this->filename);
         $this->populateMenu($menu, $this->name, $em);
+
+        $output->writeln('<fg=green>Data fetched!</>');
     }
 
     /**
