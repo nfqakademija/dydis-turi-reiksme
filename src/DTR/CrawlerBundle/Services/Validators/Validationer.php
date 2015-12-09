@@ -9,8 +9,6 @@ class Validationer implements ValidationerInterface
 {
     const RESULTS_TO_QUALIFY = 5;
 
-    const FILE = '/var/www/nfqakademija/src/DTR/CrawlerBundle/Resources/Files/test.csv';
-
     const DEFAULT_POINTS = [
         'count' => 1,
         'length' => 1,
@@ -18,6 +16,8 @@ class Validationer implements ValidationerInterface
         'consistency' => 1,
         'mode' => 1
     ];
+
+    private $file;
 
     /**
      * @var Inspector
@@ -44,6 +44,7 @@ class Validationer implements ValidationerInterface
      */
     public function __construct(Inspector $inspector)
     {
+        $this->file = getcwd(). '/src/DTR/CrawlerBundle/Resources/Files/test.csv';
         $this->inspector = $inspector;
         $this->indicator_stage = 1;
 
@@ -56,7 +57,7 @@ class Validationer implements ValidationerInterface
      */
     public function readKeywords()
     {
-        $file = fopen(self::FILE, 'r');
+        $file = fopen($this->file, 'r');
 
         if($file === FALSE)
         {

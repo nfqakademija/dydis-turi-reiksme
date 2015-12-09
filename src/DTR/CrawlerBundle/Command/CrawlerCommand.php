@@ -200,7 +200,7 @@ class CrawlerCommand extends ContainerAwareCommand
         $question = new Question('<fg=cyan>Specify directory</> <fg=yellow>['. str_replace(getcwd(), '', $this->directory). '/]</>: ', $this->directory);
         $question->setValidator(function($directory) {
             $old_location = $this->directory. '/'. $this->filename;
-            $new_location = $directory. '/'. $this->filename;
+            $new_location = getcwd(). $directory. '/'. $this->filename;
 
             if($old_location != $new_location)
             {
@@ -258,7 +258,7 @@ class CrawlerCommand extends ContainerAwareCommand
      */
     private function editFile(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Apply your changes.');
+        $output->writeln('Apply your changes to '. $this->directory. '/'. $this->filename);
         $question = new ConfirmationQuestion('<fg=cyan>Save file?</> <fg=yellow>[yes]</>', true);
 
         if(!$this->asker->ask($input, $output, $question))
