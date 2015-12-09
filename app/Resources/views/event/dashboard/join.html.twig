@@ -1,15 +1,19 @@
-{% extends 'event/dashboard/layout.html.twig' %}
+ {% extends 'event/dashboard/layout.html.twig' %}
 
 {% block content %}
-    {% if event.isFull() %}
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-                <h3 class="panel-title">Vietų neliko!</h3>
+    {% if app.user %}
+        {% if event.isFull() %}
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Vietų neliko!</h3>
+                </div>
+                <p class="panel-body">Atsiprašome, bet šiame įvykyje nebėra laisvų vietų. Dėl klaidos kreipkitės pas įvykio organizatorių.</p>
             </div>
-            <p class="panel-body">Atsiprašome, bet šiame įvykyje nebėra laisvų vietų. Dėl klaidos kreipkitės pas įvykio organizatorių.</p>
-        </div>
+        {% else %}
+            <p>Sveiki, esate neprisijunges prie "{{ event.name }}"</p>
+            <a href="{{ path('join_event', { 'hash' : event.hash }) }}" class="btn btn-primary">Prisijungti</a>
+        {% endif %}
     {% else %}
-        <p>Sveiki, esate neprisijunges prie "{{ event.name }}"</p>
-        <a href="{{ path('join_event', { 'hash' : event.hash }) }}" class="btn btn-primary">Prisijungti</a>
+        <a href="{{ url('fos_user_registration_register') }}" class="btn btn-primary">Užsiregistruokite, kad galėtumėte prisijungti į įvykį</a>
     {% endif %}
 {% endblock %}

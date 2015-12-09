@@ -127,6 +127,9 @@ class EventController extends Controller
         $doctrine = $this->getDoctrine();
 
         $user = $this->getUser();
+        if($user == null) {
+            return $this->render('event/dashboard/join.html.twig', [ 'event' => $event ]);
+        }
         $member = $doctrine->getRepository('DTRBundle:Member')->findByEventUser($event, $user);
         $items = $doctrine->getRepository('DTRBundle:Item')->findByMember($member);
         $totalCost = 0.0;
