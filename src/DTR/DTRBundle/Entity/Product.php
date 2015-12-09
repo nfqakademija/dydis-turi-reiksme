@@ -25,9 +25,23 @@ class Product
     /**
      * @var string
      *
+     * @ORM\Column(name="image_location", type="string", length=255)
+     */
+    private $imageLocation;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripton", type="string", length=255)
+     */
+    private $description;
 
     /**
      * @var float
@@ -49,13 +63,6 @@ class Product
      * @ORM\OneToMany(targetEntity="Item", mappedBy="product")
      */
     private $items;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="image_location", type="string", length=255)
-     */
-    private $imageLocation;
 
     /**
      * Get id
@@ -197,5 +204,29 @@ class Product
     public function getImageLocation()
     {
         return $this->imageLocation;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Product
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
