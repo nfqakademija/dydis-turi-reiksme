@@ -19,6 +19,8 @@ class CrawlerCommand extends ContainerAwareCommand
 
     protected $url;
 
+    protected $name;
+
     protected $directory;
 
     protected $filename;
@@ -54,8 +56,9 @@ class CrawlerCommand extends ContainerAwareCommand
             ->setName('dtr:crawler')
             ->setDescription('Crawl menu data from url.')
             ->addOption('url', 'u', InputOption::VALUE_REQUIRED, 'The page url where a menu is located.')
+            ->addOption('name', null, InputOption::VALUE_REQUIRED, 'The shop name.')
             ->addOption('directory', 'dir', InputOption::VALUE_REQUIRED, 'Name of directory to write result file to.')
-            ->addOption('print', 'p', InputOption::VALUE_OPTIONAL, 'Print contents to screen.', true)
+            ->addOption('print', 'p', InputOption::VALUE_OPTIONAL, 'Print contents to screen.', false)
             ->addOption('engine', 'eng', InputOption::VALUE_REQUIRED, 'The engine to use for menu lookup.', $this->engine);
     }
 
@@ -85,23 +88,8 @@ class CrawlerCommand extends ContainerAwareCommand
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $url = $input->getOption('url');
-
-        if(isset($url))
-        {
-            $this->url = $url;
-            return;
-        }
-
-        $question = new Question('<fg=cyan>Enter a menu url</>: ');
-        $question->setValidator(function($url) {
-            if(!filter_var($url, FILTER_VALIDATE_URL))
-                throw new \RuntimeException('The supplied url is not a valid url.');
-
-            return $url;
-        });
-
-        $this->url = $this->asker->ask($input, $output, $question);
+        $this->url = $this->manageUrlInput($input, $output);
+        $this->name = $this->manageNameInput($input, $output);
     }
 
     /**
@@ -123,7 +111,7 @@ class CrawlerCommand extends ContainerAwareCommand
         $menu = $crawler->getMenu($this->url);
         $output->writeln('<fg=green>Data fetched!</>');
 
-        $this->filename = date('Y-m-d_H-i-s'). '.json';
+        $this->filename = $this->name. '-'. date('Y-m-d_H-i-s'). '.json';
         $this->writeToFile($menu);
 
         $this->manageSnippet($input, $output);
@@ -140,6 +128,52 @@ class CrawlerCommand extends ContainerAwareCommand
         }
 
         unlink($this->directory. '/'. $this->filename);
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return string
+     */
+    private function manageUrlInput(InputInterface $input, OutputInterface $output)
+    {
+        $url = $input->getOption('url');
+
+        if(isset($url))
+            return $url;
+
+        $question = new Question('<fg=cyan>Enter a menu url</>: ');
+        $question->setValidator(function($url) {
+            if(!filter_var($url, FILTER_VALIDATE_URL))
+                throw new \RuntimeException('The supplied url is not a valid url.');
+
+            return $url;
+        });
+
+        return $this->asker->ask($input, $output, $question);
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return string
+     */
+    private function manageNameInput(InputInterface $input, OutputInterface $output)
+    {
+        $title = $input->getOption('name');
+
+        if(isset($title))
+            return $title;
+
+        $question = new Question('<fg=cyan>Enter shop name</>: ');
+        $question->setValidator(function($name) {
+            if(empty($name))
+                throw new \RuntimeException('The supplied name is empty.');
+
+            return $name;
+        });
+
+        return $this->asker->ask($input, $output, $question);
     }
 
     /**
