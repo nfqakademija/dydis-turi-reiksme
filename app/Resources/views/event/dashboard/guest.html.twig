@@ -1,5 +1,11 @@
 {% extends 'event/dashboard/layout.html.twig' %}
 
+{% block host_actions %}
+    <p style="float: right;">
+        <span style="color: #ffb03b" class="glyphicon glyphicon-star"></span>
+    </p>
+{% endblock %}
+
 {% block actions %}
     {% if guest == current %}
         <p style="float: right;">
