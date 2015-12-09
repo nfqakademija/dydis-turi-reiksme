@@ -74,6 +74,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Kebabas su kiauliena');
+        $product->setDescription("1");
         $product->setPrice(2,80);
         $product->setImageLocation('images/products/kebabas_kiauliena.jpeg');
         $product->setShop($shop);
@@ -81,6 +82,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Kebabas su vištiena');
+        $product->setDescription("1");
         $product->setPrice(3,45);
         $product->setImageLocation('images/products/kebabas_vistiena.jpeg');
         $product->setShop($shop);
@@ -88,6 +90,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Kebabas pitoje su kiauliena');
+        $product->setDescription("1");
         $product->setPrice(2,80);
         $product->setImageLocation('images/products/kebabas_pitoje.jpeg');
         $product->setShop($shop);
@@ -102,6 +105,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Kebabas lėkštėje');
+        $product->setDescription("1");
         $product->setPrice(4,10);
         $product->setImageLocation('images/products/kebabas_leksteje.jpeg');
         $product->setShop($shop);
@@ -109,6 +113,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Buritas');
+        $product->setDescription("1");
         $product->setPrice(4,00);
         $product->setImageLocation('images/products/buritas.jpeg');
         $product->setShop($shop);
@@ -116,6 +121,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Kebabo kompleksas');
+        $product->setDescription("1");
         $product->setPrice(5,45);
         $product->setImageLocation('images/products/kebabo_kompleksas.jpeg');
         $product->setShop($shop);
@@ -130,6 +136,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Hotategai');
+        $product->setDescription("1");
         $product->setPrice(2,10);
         $product->setImageLocation('images/products/hotategai.jpeg');
         $product->setShop($shop);
@@ -137,6 +144,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Love sushi');
+        $product->setDescription("1");
         $product->setPrice(2,90);
         $product->setImageLocation('images/products/love_sushi.jpeg');
         $product->setShop($shop);
@@ -144,6 +152,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Ikura sushi');
+        $product->setDescription("1");
         $product->setPrice(3,60);
         $product->setImageLocation('images/products/ikura_sushi.jpeg');
         $product->setShop($shop);
@@ -158,6 +167,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Ebi');
+        $product->setDescription("1");
         $product->setPrice(2,10);
         $product->setImageLocation('images/products/ebi.jpeg');
         $product->setShop($shop);
@@ -165,6 +175,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Unagi');
+        $product->setDescription("1");
         $product->setPrice(2,70);
         $product->setImageLocation('images/products/unagi.jpeg');
         $product->setShop($shop);
@@ -172,6 +183,7 @@ class LoadShopData implements FixtureInterface
 
         $product = new Product();
         $product->setName('Maguro');
+        $product->setDescription("1");
         $product->setPrice(2,40);
         $product->setImageLocation('images/products/maguro.jpeg');
         $product->setShop($shop);
