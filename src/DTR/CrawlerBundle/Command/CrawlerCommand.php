@@ -134,10 +134,6 @@ class CrawlerCommand extends ContainerAwareCommand
                 $menu = $new_menu;
         }
 
-        /*$menu_populator = $container->get($this->populator);
-
-        $output->writeln($menu_populator->getMenu($menu, $this->name));*/
-
         $em = $container->get('doctrine.orm.entity_manager');
 
         unlink($this->directory. '/'. $this->filename);
@@ -262,12 +258,13 @@ class CrawlerCommand extends ContainerAwareCommand
      */
     private function editFile(InputInterface $input, OutputInterface $output)
     {
+        $output->writeln('Apply your changes.');
         $question = new ConfirmationQuestion('<fg=cyan>Save file?</> <fg=yellow>[yes]</>', true);
 
         if(!$this->asker->ask($input, $output, $question))
             return false;
 
-        return json_decode($this->readFile());
+        return json_decode($this->readFile(), true);
     }
 
     /**
@@ -281,7 +278,7 @@ class CrawlerCommand extends ContainerAwareCommand
         if($file === FALSE)
             throw new \RuntimeException('There was an error opening the file: '. $filepath);
 
-        return file_get_contents($filepath);
+        return file_get_contents($filepath, true);
     }
 
     /**
