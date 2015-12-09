@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new DTR\DTRBundle\DTRBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new DTR\CrawlerBundle\CrawlerBundle(),
 //            new FOS\JsRoutingBundle\FOSJsRoutingBundle()
         );
 
