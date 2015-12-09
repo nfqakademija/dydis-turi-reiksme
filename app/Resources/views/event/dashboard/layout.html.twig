@@ -44,7 +44,8 @@
                         </ul>
                     </div>
                 </div>
-                <div><p style="font-size: 20px; display:inline;">Įvykio nuoroda: </p><p style="display: inline;font-size: 20px;color: #ffb03b;">event/{{ event.hash }}</p></div>
+                {#<div><p style="font-size: 20px; display:inline;">Įvykio nuoroda: </p><p style="display: inline;font-size: 20px;color: #ffb03b;">event/{{ event.hash }}</p></div>#}
+                <div><p style="font-size: 20px; display:inline;">Įvykio nuoroda: </p><p style="display: inline;font-size: 20px;color: #ffb03b;">{{ url('dashboard', { 'hash' : event.hash }) }}</p></div>
                 <div><a class="dtr_dash_link" style="font-size: 20px;color: #fff;" href="{{ path('edit_event', {'hash': event.hash, 'event': event}) }}">Redaguoti įvykį</a></div>
                 <div><a class="dtr_dash_link" style="font-size: 20px;color: #fff;" href="{{ path('_shops_list', {'hash': event.hash}) }}">Parduotuvės, maistas</a></div>
                 {% include 'menu/cart.html.twig' %}
