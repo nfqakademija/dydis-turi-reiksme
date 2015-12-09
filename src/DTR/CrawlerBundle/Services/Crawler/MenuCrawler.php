@@ -46,22 +46,6 @@ class MenuCrawler implements CrawlerInterface
         $contents = $this->chewUrl($url);
         $crawler = new Crawler($contents);
 
-        /*$file = fopen('the_filename_for_output.txt', 'w');
-        $str = '';
-
-        $product_html = $this->pattern->getProductHtmlCollection($crawler);
-
-        foreach($product_html as $product)
-        {
-            $str .= $product->html();
-            $str .= "\n\n\n\n";
-            $str .= ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
-            $str .= "\n\n\n\n";
-        }
-
-        fwrite($file, $str);
-        fclose($file);*/
-
         $product_html = $this->pattern->getProductHtmlCollection($crawler);
         $products = array();
 
