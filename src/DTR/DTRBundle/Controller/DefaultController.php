@@ -9,6 +9,7 @@ use DTR\DTRBundle\Entity\Product;
 use DTR\DTRBundle\Entity\Shop;
 use DTR\DTRBundle\Form\EventType;
 use DTR\DTRBundle\Form\SearchType;
+use DTR\DTRBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -80,7 +81,7 @@ class DefaultController extends Controller
             $totalCost += $productPrice;
         }
 
-        $form = $this->createForm(new SearchType());
+        $form = $this->createForm(new ProductType());
 
         $form->handleRequest($request);
 

@@ -318,3 +318,11 @@ a.addToCart:hover {
 .mfp-with-zoom.mfp-removing.mfp-bg {
 	opacity: 0;
 }
+
+.dtr_cart {
+    float: right;
+}
+
+.mfp-container .mfp-ajax-holder .mfp-s-ready {
+    float: left !important;
+}
