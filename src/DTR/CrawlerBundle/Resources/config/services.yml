@@ -1,0 +1,28 @@
+parameters:
+    crawler.default_crawler:    "menu_crawler"
+    crawler.default_algorithm:  "class_matcher"
+    crawler.default_directory:   "/var/www/nfqakademija/src/DTR/CrawlerBundle/Resources/Files"
+    crawler.snippet_lines:  22
+
+services:
+    inspector:
+        class:  DTR\CrawlerBundle\Services\Inspectors\Inspector
+    component_inspector:
+        class:  DTR\CrawlerBundle\Services\Inspectors\ComponentInspector
+    validationer:
+        class:  DTR\CrawlerBundle\Services\Validators\Validationer
+        arguments:  ["@inspector"]
+    class_matcher:
+        class:  DTR\CrawlerBundle\Services\Algorithms\ClassMatcher
+        arguments:  ["@validationer"]
+    descender:
+        class:  DTR\CrawlerBundle\Services\Algorithms\Descender
+        arguments:  ["@validationer"]
+    menu_crawler:
+        class:  DTR\CrawlerBundle\Services\Crawler\MenuCrawler
+        arguments:  ["@component_inspector"]
+    crawler.command:
+        class:  DTR\CrawlerBundle\Command\CrawlerCommand
+        arguments:  ["%crawler.default_crawler%", "%crawler.default_algorithm%", "%crawler.default_directory%", "%crawler.snippet_lines%"]
+        tags:
+            - { name: console.command }
