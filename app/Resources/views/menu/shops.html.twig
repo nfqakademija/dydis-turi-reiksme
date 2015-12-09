@@ -14,5 +14,6 @@
                 <a class="shop_name" href="shops/{{ shop.slug }}">{{ shop.name() }}</a>
             </div>
         {% endfor %}
+        <div><a class="dtr_dash_link" style="font-size: 20px;color: #fff;" href="{{ path('dashboard', {'hash': event.hash, 'event': event}) }}">Grįžti į įvykį</a></div>
     </div>
 {% endblock %}
